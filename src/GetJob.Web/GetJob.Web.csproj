@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GetJob.Data\GetJob.Data.csproj" />
+    <ProjectReference Include="..\GetJob.Models\GetJob.Models.csproj" />
+    <ProjectReference Include="..\GetJob.Services\GetJob.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="ViewModels\" />
+    <Folder Include="Views\" />
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+</Project>
