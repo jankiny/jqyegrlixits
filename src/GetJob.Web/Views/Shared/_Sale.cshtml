@@ -1,0 +1,78 @@
+﻿@{
+    Layout = "_Empty";
+}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-xl">
+        @*<a class="navbar-brand" href="#">树苗</a>*@
+        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExample07XL" aria-controls="navbarsExample07XL" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse " id="navbarsExample07XL">
+            <ul class="navbar-nav mr-auto">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="nav-item nav-link disabled">@User.Identity.Name</li>
+                    @if (User.IsInRole("Seller"))
+                    {
+                        <li class="nav-item nav-link disabled">(商家)</li>
+                    }
+                    else if (User.IsInRole("root"))
+                    {
+                        <li class="nav-item nav-link disabled">(root)</li>
+                    }
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Mine" asp-action="Logout">登出</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item active">
+                        <a class="nav-link text-success" asp-controller="Mine" asp-action="SignIn">请登录<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Mine" asp-action="SignUp">注册</a>
+                    </li>
+                }
+            </ul>
+            <ul class="navbar-nav justify-content-end">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown07XL" data-toggle="dropdown" aria-expanded="false">我的树苗</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown07XL">
+                        <a class="dropdown-item" asp-controller="Order" asp-action="Display">订单管理</a>
+                        <a class="dropdown-item" asp-controller="Mine" asp-action="Foot">我的足迹</a>
+                        <a class="dropdown-item" asp-controller="Mine" asp-action="Home">账号管理</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Cart" asp-action="Display">购物车</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Mine" asp-action="Plus">树苗会员</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown07XL" data-toggle="dropdown" aria-expanded="false">商家中心</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown07XL">
+                        <a class="dropdown-item" asp-controller="Manage" asp-action="SettleIn">免费开店</a>
+                        <a class="dropdown-item" asp-controller="Manage" asp-action="Home">管理店铺</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown07XL" data-toggle="dropdown" aria-expanded="false">联系客服</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown07XL">
+                        <a class="dropdown-item" asp-controller="Mine" asp-action="ConsumerService">消费者客服</a>
+                        <a class="dropdown-item" asp-controller="Manage" asp-action="SellerService">商家客服</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown07XL" data-toggle="dropdown" aria-expanded="false">网站导航</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown07XL">
+                        <a class="dropdown-item" asp-controller="Home" asp-action="Index">主页</a>
+                        <a class="dropdown-item" asp-controller="Manage" asp-action="Home">后台管理</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+@RenderBody()

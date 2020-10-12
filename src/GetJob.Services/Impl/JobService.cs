@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace GetJob.Services.Impl
 {
-    class JobService : IJobService
+    public class JobService : IJobService
     {
         private readonly ILogger _logger;
         private readonly GetJobDbContext _context;

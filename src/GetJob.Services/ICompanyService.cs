@@ -19,5 +19,6 @@ namespace GetJob.Services
         Task<Company> GetByIdAsync(string id);
         Task<List<Company>> GetByCompanyFieldAsync(CompanyField model);
         Task<List<Company>> GetAllAsync();
+        Task<List<Company>> SearchAsync(string searchString);
     }
 }

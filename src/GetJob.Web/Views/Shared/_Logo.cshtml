@@ -1,0 +1,9 @@
+﻿<div class="">
+    <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+        <img class="" src="/img/logo.png" alt="" width="200" height="100">
+    </a>
+    @if (!string.IsNullOrEmpty(ViewBag.Header))
+    {
+        <span class="h4 font-weight-normal align-middle">@ViewBag.Header</span>
+    }
+</div>

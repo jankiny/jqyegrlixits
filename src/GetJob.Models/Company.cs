@@ -6,7 +6,7 @@ namespace GetJob.Models
     public class Company : IdentityUser
     {
 
-        [Required, StringLength(50)] public string Name { get; set; }
+        [Required, StringLength(50)] public string RealName { get; set; }
 
         [Required] public int CompanyFieldId { get; set; }
 

@@ -6,9 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GetJob.Web.Controllers
 {
-    public class HomeController : Controller
+    public class UserController : Controller
     {
-        public IActionResult Index()
+        public IActionResult SignIn()
+        {
+            return View();
+        }
+        public IActionResult SignUp()
         {
             return View();
         }

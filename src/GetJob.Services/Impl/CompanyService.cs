@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace GetJob.Services.Impl
 {
-    class CompanyService : ICompanyService
+    public class CompanyService : ICompanyService
     {
         private readonly ILogger<CompanyService> _logger;
         private readonly GetJobDbContext _context;
@@ -149,6 +149,26 @@ namespace GetJob.Services.Impl
             try
             {
                 var companyList = await _context.Companies.ToListAsync();
+                foreach (var company in companyList)
+                {
+                    company.CompanyField = await _context.CompanyFields.FindAsync(company.CompanyFieldId);
+                }
+
+                return companyList;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return null;
+            }
+        }
+
+        public async Task<List<Company>> SearchAsync(string searchString)
+        {
+            try
+            {
+                // Where(c => c.Name.Contains(searchString) || ...)
+                var companyList = await _context.Companies.Where(c => c.Name.Contains(searchString)).ToListAsync();
                 foreach (var company in companyList)
                 {
                     company.CompanyField = await _context.CompanyFields.FindAsync(company.CompanyFieldId);

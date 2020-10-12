@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width"/>
+    <title>@ViewBag.Title</title>
+    <script type="text/javascript" asp-src-include="js/jquery.js"></script>
+    <environment include="Development">
+        <link rel="stylesheet" asp-href-include="css/*" asp-href-exclude="css/all.min.css"/>
+        <script type="text/javascript" asp-src-include="js/*" asp-src-exclude="js/all.min.js,js/jquery.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" asp-href-include="css/all.min.css"/>
+        <script type="text/javascript" asp-src-include="js/all.min.js"></script>
+    </environment>
+</head>
+<body>
+@RenderBody()
+
+<footer>
+    <partial name="_CopyRight"/>
+</footer>
+</body>
+</html>
