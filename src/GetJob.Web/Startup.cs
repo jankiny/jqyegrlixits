@@ -67,7 +67,7 @@ namespace GetJob.Web
 
 
             // SpSale.Identity
-            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IStudentService, StudentService>();
             //// SpSale.Service
             //services.AddScoped<IGoodService, GoodService>();
             //services.AddScoped<IGoodTypeService, GoodTypeService>();

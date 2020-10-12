@@ -4,11 +4,10 @@ using Microsoft.AspNetCore.Identity;
 
 namespace GetJob.Services
 {
-    public interface IAccountService
+    public interface IStudentService
     {
-        Task<IdentityResult> CreateUserAsync(Student user, string plainPassword);
+        Task<IdentityResult> CreateStudentAsync(Student user, string plainPassword);
         Task<SignInResult> PasswordSignInAsync(string userName, string password);
         Task SignOutAsync();
-        Task SetRoleAsync(string userName, string role);
     }
 }
