@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GetJob.Data
 {
-    public class AppDbContext : IdentityDbContext<Company>
+    public class AppDbContext : IdentityDbContext
     //: IdentityDbContext<
     //    IdentityUser, IdentityUserClaim<string>, IdentityUserLogin<string>,
     //    IdentityUserToken<string>, IdentityRole, IdentityRoleClaim<string>,
@@ -19,20 +19,10 @@ namespace GetJob.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            // 使用业务的表
-            modelBuilder.Entity<Company>(b =>
+            modelBuilder.Entity<IdentityUser>(b =>
             {
-                b.ToTable("C_Company");
+                b.ToTable("Sys_User");
             });
-            modelBuilder.Entity<CompanyField>(b =>
-            {
-                b.ToTable("C_CompanyField");
-            });
-            //modelBuilder.Entity<Student>(b =>
-            //{
-            //    b.ToTable("S_Student");
-            //});
-
 
             modelBuilder.Entity<IdentityUserClaim<string>>(b =>
             {

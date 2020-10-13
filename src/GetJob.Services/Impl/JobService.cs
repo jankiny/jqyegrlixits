@@ -11,10 +11,10 @@ namespace GetJob.Services.Impl
 {
     public class JobService : IJobService
     {
-        private readonly ILogger _logger;
+        private readonly ILogger<JobService> _logger;
         private readonly GetJobDbContext _context;
 
-        public JobService(ILogger logger, GetJobDbContext context)
+        public JobService(ILogger<JobService> logger, GetJobDbContext context)
         {
             _logger = logger;
             _context = context;

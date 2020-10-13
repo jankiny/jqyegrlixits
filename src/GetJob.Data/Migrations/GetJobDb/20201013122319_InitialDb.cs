@@ -7,6 +7,18 @@ namespace GetJob.Data.Migrations.GetJobDb
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "C_CompanyField",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Text = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_C_CompanyField", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "C_JobCharacter",
@@ -73,13 +85,31 @@ namespace GetJob.Data.Migrations.GetJobDb
                     table.PrimaryKey("PK_S_Student", x => x.Id);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "C_Company",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                    CompanyFieldId = table.Column<int>(nullable: false),
+                    Description = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_C_Company", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_C_Company_C_CompanyField_CompanyFieldId",
+                        column: x => x.CompanyFieldId,
+                        principalTable: "C_CompanyField",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.CreateTable(
                 name: "C_Job",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(nullable: false),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
                     PublisherId = table.Column<string>(nullable: false),
                     JobKindId = table.Column<int>(nullable: false),
@@ -121,10 +151,10 @@ namespace GetJob.Data.Migrations.GetJobDb
                 name: "C_InterviewNotify",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(nullable: false),
                     ToStudentId = table.Column<string>(nullable: false),
                     JobId = table.Column<int>(nullable: false),
+                    JobId1 = table.Column<string>(nullable: true),
                     Title = table.Column<string>(maxLength: 50, nullable: false),
                     InterviewDate = table.Column<DateTime>(nullable: false),
                     InterviewLocation = table.Column<string>(nullable: false),
@@ -134,11 +164,11 @@ namespace GetJob.Data.Migrations.GetJobDb
                 {
                     table.PrimaryKey("PK_C_InterviewNotify", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_C_InterviewNotify_C_Job_JobId",
-                        column: x => x.JobId,
+                        name: "FK_C_InterviewNotify_C_Job_JobId1",
+                        column: x => x.JobId1,
                         principalTable: "C_Job",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_C_InterviewNotify_S_Student_ToStudentId",
                         column: x => x.ToStudentId,
@@ -148,9 +178,14 @@ namespace GetJob.Data.Migrations.GetJobDb
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_C_InterviewNotify_JobId",
+                name: "IX_C_Company_CompanyFieldId",
+                table: "C_Company",
+                column: "CompanyFieldId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_C_InterviewNotify_JobId1",
                 table: "C_InterviewNotify",
-                column: "JobId");
+                column: "JobId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_C_InterviewNotify_ToStudentId",

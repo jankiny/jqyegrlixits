@@ -1,12 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Identity;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace GetJob.Models
 {
-    public class Company : IdentityUser
+    public class Company
     {
-
-        [Required, StringLength(50)] public string RealName { get; set; }
+        public string Id { get; set; } = Guid.NewGuid().ToString();
+        [Required, StringLength(50)] public string Name { get; set; }
 
         [Required] public int CompanyFieldId { get; set; }
 

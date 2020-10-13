@@ -1,21 +1,24 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using GetJob.Models;
 using GetJob.Services;
 using GetJob.Web.ViewModels.Company;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Logging;
 
 namespace GetJob.Web.Controllers
 {
     public class CompanyController : Controller
     {
-        private readonly ICompanyService _companyService;
+        private readonly IUserService _userService;
         private readonly ILogger<CompanyController> _logger;
 
-        public CompanyController(ILogger<CompanyController> logger, ICompanyService companyService)
+        public CompanyController(ILogger<CompanyController> logger, IUserService userService)
         {
             _logger = logger;
-            _companyService = companyService;
+            _userService = userService;
         }
 
         public IActionResult Home()
@@ -24,16 +27,23 @@ namespace GetJob.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SignIn(CompanySignInViewModel vm, string returnUrl = null)
+        public async Task<IActionResult> SignIn(UserSignInViewModel vm, string returnUrl = null)
         {
             if (!ModelState.IsValid) return RedirectToAction("SignIn", "User", vm);
-            var result = await _companyService.PasswordSignInAsync(vm.UserName, vm.Password);
+            var result = await _userService.PasswordSignInAsync(vm.UserName, vm.Password);
             if (result.Succeeded)
             {
                 _logger.LogInformation($"{vm.UserName} logged in.");
                 if (returnUrl != null) return LocalRedirect(returnUrl);
-
-                return RedirectToAction("Home", "Company");
+                var identity = await _userService.GetUserClaim(vm.UserName);
+                if (identity is Company)
+                {
+                    return RedirectToAction("Home", "Company");
+                }
+                else
+                {
+                    return RedirectToAction("Home", "Student");
+                }
             }
 
             ModelState.AddModelError("", "用户名/密码不正确");
@@ -45,15 +55,19 @@ namespace GetJob.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var company = new Company
+                var user = new IdentityUser
                 {
                     PhoneNumber = vm.PhoneNumber,
                     UserName = vm.UserName,
                     Email = vm.Mail,
-                    EmailConfirmed = true,
+                    EmailConfirmed = true
+                };
+                var company = new Company
+                {
+                    Name = vm.CompanyName,
                     CompanyFieldId = vm.CompanyFieldId
                 };
-                var result = await _companyService.CreateCompanyAsync(company, vm.Password);
+                var result = await _userService.CreateUserAsync(user, vm.Password, company);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation($"{vm.PhoneNumber} created a new account with password.");
@@ -67,7 +81,7 @@ namespace GetJob.Web.Controllers
         }
         public async Task<IActionResult> Logout(string returnUrl = null)
         {
-            await _companyService.SignOutAsync();
+            await _userService.SignOutAsync();
             _logger.LogInformation("Company logged out.");
             if (returnUrl != null)
                 return LocalRedirect(returnUrl);

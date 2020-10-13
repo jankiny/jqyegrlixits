@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace GetJob.Web.ViewModels.Company
 {
-    public class CompanySignInViewModel
+    public class UserSignInViewModel
     {
         public string UserName { get; set; }
         public string Password { get; set; }

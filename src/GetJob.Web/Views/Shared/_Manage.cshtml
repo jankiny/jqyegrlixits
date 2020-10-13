@@ -3,53 +3,9 @@
 }
 <style>
 
+    
 </style>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-xl">
-        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExample07XL" aria-controls="navbarsExample07XL" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse " id="navbarsExample07XL">
-            <ul class="navbar-nav mr-auto">
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <li class="nav-item nav-link disabled">@User.Identity.Name</li>
-                    @if (User.IsInRole("Seller"))
-                    {
-                        <li class="nav-item nav-link disabled">(商家)</li>
-                    }
-                    else if (User.IsInRole("root"))
-                    {
-                        <li class="nav-item nav-link disabled">(root)</li>
-                    }
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Mine" asp-action="Logout">登出</a>
-                    </li>
-                }
-            </ul>
-            <ul class="navbar-nav justify-content-end">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown07XL" data-toggle="dropdown" aria-expanded="false">商家中心</a>
-                    <div class="dropdown-menu" aria-labelledby="dropdown07XL">
-                        <a class="dropdown-item" asp-controller="Manage" asp-action="SettleIn">免费开店</a>
-                        <a class="dropdown-item" asp-controller="Manage" asp-action="Home">管理店铺</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="Manage" asp-action="SellerService">联系客服</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown07XL" data-toggle="dropdown" aria-expanded="false">网站导航</a>
-                    <div class="dropdown-menu" aria-labelledby="dropdown07XL">
-                        <a class="dropdown-item" asp-controller="Home" asp-action="Index">主页</a>
-                        <a class="dropdown-item" asp-controller="Manage" asp-action="Home">后台管理</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<partial name="_NavBar"/>
 
 <div class="container">
     <div class="row">
@@ -65,7 +21,7 @@
                             我的店铺
                         </a>
                         <div class="collapse show p-0 fs-5" id="multiCollapse1">
-                            <a class="dropdown-item @(ViewBag.Title == "店铺管理" ? "active" : "")"  asp-controller="Manage" asp-action="Home">店铺管理</a>
+                            <a class="dropdown-item @(ViewBag.Title == "店铺管理" ? "active" : "")" asp-controller="Manage" asp-action="Home">店铺管理</a>
                             <a class="dropdown-item" href="#">活动管理</a>
                             <a class="dropdown-item" href="#">折扣管理</a>
                         </div>
@@ -148,7 +104,7 @@
             </div>
         </nav>
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4" style="background-color: #F1F2F7">
-           @RenderBody()
+            @RenderBody()
         </main>
     </div>
 </div>

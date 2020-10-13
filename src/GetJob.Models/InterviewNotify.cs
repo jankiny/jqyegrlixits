@@ -5,7 +5,7 @@ namespace GetJob.Models
 {
     public class InterviewNotify
     {
-        [Key] public int Id { get; set; }
+        public string Id { get; set; } = Guid.NewGuid().ToString();
 
         [Required] public string ToStudentId { get; set; }
 

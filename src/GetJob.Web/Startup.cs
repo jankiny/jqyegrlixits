@@ -61,17 +61,14 @@ namespace GetJob.Web
                 options.User.RequireUniqueEmail = false;
             });
 
-            services.AddIdentity<Company, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders(); ;
 
-
-            // SpSale.Identity
-            services.AddScoped<IStudentService, StudentService>();
-            // SpSale.Service
             services.AddScoped<ICompanyService, CompanyService>();
-            services.AddScoped<IJobService, JobService>();
             services.AddScoped<IStudentService, StudentService>();
+            services.AddScoped<IJobService, JobService>();
+            services.AddScoped<IUserService, UserService>();
 
         }
 
@@ -97,7 +94,7 @@ namespace GetJob.Web
             {
                 endpoints.MapControllerRoute(
                     "default",
-                    "{controller=Home}/{action=Index}/{id?}");
+                    "{controller=Company}/{action=Home}/{id?}");
             });
         }
     }

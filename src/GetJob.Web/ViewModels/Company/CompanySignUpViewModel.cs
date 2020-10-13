@@ -9,7 +9,7 @@ namespace GetJob.Web.ViewModels.Company
     {
         public string PhoneNumber { get; set; }
         public string UserName { get; set; }
-        public string RealName { get; set; }
+        public string CompanyName { get; set; }
         public string Mail { get; set; }
         public string Password { get; set; }
         public int CompanyFieldId { get; set; }
