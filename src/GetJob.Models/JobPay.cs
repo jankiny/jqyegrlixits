@@ -9,5 +9,7 @@ namespace GetJob.Models
         public int Id { get; set; }
 
         [Required] [StringLength(50)] public string Text { get; set; }
+        public double PayFrom { get; set; }
+        public double PayTo { get; set; }
     }
 }

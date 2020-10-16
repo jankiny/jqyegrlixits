@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace GetJob.Models
@@ -11,6 +12,7 @@ namespace GetJob.Models
         [Required] public int CompanyFieldId { get; set; }
 
         public CompanyField CompanyField { get; set; }
+        [StringLength(50)]
         public string Description { get; set; }
     }
 }

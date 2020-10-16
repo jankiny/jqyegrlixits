@@ -15,9 +15,9 @@ namespace GetJob.Models
 
         public Job Job { get; set; }
 
-        [Required] [StringLength(50)] public string Title { get; set; }
+        [Required, StringLength(50)] public string Title { get; set; }
 
-        [Required] [DataType(DataType.Date)] public DateTime InterviewDate { get; set; }
+        [Required, DataType(DataType.Date)] public DateTime InterviewDate { get; set; }
 
         [Required] public string InterviewLocation { get; set; }
 
