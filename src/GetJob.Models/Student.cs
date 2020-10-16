@@ -2,8 +2,8 @@
 
 namespace GetJob.Models
 {
-    public class Student : IdentityUser
+    public class Student
     {
-        public int StudentId { get; set; }
+        public string StudentId { get; set; }
     }
 }
