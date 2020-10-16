@@ -4,14 +4,16 @@ using GetJob.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GetJob.Data.Migrations.GetJobDb
 {
     [DbContext(typeof(GetJobDbContext))]
-    partial class GetJobDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201016015103_changestudentmodel")]
+    partial class changestudentmodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -190,54 +192,14 @@ namespace GetJob.Data.Migrations.GetJobDb
                     b.ToTable("C_JobPay");
                 });
 
-            modelBuilder.Entity("GetJob.Models.Nation", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(2)")
-                        .HasMaxLength(2);
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("S_Nation");
-                });
-
             modelBuilder.Entity("GetJob.Models.Student", b =>
                 {
                     b.Property<string>("StudentId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Adress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Csny")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Mail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MzId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Xb")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Xh")
                         .HasColumnType("nvarchar(10)")
                         .HasMaxLength(10);
-
-                    b.Property<string>("Xm")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ZzId")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("StudentId");
 

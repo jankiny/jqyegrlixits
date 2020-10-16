@@ -18,6 +18,7 @@ namespace GetJob.Data
         public DbSet<JobKind> JobKinds { get; set; }
         public DbSet<JobPay> JobPays { get; set; }
         public DbSet<Student> Students { get; set; }
+        public DbSet<Nation> Nations { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Company>().ToTable("C_Company");
@@ -28,6 +29,7 @@ namespace GetJob.Data
             modelBuilder.Entity<JobKind>().ToTable("C_JobKind");
             modelBuilder.Entity<JobPay>().ToTable("C_JobPay");
             modelBuilder.Entity<Student>().ToTable("S_Student");
+            modelBuilder.Entity<Nation>().ToTable("S_Nation");
         }
     }
 }
