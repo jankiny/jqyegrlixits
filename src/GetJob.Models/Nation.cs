@@ -7,7 +7,7 @@ namespace GetJob.Models
 {
     public class Nation
     {
-        [StringLength(2)] public string Id { get; set; }
+        [Key] public int NationId { get; set; }
         [Required, StringLength(50)] public string Text { get; set; }
     }
 }

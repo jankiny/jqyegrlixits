@@ -11,7 +11,7 @@ namespace GetJob.Models
 
         public Student ToStudent { get; set; }
 
-        [Required] public int JobId { get; set; }
+        [Required] public string JobId { get; set; }
 
         public Job Job { get; set; }
 
@@ -21,6 +21,6 @@ namespace GetJob.Models
 
         [Required] public string InterviewLocation { get; set; }
 
-        public string Note { get; set; }
+        [StringLength(100)] public string Note { get; set; }
     }
 }

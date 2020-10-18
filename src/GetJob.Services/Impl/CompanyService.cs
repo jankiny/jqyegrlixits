@@ -26,7 +26,7 @@ namespace GetJob.Services.Impl
         {
             try
             {
-                var companyList = await _context.Companies.Where(c => c.CompanyFieldId == model.Id).ToListAsync();
+                var companyList = await _context.Companies.Where(c => c.CompanyFieldId == model.CompanyFieldId).ToListAsync();
                 foreach (var company in companyList)
                 {
                     company.CompanyField = await _context.CompanyFields.FindAsync(company.CompanyFieldId);

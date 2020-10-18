@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GetJob.Data.Migrations.GetJobDb
 {
     [DbContext(typeof(GetJobDbContext))]
-    [Migration("20201016031213_addNationModel")]
-    partial class addNationModel
+    [Migration("20201017042812_InitialDb")]
+    partial class InitialDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,7 +30,8 @@ namespace GetJob.Data.Migrations.GetJobDb
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(450);
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -46,16 +47,17 @@ namespace GetJob.Data.Migrations.GetJobDb
 
             modelBuilder.Entity("GetJob.Models.CompanyField", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("CompanyFieldId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Text")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
-                    b.HasKey("Id");
+                    b.HasKey("CompanyFieldId");
 
                     b.ToTable("C_CompanyField");
                 });
@@ -72,14 +74,13 @@ namespace GetJob.Data.Migrations.GetJobDb
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("JobId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("JobId1")
+                    b.Property<string>("JobId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Note")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -92,7 +93,7 @@ namespace GetJob.Data.Migrations.GetJobDb
 
                     b.HasKey("Id");
 
-                    b.HasIndex("JobId1");
+                    b.HasIndex("JobId");
 
                     b.HasIndex("ToStudentId");
 
@@ -105,7 +106,8 @@ namespace GetJob.Data.Migrations.GetJobDb
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(450);
 
                     b.Property<int>("JobCharacterId")
                         .HasColumnType("int");
@@ -126,7 +128,8 @@ namespace GetJob.Data.Migrations.GetJobDb
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ResumeReceived")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(450);
 
                     b.HasKey("Id");
 
@@ -143,7 +146,7 @@ namespace GetJob.Data.Migrations.GetJobDb
 
             modelBuilder.Entity("GetJob.Models.JobCharacter", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("JobCharacterId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -153,14 +156,36 @@ namespace GetJob.Data.Migrations.GetJobDb
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
-                    b.HasKey("Id");
+                    b.HasKey("JobCharacterId");
 
                     b.ToTable("C_JobCharacter");
+
+                    b.HasData(
+                        new
+                        {
+                            JobCharacterId = 1,
+                            Text = "全职"
+                        },
+                        new
+                        {
+                            JobCharacterId = 2,
+                            Text = "临时"
+                        },
+                        new
+                        {
+                            JobCharacterId = 3,
+                            Text = "实习"
+                        },
+                        new
+                        {
+                            JobCharacterId = 4,
+                            Text = "兼职"
+                        });
                 });
 
             modelBuilder.Entity("GetJob.Models.JobKind", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("JobKindId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -170,14 +195,123 @@ namespace GetJob.Data.Migrations.GetJobDb
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
-                    b.HasKey("Id");
+                    b.HasKey("JobKindId");
 
                     b.ToTable("C_JobKind");
                 });
 
             modelBuilder.Entity("GetJob.Models.JobPay", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("JobPayId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<double>("PayFrom")
+                        .HasColumnType("float");
+
+                    b.Property<double>("PayTo")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.HasKey("JobPayId");
+
+                    b.ToTable("C_JobPay");
+
+                    b.HasData(
+                        new
+                        {
+                            JobPayId = 1,
+                            PayFrom = 0.0,
+                            PayTo = 1000.0,
+                            Text = "1000以下"
+                        },
+                        new
+                        {
+                            JobPayId = 2,
+                            PayFrom = 1000.0,
+                            PayTo = 2000.0,
+                            Text = "1000~2000"
+                        },
+                        new
+                        {
+                            JobPayId = 3,
+                            PayFrom = 2000.0,
+                            PayTo = 3000.0,
+                            Text = "2000~3000"
+                        },
+                        new
+                        {
+                            JobPayId = 4,
+                            PayFrom = 3000.0,
+                            PayTo = 4000.0,
+                            Text = "3000~4000"
+                        },
+                        new
+                        {
+                            JobPayId = 5,
+                            PayFrom = 4000.0,
+                            PayTo = 6000.0,
+                            Text = "4000~6000"
+                        },
+                        new
+                        {
+                            JobPayId = 6,
+                            PayFrom = 6000.0,
+                            PayTo = 8000.0,
+                            Text = "6000~8000"
+                        },
+                        new
+                        {
+                            JobPayId = 7,
+                            PayFrom = 8000.0,
+                            PayTo = 10000.0,
+                            Text = "8000~10000"
+                        },
+                        new
+                        {
+                            JobPayId = 8,
+                            PayFrom = 10000.0,
+                            PayTo = 15000.0,
+                            Text = "10000~15000"
+                        },
+                        new
+                        {
+                            JobPayId = 9,
+                            PayFrom = 15000.0,
+                            PayTo = 20000.0,
+                            Text = "15000~20000"
+                        },
+                        new
+                        {
+                            JobPayId = 10,
+                            PayFrom = 20000.0,
+                            PayTo = 30000.0,
+                            Text = "20000~30000"
+                        },
+                        new
+                        {
+                            JobPayId = 11,
+                            PayFrom = 30000.0,
+                            PayTo = 50000.0,
+                            Text = "30000~50000"
+                        },
+                        new
+                        {
+                            JobPayId = 12,
+                            PayFrom = 50000.0,
+                            PayTo = 10000000.0,
+                            Text = "50000以上"
+                        });
+                });
+
+            modelBuilder.Entity("GetJob.Models.Nation", b =>
+                {
+                    b.Property<int>("NationId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -187,25 +321,21 @@ namespace GetJob.Data.Migrations.GetJobDb
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
-                    b.HasKey("Id");
-
-                    b.ToTable("C_JobPay");
-                });
-
-            modelBuilder.Entity("GetJob.Models.Nation", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(2)")
-                        .HasMaxLength(2);
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
-
-                    b.HasKey("Id");
+                    b.HasKey("NationId");
 
                     b.ToTable("S_Nation");
+
+                    b.HasData(
+                        new
+                        {
+                            NationId = 1,
+                            Text = "汉族"
+                        },
+                        new
+                        {
+                            NationId = 2,
+                            Text = "蒙古族"
+                        });
                 });
 
             modelBuilder.Entity("GetJob.Models.Student", b =>
@@ -246,6 +376,58 @@ namespace GetJob.Data.Migrations.GetJobDb
                     b.ToTable("S_Student");
                 });
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("IdentityUser");
+                });
+
             modelBuilder.Entity("GetJob.Models.Company", b =>
                 {
                     b.HasOne("GetJob.Models.CompanyField", "CompanyField")
@@ -259,7 +441,9 @@ namespace GetJob.Data.Migrations.GetJobDb
                 {
                     b.HasOne("GetJob.Models.Job", "Job")
                         .WithMany()
-                        .HasForeignKey("JobId1");
+                        .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("GetJob.Models.Student", "ToStudent")
                         .WithMany()
@@ -288,7 +472,7 @@ namespace GetJob.Data.Migrations.GetJobDb
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GetJob.Models.Company", "Publisher")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Publisher")
                         .WithMany()
                         .HasForeignKey("PublisherId")
                         .OnDelete(DeleteBehavior.Cascade)

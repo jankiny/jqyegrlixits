@@ -83,7 +83,7 @@ namespace GetJob.Services.Impl
         {
             try
             {
-                var jobList = await _context.Jobs.Where(j => j.JobCharacterId == model.Id).ToListAsync();
+                var jobList = await _context.Jobs.Where(j => j.JobCharacterId == model.JobCharacterId).ToListAsync();
                 foreach (var job in jobList)
                 {
                     job.JobCharacter = model;
@@ -104,7 +104,7 @@ namespace GetJob.Services.Impl
         {
             try
             {
-                var jobList = await _context.Jobs.Where(j => j.JobKindId == model.Id).ToListAsync();
+                var jobList = await _context.Jobs.Where(j => j.JobKindId == model.JobKindId).ToListAsync();
                 foreach (var job in jobList)
                 {
                     job.JobCharacter = await _context.JobCharacters.FindAsync(job.JobCharacterId);
@@ -125,7 +125,7 @@ namespace GetJob.Services.Impl
         {
             try
             {
-                var jobList = await _context.Jobs.Where(j => j.JobPayId == model.Id).ToListAsync();
+                var jobList = await _context.Jobs.Where(j => j.JobPayId == model.JobPayId).ToListAsync();
                 foreach (var job in jobList)
                 {
                     job.JobCharacter = await _context.JobCharacters.FindAsync(job.JobCharacterId);
