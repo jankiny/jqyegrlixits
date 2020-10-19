@@ -20,6 +20,7 @@ namespace GetJob.Web.Controllers
         private readonly ILogger<CompanyController> _logger;
         private readonly IUserService _userService;
 
+
         public CompanyController(ILogger<CompanyController> logger, IUserService userService,
             ICompanyService companyService, IJobService jobService)
         {
@@ -53,16 +54,25 @@ namespace GetJob.Web.Controllers
         }
 
         private async Task PopulateJobRelatedDropDownList(string selectedJobCharacterId = null,
-            string selectedJobFirstKindId = null, string selectedJobPayId = null)
+            string selectedJobFirstKindId = null, string selectedJobKindId = null, string selectedJobPayId = null,
+            string selectedJobStatusId = null)
         {
             var jobCharacters = await _jobService.GetAllJobCharacterAsync();
             ViewBag.JobCharacters = new SelectList(jobCharacters, "JobCharacterId", "Text", selectedJobCharacterId);
 
-            var jobFirstKind = await _jobService.GetAllFirstKindAsync();
-            ViewBag.JobFirstKinds = new SelectList(jobFirstKind, "JobKindId", "Text", selectedJobFirstKindId);
+            var jobFirstKinds = await _jobService.GetAllFirstKindAsync();
+            ViewBag.JobFirstKinds = new SelectList(jobFirstKinds, "JobKindId", "Text", selectedJobFirstKindId);
+            if (selectedJobFirstKindId != null)
+            {
+                var jobKinds = await _jobService.GetAllSecondKindAsync(int.Parse(selectedJobFirstKindId));
+                ViewBag.JobKinds = new SelectList(jobKinds, "JobKindId", "Text", selectedJobKindId);
+            }
 
             var jobPays = await _jobService.GetAllJobPayAsync();
             ViewBag.JobPays = new SelectList(jobPays, "JobPayId", "Text", selectedJobPayId);
+
+            var jobStatuses = await _jobService.GetAllJobStatusAsync();
+            ViewBag.JobStatuses = new SelectList(jobStatuses, "JobStatusId", "Text", selectedJobStatusId);
         }
 
         [Authorize(Policy = "CompanyOnly")]
@@ -72,7 +82,8 @@ namespace GetJob.Web.Controllers
             return View();
         }
 
-        [HttpPost, Authorize(Policy = "CompanyOnly")]
+        [HttpPost]
+        [Authorize(Policy = "CompanyOnly")]
         public async Task<IActionResult> HireJobPublish(JobViewModel vm)
         {
             if (ModelState.IsValid)
@@ -84,6 +95,7 @@ namespace GetJob.Web.Controllers
                     JobCharacterId = vm.JobCharacterId,
                     JobKindId = vm.JobKindId,
                     JobPayId = vm.JobPayId,
+                    JobStatusId = vm.JobStatusId,
                     Description = vm.Description,
                     LastModify = DateTime.Now
                 };
@@ -92,8 +104,71 @@ namespace GetJob.Web.Controllers
             }
 
             await PopulateJobRelatedDropDownList(vm.JobCharacterId.ToString(), vm.JobFirstKindId.ToString(),
-                vm.JobPayId.ToString());
+                vm.JobKindId.ToString(), vm.JobPayId.ToString(), vm.JobStatusId.ToString());
             return View(vm);
+        }
+
+        [Authorize(Policy = "CompanyOnly")]
+        public async Task<IActionResult> HireJobEdit(string id = null)
+        {
+            if (id == null) return NotFound();
+            var job = await _jobService.GetByIdAsync(id);
+            if (job == null) return NotFound();
+            var vm = new JobViewModel(job);
+            await PopulateJobRelatedDropDownList(vm.JobCharacterId.ToString(), vm.JobFirstKindId.ToString(),
+                vm.JobKindId.ToString(), vm.JobPayId.ToString(), vm.JobStatusId.ToString());
+            return View(vm);
+        }
+
+        [HttpPost]
+        [Authorize(Policy = "CompanyOnly")]
+        public async Task<IActionResult> HireJobEdit(JobViewModel vm)
+        {
+            if (ModelState.IsValid)
+            {
+                var job = new Job
+                {
+                    Id = vm.Id,
+                    Name = vm.Name,
+                    CompanyId = vm.CompanyId,
+                    JobCharacterId = vm.JobCharacterId,
+                    JobKindId = vm.JobKindId,
+                    JobPayId = vm.JobPayId,
+                    JobStatusId = vm.JobStatusId,
+                    Description = vm.Description,
+                    LastModify = DateTime.Now
+                };
+                await _jobService.UpdateAsync(job);
+                return RedirectToAction(nameof(HireJobManage));
+            }
+
+            await PopulateJobRelatedDropDownList(vm.JobCharacterId.ToString(), vm.JobFirstKindId.ToString(),
+                vm.JobKindId.ToString(), vm.JobPayId.ToString(), vm.JobStatusId.ToString());
+            return View(vm);
+        }
+
+        [Authorize(Policy = "CompanyOnly")]
+        public async Task<IActionResult> HireJobDelete(string id = null)
+        {
+            if (id == null) return NotFound();
+
+            var job = await _jobService.GetByIdAsync(id);
+            await _jobService.DeleteJobAsync(job);
+            return RedirectToAction(nameof(HireJobManage));
+        }
+
+        [Authorize(Policy = "CompanyOnly")]
+        public async Task<IActionResult> HireJobDeleteSelected(JobListViewModel vm)
+        {
+            if (ModelState.IsValid)
+                foreach (var model in vm.JobViewModels)
+                    if (model.Selected)
+                    {
+                        var job = await _jobService.GetByIdAsync(model.Id);
+                        await _jobService.DeleteJobAsync(job);
+                    }
+
+            return RedirectToAction(nameof(HireJobManage));
         }
 
         private async Task PopulateCompanyFieldsDropDownList(string selectedCompanyFieldId = null)
@@ -132,7 +207,7 @@ namespace GetJob.Web.Controllers
                     if (result.Succeeded)
                     {
                         _logger.LogInformation($"{vm.Phone} created a new account with password.");
-                        return RedirectToAction("SignIn", "User");
+                        return RedirectToAction("SignIn", "Home");
                     }
                 }
             }

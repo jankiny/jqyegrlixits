@@ -17,6 +17,7 @@ namespace GetJob.Data
         public DbSet<JobCharacter> JobCharacters { get; set; }
         public DbSet<JobKind> JobKinds { get; set; }
         public DbSet<JobPay> JobPays { get; set; }
+        public DbSet<JobStatus> JobStatuses { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Nation> Nations { get; set; }
 
@@ -29,6 +30,7 @@ namespace GetJob.Data
             modelBuilder.Entity<JobCharacter>().ToTable("C_JobCharacter");
             modelBuilder.Entity<JobKind>().ToTable("C_JobKind");
             modelBuilder.Entity<JobPay>().ToTable("C_JobPay");
+            modelBuilder.Entity<JobStatus>().ToTable("C_JobStatus");
             modelBuilder.Entity<Student>().ToTable("S_Student");
             modelBuilder.Entity<Nation>().ToTable("S_Nation");
 
@@ -74,6 +76,12 @@ namespace GetJob.Data
                 ResumeReceived = "",
                 LastModify = DateTime.Now
             });
+            modelBuilder.Entity<JobStatus>().HasData(
+                new JobStatus
+                {
+                    JobStatusId = 1,
+                    Text = "招聘中"
+                });
             modelBuilder.Entity<InterviewNotify>().HasData(new InterviewNotify
             {
                 Id = defaultGuid.ToString(),
