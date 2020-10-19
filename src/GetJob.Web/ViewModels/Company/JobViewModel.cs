@@ -22,10 +22,13 @@ namespace GetJob.Web.ViewModels.Company
             Company = job.Company;
             JobCharacterId = job.JobCharacterId;
             JobCharacter = job.JobCharacter;
+            JobFirstKindId = job.JobKindId - (job.JobKindId % 10000);
             JobKindId = job.JobKindId;
             JobKind = job.JobKind;
             JobPayId = job.JobPayId;
             JobPay = job.JobPay;
+            JobStatusId = job.JobStatusId;
+            JobStatus = job.JobStatus;
             Description = job.Description;
             ResumeReceived = job.ResumeReceived;
             LastModify = job.LastModify;
@@ -52,6 +55,8 @@ namespace GetJob.Web.ViewModels.Company
         [Required, Display(Name = "薪水")] public int JobPayId { get; set; }
 
         public JobPay JobPay { get; set; }
+        [Required, Display(Name = "招聘状态")] public int JobStatusId { get; set; }
+        public JobStatus JobStatus { get; set; }
 
         [StringLength(450), Display(Name = "岗位描述")] public string Description { get; set; } = string.Empty;
 

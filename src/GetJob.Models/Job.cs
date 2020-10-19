@@ -25,6 +25,8 @@ namespace GetJob.Models
         [Required] public int JobPayId { get; set; }
 
         public JobPay JobPay { get; set; }
+        [Required] public int JobStatusId { get; set; }
+        public JobStatus JobStatus { get; set; }
 
         [StringLength(450)] public string Description { get; set; } = string.Empty;
 

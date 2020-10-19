@@ -37,7 +37,7 @@ namespace GetJob.Services.Impl
         {
             try
             {
-                return await _context.JobKinds.Where(k => k.JobKindId >= 010000).ToListAsync();
+                return await _context.JobKinds.Where(k => k.JobKindId % 10000 == 0).ToListAsync();
             }
             catch (Exception e)
             {
@@ -65,6 +65,19 @@ namespace GetJob.Services.Impl
             try
             {
                 return await _context.JobPays.ToListAsync();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return null;
+            }
+        }
+
+        public async Task<List<JobStatus>> GetAllJobStatusAsync()
+        {
+            try
+            {
+                return await _context.JobStatuses.ToListAsync();
             }
             catch (Exception e)
             {
@@ -115,7 +128,7 @@ namespace GetJob.Services.Impl
             }
         }
 
-        public async Task<Job> GetByIdAsync(int id)
+        public async Task<Job> GetByIdAsync(string id)
         {
             try
             {

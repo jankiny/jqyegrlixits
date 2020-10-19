@@ -26,6 +26,7 @@ namespace GetJob.Web.Controllers
         {
             return View();
         }
+        [HttpGet]
         public IActionResult SignIn()
         {
             return View();

@@ -11,7 +11,7 @@ namespace GetJob.Web.ViewModels.User
         [Required] [Display(Name = "邮箱")] public string Mail { get; set; }
 
         [Required] [Display(Name = "手机")] public string Phone { get; set; }
-        public bool HasCompany { get; set; }
+        //public bool HasCompany { get; set; }
         [Display(Name = "公司名")] public string CompanyName { get; set; }
         [Display(Name = "公司类别")] public int CompanyFieldId { get; set; }
     }

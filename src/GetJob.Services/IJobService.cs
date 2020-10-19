@@ -14,12 +14,14 @@ namespace GetJob.Services
         Task<List<JobKind>> GetAllSecondKindAsync(int firstKindId);
         // JobPay
         Task<List<JobPay>> GetAllJobPayAsync();
+        // JobStatus
+        Task<List<JobStatus>> GetAllJobStatusAsync();
 
         // Job
         Task<int> AddJobAsync(Job model);
         Task<int> DeleteJobAsync(Job model);
         Task<int> UpdateAsync(Job model);
-        Task<Job> GetByIdAsync(int id);
+        Task<Job> GetByIdAsync(string id);
         Task<List<Job>> GetByCompanyAsync(Company model);
         Task<List<Job>> GetByJobCharacterAsync(JobCharacter model);
         Task<List<Job>> GetByJobKindAsync(JobKind model);
