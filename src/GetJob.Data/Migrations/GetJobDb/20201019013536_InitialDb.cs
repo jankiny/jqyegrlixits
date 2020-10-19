@@ -62,31 +62,6 @@ namespace GetJob.Data.Migrations.GetJobDb
                 });
 
             migrationBuilder.CreateTable(
-                name: "IdentityUser",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    UserName = table.Column<string>(nullable: true),
-                    NormalizedUserName = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    NormalizedEmail = table.Column<string>(nullable: true),
-                    EmailConfirmed = table.Column<bool>(nullable: false),
-                    PasswordHash = table.Column<string>(nullable: true),
-                    SecurityStamp = table.Column<string>(nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
-                    LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_IdentityUser", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "S_Nation",
                 columns: table => new
                 {
@@ -145,7 +120,7 @@ namespace GetJob.Data.Migrations.GetJobDb
                 {
                     Id = table.Column<string>(nullable: false),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
-                    PublisherId = table.Column<string>(nullable: false),
+                    CompanyId = table.Column<string>(nullable: false),
                     JobCharacterId = table.Column<int>(nullable: false),
                     JobKindId = table.Column<int>(nullable: false),
                     JobPayId = table.Column<int>(nullable: false),
@@ -155,6 +130,12 @@ namespace GetJob.Data.Migrations.GetJobDb
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_C_Job", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_C_Job_C_Company_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "C_Company",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_C_Job_C_JobCharacter_JobCharacterId",
                         column: x => x.JobCharacterId,
@@ -172,12 +153,6 @@ namespace GetJob.Data.Migrations.GetJobDb
                         column: x => x.JobPayId,
                         principalTable: "C_JobPay",
                         principalColumn: "JobPayId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_C_Job_IdentityUser_PublisherId",
-                        column: x => x.PublisherId,
-                        principalTable: "IdentityUser",
-                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -211,6 +186,11 @@ namespace GetJob.Data.Migrations.GetJobDb
                 });
 
             migrationBuilder.InsertData(
+                table: "C_CompanyField",
+                columns: new[] { "CompanyFieldId", "Text" },
+                values: new object[] { 1, "服务业" });
+
+            migrationBuilder.InsertData(
                 table: "C_JobCharacter",
                 columns: new[] { "JobCharacterId", "Text" },
                 values: new object[,]
@@ -219,6 +199,15 @@ namespace GetJob.Data.Migrations.GetJobDb
                     { 2, "临时" },
                     { 3, "实习" },
                     { 4, "兼职" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "C_JobKind",
+                columns: new[] { "JobKindId", "Text" },
+                values: new object[,]
+                {
+                    { 10000, "计算机类" },
+                    { 10001, "测试" }
                 });
 
             migrationBuilder.InsertData(
@@ -232,8 +221,8 @@ namespace GetJob.Data.Migrations.GetJobDb
                     { 9, 15000.0, 20000.0, "15000~20000" },
                     { 8, 10000.0, 15000.0, "10000~15000" },
                     { 7, 8000.0, 10000.0, "8000~10000" },
-                    { 5, 4000.0, 6000.0, "4000~6000" },
                     { 4, 3000.0, 4000.0, "3000~4000" },
+                    { 5, 4000.0, 6000.0, "4000~6000" },
                     { 3, 2000.0, 3000.0, "2000~3000" },
                     { 2, 1000.0, 2000.0, "1000~2000" },
                     { 1, 0.0, 1000.0, "1000以下" },
@@ -245,9 +234,29 @@ namespace GetJob.Data.Migrations.GetJobDb
                 columns: new[] { "NationId", "Text" },
                 values: new object[,]
                 {
-                    { 1, "汉族" },
-                    { 2, "蒙古族" }
+                    { 2, "蒙古族" },
+                    { 1, "汉族" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "S_Student",
+                columns: new[] { "StudentId", "Adress", "Csny", "Mail", "MzId", "Phone", "Xb", "Xh", "Xm", "ZzId" },
+                values: new object[] { "a1b0c2d4-eabc-1024-deed-adeabcdefabc", "null", "null", "null", "null", "null", "男", "2017050213", "吴知", "null" });
+
+            migrationBuilder.InsertData(
+                table: "C_Company",
+                columns: new[] { "Id", "CompanyFieldId", "Description", "Name" },
+                values: new object[] { "a1b0c2d4-eabc-1024-deed-adeabcdefabc", 1, "无", "树苗" });
+
+            migrationBuilder.InsertData(
+                table: "C_Job",
+                columns: new[] { "Id", "CompanyId", "Description", "JobCharacterId", "JobKindId", "JobPayId", "Name", "ResumeReceived" },
+                values: new object[] { "a1b0c2d4-eabc-1024-deed-adeabcdefabc", "a1b0c2d4-eabc-1024-deed-adeabcdefabc", null, 3, 10001, 4, "测试攻城师", null });
+
+            migrationBuilder.InsertData(
+                table: "C_InterviewNotify",
+                columns: new[] { "Id", "InterviewDate", "InterviewLocation", "JobId", "Note", "Title", "ToStudentId" },
+                values: new object[] { "a1b0c2d4-eabc-1024-deed-adeabcdefabc", new DateTime(2020, 10, 19, 9, 35, 35, 652, DateTimeKind.Local).AddTicks(4948), "", "a1b0c2d4-eabc-1024-deed-adeabcdefabc", null, "通知测试种子数据", "a1b0c2d4-eabc-1024-deed-adeabcdefabc" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_C_Company_CompanyFieldId",
@@ -265,6 +274,11 @@ namespace GetJob.Data.Migrations.GetJobDb
                 column: "ToStudentId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_C_Job_CompanyId",
+                table: "C_Job",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_C_Job_JobCharacterId",
                 table: "C_Job",
                 column: "JobCharacterId");
@@ -278,18 +292,10 @@ namespace GetJob.Data.Migrations.GetJobDb
                 name: "IX_C_Job_JobPayId",
                 table: "C_Job",
                 column: "JobPayId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_C_Job_PublisherId",
-                table: "C_Job",
-                column: "PublisherId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "C_Company");
-
             migrationBuilder.DropTable(
                 name: "C_InterviewNotify");
 
@@ -297,13 +303,13 @@ namespace GetJob.Data.Migrations.GetJobDb
                 name: "S_Nation");
 
             migrationBuilder.DropTable(
-                name: "C_CompanyField");
-
-            migrationBuilder.DropTable(
                 name: "C_Job");
 
             migrationBuilder.DropTable(
                 name: "S_Student");
+
+            migrationBuilder.DropTable(
+                name: "C_Company");
 
             migrationBuilder.DropTable(
                 name: "C_JobCharacter");
@@ -315,7 +321,7 @@ namespace GetJob.Data.Migrations.GetJobDb
                 name: "C_JobPay");
 
             migrationBuilder.DropTable(
-                name: "IdentityUser");
+                name: "C_CompanyField");
         }
     }
 }

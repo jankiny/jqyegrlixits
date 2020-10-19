@@ -7,6 +7,14 @@
   <ItemGroup>
     <Compile Remove="Migrations\20201012095324_InitialDb.cs" />
     <Compile Remove="Migrations\20201012095324_InitialDb.Designer.cs" />
+    <Compile Remove="Migrations\GetJobDb\20201018084708_AddDataSeed.cs" />
+    <Compile Remove="Migrations\GetJobDb\20201018084708_AddDataSeed.Designer.cs" />
+    <Compile Remove="Migrations\GetJobDb\20201019011624_InitialDb.cs" />
+    <Compile Remove="Migrations\GetJobDb\20201019011624_InitialDb.Designer.cs" />
+    <Compile Remove="Migrations\GetJobDb\20201019011823_InitialDb.cs" />
+    <Compile Remove="Migrations\GetJobDb\20201019011823_InitialDb.Designer.cs" />
+    <Compile Remove="Migrations\GetJobDb\20201019012121_InitialDb.cs" />
+    <Compile Remove="Migrations\GetJobDb\20201019012121_InitialDb.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

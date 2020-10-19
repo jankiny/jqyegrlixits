@@ -133,6 +133,25 @@ namespace GetJob.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("Sys_User");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "a1b0c2d4-eabc-1024-deed-adeabcdefabc",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "e559ae7b-3a71-4047-878e-845df8688436",
+                            Email = "123456@test.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "123456@TEST.COM",
+                            NormalizedUserName = "TEST",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJUaVTjZwGFbhiLxeTG8AeKARILXbRDwAjE5iBCLO/Yt/YLkqN0EBWQafi+Q1JJsAg==",
+                            PhoneNumber = "12387654321",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "EUKRFQG3CKQNR33NIXQEH6D4SZHKD4H5",
+                            TwoFactorEnabled = false,
+                            UserName = "test"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>

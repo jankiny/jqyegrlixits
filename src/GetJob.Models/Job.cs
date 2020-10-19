@@ -10,9 +10,9 @@ namespace GetJob.Models
 
         [Required, StringLength(50)] public string Name { get; set; }
 
-        [Required] public string PublisherId { get; set; }
+        [Required] public string CompanyId { get; set; }
 
-        public IdentityUser Publisher { get; set; }
+        public Company Company { get; set; }
 
         [Required] public int JobCharacterId { get; set; }
 

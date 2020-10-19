@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GetJob.Data.Migrations.GetJobDb
 {
     [DbContext(typeof(GetJobDbContext))]
-    [Migration("20201017042812_InitialDb")]
+    [Migration("20201019013536_InitialDb")]
     partial class InitialDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,6 +43,15 @@ namespace GetJob.Data.Migrations.GetJobDb
                     b.HasIndex("CompanyFieldId");
 
                     b.ToTable("C_Company");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "a1b0c2d4-eabc-1024-deed-adeabcdefabc",
+                            CompanyFieldId = 1,
+                            Description = "无",
+                            Name = "树苗"
+                        });
                 });
 
             modelBuilder.Entity("GetJob.Models.CompanyField", b =>
@@ -60,6 +69,13 @@ namespace GetJob.Data.Migrations.GetJobDb
                     b.HasKey("CompanyFieldId");
 
                     b.ToTable("C_CompanyField");
+
+                    b.HasData(
+                        new
+                        {
+                            CompanyFieldId = 1,
+                            Text = "服务业"
+                        });
                 });
 
             modelBuilder.Entity("GetJob.Models.InterviewNotify", b =>
@@ -98,11 +114,26 @@ namespace GetJob.Data.Migrations.GetJobDb
                     b.HasIndex("ToStudentId");
 
                     b.ToTable("C_InterviewNotify");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "a1b0c2d4-eabc-1024-deed-adeabcdefabc",
+                            InterviewDate = new DateTime(2020, 10, 19, 9, 35, 35, 652, DateTimeKind.Local).AddTicks(4948),
+                            InterviewLocation = "",
+                            JobId = "a1b0c2d4-eabc-1024-deed-adeabcdefabc",
+                            Title = "通知测试种子数据",
+                            ToStudentId = "a1b0c2d4-eabc-1024-deed-adeabcdefabc"
+                        });
                 });
 
             modelBuilder.Entity("GetJob.Models.Job", b =>
                 {
                     b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CompanyId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
@@ -123,15 +154,13 @@ namespace GetJob.Data.Migrations.GetJobDb
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
-                    b.Property<string>("PublisherId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("ResumeReceived")
                         .HasColumnType("nvarchar(450)")
                         .HasMaxLength(450);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
 
                     b.HasIndex("JobCharacterId");
 
@@ -139,9 +168,18 @@ namespace GetJob.Data.Migrations.GetJobDb
 
                     b.HasIndex("JobPayId");
 
-                    b.HasIndex("PublisherId");
-
                     b.ToTable("C_Job");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "a1b0c2d4-eabc-1024-deed-adeabcdefabc",
+                            CompanyId = "a1b0c2d4-eabc-1024-deed-adeabcdefabc",
+                            JobCharacterId = 3,
+                            JobKindId = 10001,
+                            JobPayId = 4,
+                            Name = "测试攻城师"
+                        });
                 });
 
             modelBuilder.Entity("GetJob.Models.JobCharacter", b =>
@@ -198,6 +236,18 @@ namespace GetJob.Data.Migrations.GetJobDb
                     b.HasKey("JobKindId");
 
                     b.ToTable("C_JobKind");
+
+                    b.HasData(
+                        new
+                        {
+                            JobKindId = 10000,
+                            Text = "计算机类"
+                        },
+                        new
+                        {
+                            JobKindId = 10001,
+                            Text = "测试"
+                        });
                 });
 
             modelBuilder.Entity("GetJob.Models.JobPay", b =>
@@ -374,58 +424,21 @@ namespace GetJob.Data.Migrations.GetJobDb
                     b.HasKey("StudentId");
 
                     b.ToTable("S_Student");
-                });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("IdentityUser");
+                    b.HasData(
+                        new
+                        {
+                            StudentId = "a1b0c2d4-eabc-1024-deed-adeabcdefabc",
+                            Adress = "null",
+                            Csny = "null",
+                            Mail = "null",
+                            MzId = "null",
+                            Phone = "null",
+                            Xb = "男",
+                            Xh = "2017050213",
+                            Xm = "吴知",
+                            ZzId = "null"
+                        });
                 });
 
             modelBuilder.Entity("GetJob.Models.Company", b =>
@@ -454,6 +467,12 @@ namespace GetJob.Data.Migrations.GetJobDb
 
             modelBuilder.Entity("GetJob.Models.Job", b =>
                 {
+                    b.HasOne("GetJob.Models.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("GetJob.Models.JobCharacter", "JobCharacter")
                         .WithMany()
                         .HasForeignKey("JobCharacterId")
@@ -469,12 +488,6 @@ namespace GetJob.Data.Migrations.GetJobDb
                     b.HasOne("GetJob.Models.JobPay", "JobPay")
                         .WithMany()
                         .HasForeignKey("JobPayId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Publisher")
-                        .WithMany()
-                        .HasForeignKey("PublisherId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
