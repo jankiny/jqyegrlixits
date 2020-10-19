@@ -6,13 +6,13 @@
         <div class="collapse navbar-collapse " id="navbarsExample07XL">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" asp-controller="User" asp-action="Index">首页</a>
+                    <a class="nav-link" asp-controller="Home" asp-action="Index">首页</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" asp-controller="User" asp-action="Job">职位</a>
+                    <a class="nav-link" asp-controller="Home" asp-action="Job">职位</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" asp-controller="User" asp-action="Company">公司</a>
+                    <a class="nav-link" asp-controller="Home" asp-action="Company">公司</a>
                 </li>
             </ul>
             <ul class="navbar-nav justify-content-end">
@@ -26,7 +26,7 @@
                         <a class="nav-link" asp-controller="Company" asp-action="SignUp">我要招聘</a>
                     </li>
                     <li class="nav-item">
-                        <button class="nav-link" asp-controller="User" asp-action="SignIn">登录</button>
+                        <a class="nav-link" asp-controller="Home" asp-action="SignIn">登录</a>
                     </li>
                 }
                 else
@@ -34,7 +34,10 @@
                     @if (User.Claims.Any(i => i.Type == "Identity" && i.Value == "Company"))
                     {
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Company" asp-action="PublishJob">发布岗位</a>
+                            <a class="nav-link" asp-controller="Company" asp-action="HireJobManage">企业后台</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Company" asp-action="HireJobPublish">发布岗位</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="dropdown07XL" data-toggle="dropdown" aria-expanded="false">@User.Identity.Name</a>
@@ -42,7 +45,7 @@
                                 <a class="dropdown-item" asp-controller="Order" asp-action="Display">个人信息</a>
                                 <a class="dropdown-item" asp-controller="Order" asp-action="Display">当前职位</a>
                                 <a class="dropdown-item" asp-controller="Mine" asp-action="Foot">密码修改</a>
-                                <a class="dropdown-item" asp-controller="User" asp-action="Logout">登出</a>
+                                <a class="dropdown-item" asp-controller="Home" asp-action="Logout">登出</a>
                             </div>
                         </li>
                     }

@@ -10,7 +10,7 @@
 
 <div class="container">
     <div class="row">
-        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar collapse">
+        <nav id="sidebarMenu" class="col-lg-2 d-md-block sidebar collapse" style="background-color: #F8F9FA">
             <div class="sidebar-sticky pt-3">
                 <ul class="nav flex-column">
                     <li class="nav-item">
@@ -23,8 +23,8 @@
                             招聘管理
                         </a>
                         <div class="collapse show p-0 fs-5" id="multiCollapse2">
-                            <a class="dropdown-item" href="#">岗位管理</a>
-                            <a class="dropdown-item" href="#">岗位发布</a>
+                            <a class="dropdown-item" asp-controller="Company" asp-action="HireJobManage">岗位管理</a>
+                            <a class="dropdown-item" asp-controller="Company" asp-action="HireJobPublish">岗位发布</a>
                             <a class="dropdown-item" href="#">简历审核</a>
                             <a class="dropdown-item" href="#">招聘历史</a>
                         </div>
@@ -69,7 +69,7 @@
                 </ul>
             </div>
         </nav>
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4" style="background-color: #F1F2F7">
+        <main role="main" class="col-lg-10 px-md-4 py-md-4">
             @RenderBody()
         </main>
     </div>

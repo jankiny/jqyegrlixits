@@ -60,21 +60,21 @@ namespace GetJob.Data
                     AccessFailedCount = 0
                 }
             );
-            //modelBuilder.Entity<IdentityUserClaim<string>>().HasData(
-            //    new IdentityUserClaim<string>
-            //    {
-            //        Id = 1,
-            //        UserId = defaultGuid.ToString(),
-            //        ClaimType = "Identity",
-            //        ClaimValue = "Company"
-            //    },
-            //    new IdentityUserClaim<string>
-            //    {
-            //        Id = 1,
-            //        UserId = defaultGuid.ToString(),
-            //        ClaimType = "CompanyId",
-            //        ClaimValue = defaultGuid.ToString()
-            //    });
+            modelBuilder.Entity<IdentityUserClaim<string>>().HasData(
+                new IdentityUserClaim<string>
+                {
+                    Id = 1,
+                    UserId = defaultGuid.ToString(),
+                    ClaimType = "Identity",
+                    ClaimValue = "Company"
+                },
+                new IdentityUserClaim<string>
+                {
+                    Id = 2,
+                    UserId = defaultGuid.ToString(),
+                    ClaimType = "CompanyId",
+                    ClaimValue = defaultGuid.ToString()
+                });
 
             #endregion
         }

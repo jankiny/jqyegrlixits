@@ -12,15 +12,19 @@ using Microsoft.Extensions.Logging;
 
 namespace GetJob.Web.Controllers
 {
-    public class UserController : Controller
+    public class HomeController : Controller
     {
         private readonly IUserService _userService;
-        private readonly ILogger<UserController> _logger;
+        private readonly ILogger<HomeController> _logger;
 
-        public UserController(IUserService userService, ILogger<UserController> logger)
+        public HomeController(IUserService userService, ILogger<HomeController> logger)
         {
             _userService = userService;
             _logger = logger;
+        }
+        public IActionResult Index()
+        {
+            return View();
         }
         public IActionResult SignIn()
         {
@@ -38,7 +42,7 @@ namespace GetJob.Web.Controllers
                 if (identity is Company company)
                 {
                     _logger.LogInformation($"用户身份是{company.Name}");
-                    return RedirectToAction("Home", "Company");
+                    return RedirectToAction("HireJobManage", "Company");
                 }
                 else if (identity is Student student)
                 {
@@ -48,7 +52,9 @@ namespace GetJob.Web.Controllers
                 else
                 {
                     _logger.LogError("未找到用户身份");
-                    return NotFound();
+                    ModelState.AddModelError("", "用户身份非法");
+                    await _userService.SignOutAsync();
+                    return View();
                 }
             }
             ModelState.AddModelError("", "用户名/密码不正确");
@@ -60,7 +66,7 @@ namespace GetJob.Web.Controllers
             _logger.LogInformation("Company logged out.");
             if (returnUrl != null)
                 return LocalRedirect(returnUrl);
-            return RedirectToAction("SignIn", "User");
+            return RedirectToAction("Index", "Home");
         }
     }
 }

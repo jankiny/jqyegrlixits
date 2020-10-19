@@ -70,8 +70,9 @@ namespace GetJob.Data
                 JobCharacterId = 3,
                 JobKindId = 010001,
                 JobPayId = 4,
-                Description = null,
-                ResumeReceived = null
+                Description = "",
+                ResumeReceived = "",
+                LastModify = DateTime.Now
             });
             modelBuilder.Entity<InterviewNotify>().HasData(new InterviewNotify
             {
@@ -81,7 +82,7 @@ namespace GetJob.Data
                 Title = "通知测试种子数据",
                 InterviewDate = DateTime.Now,
                 InterviewLocation = "",
-                Note = null
+                Note = ""
             });
             modelBuilder.Entity<Nation>().HasData(
                 new Nation {NationId = 1, Text = "汉族"},

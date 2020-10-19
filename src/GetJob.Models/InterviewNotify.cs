@@ -21,6 +21,6 @@ namespace GetJob.Models
 
         [Required] public string InterviewLocation { get; set; }
 
-        [StringLength(100)] public string Note { get; set; }
+        [StringLength(100)] public string Note { get; set; } = string.Empty;
     }
 }

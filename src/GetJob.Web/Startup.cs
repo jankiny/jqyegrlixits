@@ -28,6 +28,10 @@ namespace GetJob.Web
             services.AddControllersWithViews()
                 .AddRazorRuntimeCompilation();
 
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("CompanyOnly", policy => policy.RequireClaim("CompanyId"));
+            });
 
             services.AddDbContext<GetJobDbContext>(options =>
             {
@@ -94,7 +98,7 @@ namespace GetJob.Web
             {
                 endpoints.MapControllerRoute(
                     "default",
-                    "{controller=company}/{action=home}/{id?}");
+                    "{controller=home}/{action=index}/{id?}");
             });
         }
     }

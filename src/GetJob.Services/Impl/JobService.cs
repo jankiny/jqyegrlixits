@@ -20,7 +20,60 @@ namespace GetJob.Services.Impl
             _context = context;
         }
 
-        public async Task<int> PublishJobAsync(Job model)
+        public async Task<List<JobCharacter>> GetAllJobCharacterAsync()
+        {
+            try
+            {
+                return await _context.JobCharacters.ToListAsync();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return null;
+            }
+        }
+
+        public async Task<List<JobKind>> GetAllFirstKindAsync()
+        {
+            try
+            {
+                return await _context.JobKinds.Where(k => k.JobKindId >= 010000).ToListAsync();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return null;
+            }
+        }
+
+        public async Task<List<JobKind>> GetAllSecondKindAsync(int firstKindId)
+        {
+            try
+            {
+                var maxId = firstKindId + 9999;
+                return await _context.JobKinds.Where(k => k.JobKindId > firstKindId && k.JobKindId <= maxId).ToListAsync();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return null;
+            }
+        }
+
+        public async Task<List<JobPay>> GetAllJobPayAsync()
+        {
+            try
+            {
+                return await _context.JobPays.ToListAsync();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return null;
+            }
+        }
+
+        public async Task<int> AddJobAsync(Job model)
         {
             try
             {
@@ -67,10 +120,33 @@ namespace GetJob.Services.Impl
             try
             {
                 var job = await _context.Jobs.FindAsync(id);
+                job.Company = await _context.Companies.FindAsync(job.CompanyId);
                 job.JobCharacter = await _context.JobCharacters.FindAsync(job.JobCharacterId);
                 job.JobKind = await _context.JobKinds.FindAsync(job.JobKindId);
                 job.JobPay = await _context.JobPays.FindAsync(job.JobPayId);
                 return job;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return null;
+            }
+        }
+
+        public async Task<List<Job>> GetByCompanyAsync(Company model)
+        {
+            try
+            {
+                var jobList = await _context.Jobs.Where(j => j.CompanyId == model.Id).ToListAsync();
+                foreach (var job in jobList)
+                {
+                    job.Company = await _context.Companies.FindAsync(model.Id);
+                    job.JobCharacter = await _context.JobCharacters.FindAsync(job.JobCharacterId);
+                    job.JobKind = await _context.JobKinds.FindAsync(job.JobKindId);
+                    job.JobPay = await _context.JobPays.FindAsync(job.JobPayId);
+                }
+
+                return jobList;
             }
             catch (Exception e)
             {
@@ -86,6 +162,7 @@ namespace GetJob.Services.Impl
                 var jobList = await _context.Jobs.Where(j => j.JobCharacterId == model.JobCharacterId).ToListAsync();
                 foreach (var job in jobList)
                 {
+                    job.Company = await _context.Companies.FindAsync(job.CompanyId);
                     job.JobCharacter = model;
                     job.JobKind = await _context.JobKinds.FindAsync(job.JobKindId);
                     job.JobPay = await _context.JobPays.FindAsync(job.JobPayId);
@@ -107,6 +184,7 @@ namespace GetJob.Services.Impl
                 var jobList = await _context.Jobs.Where(j => j.JobKindId == model.JobKindId).ToListAsync();
                 foreach (var job in jobList)
                 {
+                    job.Company = await _context.Companies.FindAsync(job.CompanyId);
                     job.JobCharacter = await _context.JobCharacters.FindAsync(job.JobCharacterId);
                     job.JobKind = model;
                     job.JobPay = await _context.JobPays.FindAsync(job.JobPayId);
@@ -128,6 +206,7 @@ namespace GetJob.Services.Impl
                 var jobList = await _context.Jobs.Where(j => j.JobPayId == model.JobPayId).ToListAsync();
                 foreach (var job in jobList)
                 {
+                    job.Company = await _context.Companies.FindAsync(job.CompanyId);
                     job.JobCharacter = await _context.JobCharacters.FindAsync(job.JobCharacterId);
                     job.JobKind = await _context.JobKinds.FindAsync(job.JobKindId);
                     job.JobPay = model;
@@ -149,6 +228,7 @@ namespace GetJob.Services.Impl
                 var jobList = await _context.Jobs.ToListAsync();
                 foreach (var job in jobList)
                 {
+                    job.Company = await _context.Companies.FindAsync(job.CompanyId);
                     job.JobCharacter = await _context.JobCharacters.FindAsync(job.JobCharacterId);
                     job.JobKind = await _context.JobKinds.FindAsync(job.JobKindId);
                     job.JobPay = await _context.JobPays.FindAsync(job.JobPayId);

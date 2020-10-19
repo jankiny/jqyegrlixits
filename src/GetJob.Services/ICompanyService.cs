@@ -14,6 +14,7 @@ namespace GetJob.Services
         Task<int> AddAsync(Company model);
         Task<int> DeleteAsync(Company model);
         Task<int> UpdateAsync(Company model);
+        Task<Company> GetByIdAsync(string id);
         Task<List<Company>> GetByCompanyFieldAsync(CompanyField model);
         Task<List<Company>> GetAllAsync();
         Task<List<Company>> SearchAsync(string searchString);

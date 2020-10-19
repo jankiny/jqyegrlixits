@@ -77,6 +77,21 @@ namespace GetJob.Services.Impl
             }
         }
 
+        public async Task<Company> GetByIdAsync(string id)
+        {
+            try
+            {
+                var company = await _context.Companies.FindAsync(id);
+                company.CompanyField = await _context.CompanyFields.FindAsync(company.CompanyFieldId);
+                return company;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return null;
+            }
+        }
+
         public async Task<List<Company>> GetByCompanyFieldAsync(CompanyField model)
         {
             try
