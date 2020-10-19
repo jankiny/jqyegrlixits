@@ -7,13 +7,15 @@ namespace GetJob.Models
     {
         public string Id { get; set; } = Guid.NewGuid().ToString();
 
-        [Required] public string ToStudentId { get; set; }
+        //[Required] public string ToStudentId { get; set; }
 
-        public Student ToStudent { get; set; }
+        //public Student ToStudent { get; set; }
 
-        [Required] public string JobId { get; set; }
+        //[Required] public string JobId { get; set; }
 
-        public Job Job { get; set; }
+        //public Job Job { get; set; }
+        [Required] public string DeliverId { get; set; }
+        public Deliver Deliver { get; set; }
 
         [Required, StringLength(50)] public string Title { get; set; }
 

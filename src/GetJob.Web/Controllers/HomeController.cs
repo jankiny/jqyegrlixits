@@ -47,7 +47,7 @@ namespace GetJob.Web.Controllers
                 }
                 else if (identity is Student student)
                 {
-                    _logger.LogInformation($"用户身份是{student.Xm}");
+                    _logger.LogInformation($"用户身份是{student.Id}");
                     return RedirectToAction("Index", "Home");
                 }
                 else

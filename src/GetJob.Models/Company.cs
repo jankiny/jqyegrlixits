@@ -9,6 +9,8 @@ namespace GetJob.Models
         [Required] [StringLength(50)] public string Name { get; set; }
         [Required] public int CompanyFieldId { get; set; }
         public CompanyField CompanyField { get; set; }
+        [Required] public int CompanyScaleId { get; set; }
+        public CompanyScale CompanyScale { get; set; }
         [StringLength(450)] public string Description { get; set; }
     }
 }

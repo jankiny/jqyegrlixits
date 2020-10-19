@@ -6,8 +6,7 @@ namespace GetJob.Models
     public class JobKind
     {
         //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Key]
-        public int JobKindId { get; set; }
+        [Key] public int JobKindId { get; set; }
 
         [Required, StringLength(50)] public string Text { get; set; }
     }

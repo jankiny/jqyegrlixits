@@ -47,7 +47,7 @@ namespace GetJob.Services.Impl
             {
                 await _userManager.CreateAsync(model, plainPassword);
                 await _userManager.AddClaimAsync(model, new Claim("Identity", "Student"));
-                return await _userManager.AddClaimAsync(model, new Claim("Xm", student.Xm));
+                return await _userManager.AddClaimAsync(model, new Claim("StudentId", student.Id));
             }
             catch (Exception e)
             {

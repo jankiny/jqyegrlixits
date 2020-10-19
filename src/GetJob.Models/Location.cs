@@ -5,11 +5,11 @@ using System.Text;
 
 namespace GetJob.Models
 {
-    public class Provinces
+    public class Location
     {
-        [Key, StringLength(6)] public int PoliticalId { get; set; }
+        [Key] public int LocationId { get; set; }
 
-        [StringLength(50)] public string PoliticalMc { get; set; }
+        [StringLength(50)] public string Text { get; set; }
 
         
     }

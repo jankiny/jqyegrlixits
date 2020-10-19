@@ -5,9 +5,9 @@ using System.Text;
 
 namespace GetJob.Models
 {
-    public class Degree
+    public class PoliticalOutlook
     {
-        [Key] public int DegreeId { get; set; }
+        [Key] public int PoliticalOutlookId { get; set; }
         [Required, StringLength(50)] public string Text { get; set; }
     }
 }

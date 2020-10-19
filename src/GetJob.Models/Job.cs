@@ -11,27 +11,33 @@ namespace GetJob.Models
         [Required, StringLength(50)] public string Name { get; set; }
 
         [Required] public string CompanyId { get; set; }
-
         public Company Company { get; set; }
 
         [Required] public int JobCharacterId { get; set; }
-
         public JobCharacter JobCharacter { get; set; }
 
         [Required] public int JobKindId { get; set; }
-
         public JobKind JobKind { get; set; }
 
         [Required] public int JobPayId { get; set; }
-
         public JobPay JobPay { get; set; }
+
         [Required] public int JobStatusId { get; set; }
         public JobStatus JobStatus { get; set; }
+
+        [Required] public int LocationId { get; set; }
+        public Location Location { get; set; }
+
+        [Required] public int DegreeId { get; set; }
+        public Degree Degree { get; set; }
+
+        [Required] public int RecruitNumber { get; set; }
 
         [StringLength(450)] public string Description { get; set; } = string.Empty;
 
         // 用‘|’分割
-        [StringLength(450)] public string ResumeReceived { get; set; } = string.Empty;
+        //[StringLength(450)] public string ResumeReceived { get; set; } = string.Empty;
+
         [Required, DataType(DataType.DateTime)] public DateTime LastModify { get; set; }
     }
 }

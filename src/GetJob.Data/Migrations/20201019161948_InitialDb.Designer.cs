@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GetJob.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20201019011415_InitialDb")]
+    [Migration("20201019161948_InitialDb")]
     partial class InitialDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -139,7 +139,7 @@ namespace GetJob.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a1b0c2d4-eabc-1024-deed-adeabcdefabc",
+                            Id = "3eed3eed-3eed-2020-3eed-123456789abc",
                             AccessFailedCount = 0,
                             ConcurrencyStamp = "e559ae7b-3a71-4047-878e-845df8688436",
                             Email = "123456@test.com",
@@ -178,6 +178,22 @@ namespace GetJob.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Sys_UserClaim");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ClaimType = "Identity",
+                            ClaimValue = "Company",
+                            UserId = "3eed3eed-3eed-2020-3eed-123456789abc"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ClaimType = "CompanyId",
+                            ClaimValue = "3eed3eed-3eed-2020-3eed-123456789abc",
+                            UserId = "3eed3eed-3eed-2020-3eed-123456789abc"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>

@@ -30,7 +30,6 @@ namespace GetJob.Web.ViewModels.Company
             JobStatusId = job.JobStatusId;
             JobStatus = job.JobStatus;
             Description = job.Description;
-            ResumeReceived = job.ResumeReceived;
             LastModify = job.LastModify;
         }
         public bool Selected { get; set; }

@@ -9,6 +9,8 @@
     <Compile Remove="Migrations\20201012095324_InitialDb.Designer.cs" />
     <Compile Remove="Migrations\20201019062832_ChangeSeedData.cs" />
     <Compile Remove="Migrations\20201019062832_ChangeSeedData.Designer.cs" />
+    <Compile Remove="Migrations\20201019160719_InitialDb.cs" />
+    <Compile Remove="Migrations\20201019160719_InitialDb.Designer.cs" />
     <Compile Remove="Migrations\GetJobDb\20201018084708_AddDataSeed.cs" />
     <Compile Remove="Migrations\GetJobDb\20201018084708_AddDataSeed.Designer.cs" />
     <Compile Remove="Migrations\GetJobDb\20201019011624_InitialDb.cs" />
@@ -19,6 +21,20 @@
     <Compile Remove="Migrations\GetJobDb\20201019012121_InitialDb.Designer.cs" />
     <Compile Remove="Migrations\GetJobDb\20201019061933_ChangeJobModel.cs" />
     <Compile Remove="Migrations\GetJobDb\20201019061933_ChangeJobModel.Designer.cs" />
+    <Compile Remove="Migrations\GetJobDb\20201019154421_InitialDb.cs" />
+    <Compile Remove="Migrations\GetJobDb\20201019154421_InitialDb.Designer.cs" />
+    <Compile Remove="Migrations\GetJobDb\20201019155035_InitialDb.cs" />
+    <Compile Remove="Migrations\GetJobDb\20201019155035_InitialDb.Designer.cs" />
+    <Compile Remove="Migrations\GetJobDb\20201019155131_InitialDb.cs" />
+    <Compile Remove="Migrations\GetJobDb\20201019155131_InitialDb.Designer.cs" />
+    <Compile Remove="Migrations\GetJobDb\20201019155605_InitialDb.cs" />
+    <Compile Remove="Migrations\GetJobDb\20201019155605_InitialDb.Designer.cs" />
+    <Compile Remove="Migrations\GetJobDb\20201019155713_InitialDb.cs" />
+    <Compile Remove="Migrations\GetJobDb\20201019155713_InitialDb.Designer.cs" />
+    <Compile Remove="Migrations\GetJobDb\20201019160141_ChangeResume.cs" />
+    <Compile Remove="Migrations\GetJobDb\20201019160141_ChangeResume.Designer.cs" />
+    <Compile Remove="Migrations\GetJobDb\20201019160501_ChangeStudent1.cs" />
+    <Compile Remove="Migrations\GetJobDb\20201019160501_ChangeStudent1.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

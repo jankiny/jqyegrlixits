@@ -7,15 +7,18 @@ namespace GetJob.Models
 {
     public class Deliver
     {
-        [Key, StringLength(50)] public string DID { get; set; }
+        public string Id { get; set; } = Guid.NewGuid().ToString();
 
-        public string JID { get; set; }
+        [Required] public string JobId { get; set; }
+        public Job Job { get; set; }
 
-        [StringLength(50)] public string RSID { get; set; }
+        [Required] public string ResumeSubmittedId { get; set; }
+        public ResumeSubmitted ResumeSubmitted { get; set; }
 
-        [StringLength(50)] public string State { get; set; }
+        [Required] public int DeliverStatusId { get; set; }
+        public DeliverStatus DeliverStatus { get; set; }
 
-        public DateTime Tdsj { get; set; }
+        public DateTime DeliverDateTime { get; set; }
 
     }
 }
