@@ -47,7 +47,7 @@ namespace GetJob.Services.Impl
             {
                 await _userManager.CreateAsync(model, plainPassword);
                 await _userManager.AddClaimAsync(model, new Claim("Identity", "Student"));
-                return await _userManager.AddClaimAsync(model, new Claim("StudentId", student.StudentId));
+                return await _userManager.AddClaimAsync(model, new Claim("Xm", student.Xm));
             }
             catch (Exception e)
             {
@@ -128,7 +128,8 @@ namespace GetJob.Services.Impl
                         var companyId = claims.FirstOrDefault(c => c.Type == "CompanyId")?.Value;
                         return await _context.Companies.FindAsync(companyId);
                     case "Student":
-                        return null;
+                        var studentId = claims.FirstOrDefault(c => c.Type == "StudentId")?.Value;
+                        return await _context.Companies.FindAsync(studentId);
                     default:
                         return null;
                 }

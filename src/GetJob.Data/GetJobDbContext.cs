@@ -19,7 +19,16 @@ namespace GetJob.Data
         public DbSet<JobPay> JobPays { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Nation> Nations { get; set; }
+        public DbSet<Resume> Resumes { get; set; }    
+        public DbSet<Deliver> Delivers { get; set; }
+        public DbSet<PostCollection> PostCollections { get; set; }
 
+        public DbSet<ResumeSubmitted> ResumeSubmitteds { get; set; }
+
+        public DbSet<Degree> Degrees { get; set; }
+        public DbSet<Political> Politicals { get; set; }
+        public DbSet<Provinces> Provincess { get; set; }
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Company>().ToTable("C_Company");
@@ -31,7 +40,13 @@ namespace GetJob.Data
             modelBuilder.Entity<JobPay>().ToTable("C_JobPay");
             modelBuilder.Entity<Student>().ToTable("S_Student");
             modelBuilder.Entity<Nation>().ToTable("S_Nation");
-
+            modelBuilder.Entity<Resume>().ToTable("S_Resume");
+            modelBuilder.Entity<Deliver>().ToTable("S_Deliver");
+            modelBuilder.Entity<PostCollection>().ToTable("S_PostCollection");
+            modelBuilder.Entity<ResumeSubmitted>().ToTable("S_ResumeSubmitted");
+            modelBuilder.Entity<Degree>().ToTable("S_Degree");
+            modelBuilder.Entity<Political>().ToTable("S_Political");
+            modelBuilder.Entity<Provinces>().ToTable("S_Provinces");
             #region 测试用种子数据
 
             var defaultGuid = new Guid("3eed3eed-3eed-2020-3eed-123456789abc");
@@ -90,16 +105,21 @@ namespace GetJob.Data
             );
             modelBuilder.Entity<Student>().HasData(new Student
             {
-                StudentId = defaultGuid.ToString(),
-                Xh = "2017050213",
+                SID = defaultGuid.ToString(),
+                Sfzh = "330682199909301038",
                 Xm = "吴知",
                 Xb = "男",
-                Csny = "null",
-                MzId = "null",
-                ZzId = "null",
+                Jg = "null",
+                Csny = DateTime.Now,
+                MzId = 1,
+                ZzmmId = 1,
                 Phone = "null",
                 Mail = "null",
-                Adress = "null"
+                Adress = "null",
+                College="null",
+                Jdsj= DateTime.Now,
+                DegreeID=1,
+                XlID=1
             });
 
             #endregion

@@ -1,0 +1,205 @@
+﻿@model UserSignUpViewModel
+@{
+    ViewBag.Header = "学生注册";
+}
+<style>
+
+    .form-signin {
+        margin: auto;
+        max-width: 330px;
+        padding: 15px;
+        width: 100%;
+    }
+
+    .form-signin .checkbox { font-weight: 400; }
+
+    .form-signin .form-control {
+        box-sizing: border-box;
+        font-size: 16px;
+        height: auto;
+        padding: 10px;
+        position: relative;
+    }
+
+    .form-signin .form-control:focus { z-index: 2; }
+
+    .form-signin input[type="password"] {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        margin-bottom: 10px;
+    }
+</style>
+<div class="container">
+    <partial name="_Logo"/>
+</div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable mt-sm-5" style="max-height: 600px; max-width: 900px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="agreement">用户注册协议和隐私政策</h5>
+                <button id="disagree" type="button" class="close" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="text-align: left; vertical-align: baseline;" align="left">
+                    <b>
+                        <span style="font-family: 宋体; font-size: 11.5pt;">欢迎注册成为用户！在您注册过程中，您需要完成我们的注册流程并通过点击同意的形式在线签署以下协议，请您务必仔细阅读、充分理解协议中的条款内容后再点击同意（尤其是以粗体或下划线标识的条款，因为这些条款可能会明确您应履行的义务或对您的权利有所限制）。</span>
+                    </b>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">同意并继续</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<div class="container">
+    <form enctype="multipart/form-data" method="post">
+        <ul class="nav nav-pills mb-3 justify-content-end" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="1" data-toggle="pill" href="#pills-phone" role="tab" aria-controls="pills-home" aria-selected="true">绑定手机</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="2" data-toggle="pill" href="#pills-detail" role="tab" aria-controls="pills-profile" aria-selected="false">个人信息</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="3" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">企业信息</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-phone" role="tabpanel" aria-labelledby="pills-home-tab">
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label" asp-for="Phone"></label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" asp-for="Phone">
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row justify-content-end">
+                    <div id="nextStep" class="col-sm-2">
+                        <button class="btn btn-lg btn-primary btn-block" onclick="btnNextStep()" type="button">下一步</button>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-detail" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label" asp-for="UserName"></label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" asp-for="UserName">
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label" asp-for="Password"></label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" asp-for="Password">
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label" asp-for="Mail"></label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" asp-for="Mail">
+                        <span asp-validation-for="Mail" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row justify-content-end">
+                    <div id="lastStep" class="col-sm-2">
+                        <button class="btn btn-lg btn-primary btn-block" onclick="btnLastStep()" type="button">上一步</button>
+                    </div>
+                    <div id="nextStep" class="col-sm-2">
+                        <button class="btn btn-lg btn-primary btn-block" onclick="btnNextStep()" type="button">下一步</button>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                @*<div class="form-group row">
+            <label class="col-sm-2 col-form-label">公司已注册</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                <label class="form-check-label" for="inlineRadio1">是</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                <label class="form-check-label" for="inlineRadio2">否</label>
+            </div>
+        </div>*@
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label" asp-for="CompanyName"></label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" asp-for="CompanyName">
+                        <span asp-validation-for="CompanyName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label" asp-for="CompanyFieldId"></label>
+                    <div class="col-sm-10">
+                        <select asp-for="CompanyFieldId" asp-items="ViewBag.CompanyFields">
+                            <option value="0">-- 选择公司类别 --</option>
+                        </select>
+                        <span asp-validation-for="CompanyFieldId" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row justify-content-end">
+                    <div id="lastStep" class="col-sm-2">
+                        <button class="btn btn-lg btn-primary btn-block" onclick="btnLastStep()" type="button">上一步</button>
+                    </div>
+                    <div id="submit" class="col-sm-2">
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">提交</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            注册用户需同意<a id="showAgreement" data-toggle="modal" data-target="#myModal" style="color: #007bff !important;">《用户协议》</a>
+        </div>
+    </form>
+</div>
+<script>
+    var step = 1;
+    $('#myModal').modal('show');
+    $('#myTab a').on('click',
+        function(e) {
+            step = parseInt($(this).attr('id'));
+            //console.log(step);
+            e.preventDefault();
+            $(this).tab('show');
+        });
+    $("#disagree").click(function() {
+        toHome();
+    });
+
+    function btnLastStep() {
+        step -= 1;
+        //console.log(step);
+        tabShow(step);
+    }
+
+    function btnNextStep() {
+        step += 1;
+        //console.log(step);
+        tabShow(step);
+    }
+
+    function tabShow(s) {
+        switch (s) {
+        case 1:
+            $('#myTab li:nth-child(1) a').tab('show');
+            break;
+        case 2:
+            $('#myTab li:nth-child(2) a').tab('show');
+            break;
+        case 3:
+            $('#myTab li:nth-child(3) a').tab('show');
+            break;
+        default:
+        }
+    }
+
+
+</script>

@@ -4,14 +4,16 @@ using GetJob.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GetJob.Data.Migrations.GetJobDb
 {
     [DbContext(typeof(GetJobDbContext))]
-    partial class GetJobDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201019122714_addmodel2")]
+    partial class addmodel2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

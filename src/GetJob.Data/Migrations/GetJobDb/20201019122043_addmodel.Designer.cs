@@ -4,14 +4,16 @@ using GetJob.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GetJob.Data.Migrations.GetJobDb
 {
     [DbContext(typeof(GetJobDbContext))]
-    partial class GetJobDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201019122043_addmodel")]
+    partial class addmodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -159,7 +161,7 @@ namespace GetJob.Data.Migrations.GetJobDb
                         new
                         {
                             Id = "3eed3eed-3eed-2020-3eed-123456789abc",
-                            InterviewDate = new DateTime(2020, 10, 19, 20, 27, 14, 64, DateTimeKind.Local).AddTicks(5077),
+                            InterviewDate = new DateTime(2020, 10, 19, 20, 20, 43, 478, DateTimeKind.Local).AddTicks(7362),
                             InterviewLocation = "",
                             JobId = "3eed3eed-3eed-2020-3eed-123456789abc",
                             Note = "",
@@ -223,7 +225,7 @@ namespace GetJob.Data.Migrations.GetJobDb
                             JobCharacterId = 3,
                             JobKindId = 10001,
                             JobPayId = 4,
-                            LastModify = new DateTime(2020, 10, 19, 20, 27, 14, 62, DateTimeKind.Local).AddTicks(9722),
+                            LastModify = new DateTime(2020, 10, 19, 20, 20, 43, 477, DateTimeKind.Local).AddTicks(605),
                             Name = "测试攻城师",
                             ResumeReceived = ""
                         });
@@ -485,8 +487,8 @@ namespace GetJob.Data.Migrations.GetJobDb
                         .HasMaxLength(6)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("PoliticalMc")
-                        .HasColumnType("nvarchar(50)")
+                    b.Property<int>("PoliticalMc")
+                        .HasColumnType("int")
                         .HasMaxLength(50);
 
                     b.HasKey("PoliticalId");
@@ -668,9 +670,9 @@ namespace GetJob.Data.Migrations.GetJobDb
                             SID = "3eed3eed-3eed-2020-3eed-123456789abc",
                             Adress = "null",
                             College = "null",
-                            Csny = new DateTime(2020, 10, 19, 20, 27, 14, 65, DateTimeKind.Local).AddTicks(164),
+                            Csny = new DateTime(2020, 10, 19, 20, 20, 43, 479, DateTimeKind.Local).AddTicks(2712),
                             DegreeID = 1,
-                            Jdsj = new DateTime(2020, 10, 19, 20, 27, 14, 65, DateTimeKind.Local).AddTicks(2765),
+                            Jdsj = new DateTime(2020, 10, 19, 20, 20, 43, 479, DateTimeKind.Local).AddTicks(5695),
                             Jg = "null",
                             Mail = "null",
                             MzId = 1,
