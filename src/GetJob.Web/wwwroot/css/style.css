@@ -23,7 +23,7 @@ a:hover { color: #0D812E !important; }
     color: #fff !important;
 }
 
-.tab-content { min-height: 600px; }
+.tab-content { min-height: 300px; }
 
 .dropdown-item.active, .dropdown-item:active {
     background-color: #fff !important;

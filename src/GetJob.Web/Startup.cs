@@ -94,7 +94,7 @@ namespace GetJob.Web
             {
                 endpoints.MapControllerRoute(
                     "default",
-                    "{controller=Company}/{action=Home}/{id?}");
+                    "{controller=company}/{action=home}/{id?}");
             });
         }
     }

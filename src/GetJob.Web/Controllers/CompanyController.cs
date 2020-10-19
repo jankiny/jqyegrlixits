@@ -2,9 +2,12 @@
 using System.Threading.Tasks;
 using GetJob.Models;
 using GetJob.Services;
+using GetJob.Web.ViewModels;
 using GetJob.Web.ViewModels.Company;
+using GetJob.Web.ViewModels.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Logging;
 
@@ -13,51 +16,39 @@ namespace GetJob.Web.Controllers
     public class CompanyController : Controller
     {
         private readonly IUserService _userService;
+        private readonly ICompanyService _companyService;
         private readonly ILogger<CompanyController> _logger;
 
-        public CompanyController(ILogger<CompanyController> logger, IUserService userService)
+        public CompanyController(ILogger<CompanyController> logger, IUserService userService, ICompanyService companyService)
         {
             _logger = logger;
             _userService = userService;
+            _companyService = companyService;
         }
 
         public IActionResult Home()
         {
             return View();
         }
-
-        [HttpPost]
-        public async Task<IActionResult> SignIn(UserSignInViewModel vm, string returnUrl = null)
+        public async Task<IActionResult> SignUp()
         {
-            if (!ModelState.IsValid) return RedirectToAction("SignIn", "User", vm);
-            var result = await _userService.PasswordSignInAsync(vm.UserName, vm.Password);
-            if (result.Succeeded)
-            {
-                _logger.LogInformation($"{vm.UserName} logged in.");
-                if (returnUrl != null) return LocalRedirect(returnUrl);
-                var identity = await _userService.GetUserClaim(vm.UserName);
-                if (identity is Company)
-                {
-                    return RedirectToAction("Home", "Company");
-                }
-                else
-                {
-                    return RedirectToAction("Home", "Student");
-                }
-            }
-
-            ModelState.AddModelError("", "用户名/密码不正确");
-            return RedirectToAction("SignIn", "User");
+            await PopulateCompanyFieldsDropDownList();
+            return View();
         }
 
+        private async Task PopulateCompanyFieldsDropDownList(string selectedCompanyFieldId = null)
+        {
+            var companyFields = await _companyService.GetAllCompanyFieldAsync();
+            ViewBag.CompanyFields = new SelectList(companyFields, "CompanyFieldId", "Text", selectedCompanyFieldId);
+        }
         [HttpPost]
-        public async Task<IActionResult> SignUp(CompanySignUpViewModel vm, string returnUrl = null)
+        public async Task<IActionResult> SignUp(UserSignUpViewModel vm)
         {
             if (ModelState.IsValid)
             {
                 var user = new IdentityUser
                 {
-                    PhoneNumber = vm.PhoneNumber,
+                    PhoneNumber = vm.Phone,
                     UserName = vm.UserName,
                     Email = vm.Mail,
                     EmailConfirmed = true
@@ -67,25 +58,21 @@ namespace GetJob.Web.Controllers
                     Name = vm.CompanyName,
                     CompanyFieldId = vm.CompanyFieldId
                 };
-                var result = await _userService.CreateUserAsync(user, vm.Password, company);
-                if (result.Succeeded)
+                if (await _companyService.AddAsync(company) != -1)
                 {
-                    _logger.LogInformation($"{vm.PhoneNumber} created a new account with password.");
-                    return View("_SignUpSuccess");
+                    var result = await _userService.CreateUserAsync(user, vm.Password, company);
+
+                    if (result.Succeeded)
+                    {
+                        _logger.LogInformation($"{vm.Phone} created a new account with password.");
+                        return RedirectToAction("SignIn", "User");
+                    }
                 }
             }
-
             _logger.LogInformation("Failed to create a new account.");
             ModelState.AddModelError("", "错误信息");
-            return RedirectToAction("SignUp", "User", vm);
-        }
-        public async Task<IActionResult> Logout(string returnUrl = null)
-        {
-            await _userService.SignOutAsync();
-            _logger.LogInformation("Company logged out.");
-            if (returnUrl != null)
-                return LocalRedirect(returnUrl);
-            return RedirectToAction("SignIn", "User");
+            await PopulateCompanyFieldsDropDownList(vm.CompanyFieldId.ToString());
+            return RedirectToAction("SignUp", "Company", vm);
         }
     }
 }

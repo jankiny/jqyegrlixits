@@ -34,8 +34,7 @@ namespace GetJob.Data
 
             #region 测试用种子数据
 
-            var defaultGuid = new Guid("a1b0c2d4-eabc-1024-deed-adeabcdefabc");
-
+            var defaultGuid = new Guid("3eed3eed-3eed-2020-3eed-123456789abc");
             modelBuilder.Entity<CompanyField>().HasData(new CompanyField {CompanyFieldId = 1, Text = "服务业"});
             modelBuilder.Entity<Company>().HasData(new Company
                 {Id = defaultGuid.ToString(), CompanyFieldId = 1, Name = "树苗", Description = "无"});

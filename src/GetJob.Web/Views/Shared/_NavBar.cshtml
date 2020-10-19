@@ -16,17 +16,14 @@
                 </li>
             </ul>
             <ul class="navbar-nav justify-content-end">
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="Cart" asp-action="Display">我要找工作</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="User" asp-action="SignUp">我要招聘</a>
-                </li>
                 @*@User.Claims.Any(c => c.Type == "Company")*@
                 @if (!User.Identity.IsAuthenticated)
                 {
                     <li class="nav-item">
-                        <button class="nav-link" asp-controller="User" asp-action="SignUp">注册</button>
+                        <a class="nav-link" asp-controller="Student" asp-action="SignUp">我要找工作</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Company" asp-action="SignUp">我要招聘</a>
                     </li>
                     <li class="nav-item">
                         <button class="nav-link" asp-controller="User" asp-action="SignIn">登录</button>
@@ -34,17 +31,18 @@
                 }
                 else
                 {
-                    @if (User.IsInRole("Company"))
+                    @if (User.Claims.Any(i => i.Type == "Identity" && i.Value == "Company"))
                     {
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Company" asp-action="PublishJob">面试</a>
+                            <a class="nav-link" asp-controller="Company" asp-action="PublishJob">发布岗位</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="dropdown07XL" data-toggle="dropdown" aria-expanded="false">@User.Identity.Name</a>
                             <div class="dropdown-menu" aria-labelledby="dropdown07XL">
-                                <a class="dropdown-item" asp-controller="Order" asp-action="Display">企业页面</a>
                                 <a class="dropdown-item" asp-controller="Order" asp-action="Display">个人信息</a>
+                                <a class="dropdown-item" asp-controller="Order" asp-action="Display">当前职位</a>
                                 <a class="dropdown-item" asp-controller="Mine" asp-action="Foot">密码修改</a>
+                                <a class="dropdown-item" asp-controller="User" asp-action="Logout">登出</a>
                             </div>
                         </li>
                     }

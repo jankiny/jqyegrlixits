@@ -38,7 +38,7 @@ namespace GetJob.Data
             //modelBuilder.Entity<IdentityRole>().HasData(
             //    new IdentityRole(){ Id = "1", Name = "root", NormalizedName = "ROOT" }
             //);
-            var defaultGuid = new Guid("a1b0c2d4-eabc-1024-deed-adeabcdefabc");
+            var defaultGuid = new Guid("3eed3eed-3eed-2020-3eed-123456789abc");
             modelBuilder.Entity<IdentityUser>().HasData(
                 new IdentityUser
                 {
@@ -60,6 +60,22 @@ namespace GetJob.Data
                     AccessFailedCount = 0
                 }
             );
+            //modelBuilder.Entity<IdentityUserClaim<string>>().HasData(
+            //    new IdentityUserClaim<string>
+            //    {
+            //        Id = 1,
+            //        UserId = defaultGuid.ToString(),
+            //        ClaimType = "Identity",
+            //        ClaimValue = "Company"
+            //    },
+            //    new IdentityUserClaim<string>
+            //    {
+            //        Id = 1,
+            //        UserId = defaultGuid.ToString(),
+            //        ClaimType = "CompanyId",
+            //        ClaimValue = defaultGuid.ToString()
+            //    });
+
             #endregion
         }
     }

@@ -22,14 +22,69 @@ namespace GetJob.Services.Impl
             _context = context;
         }
 
-        async Task<List<Company>> ICompanyService.GetByCompanyFieldAsync(CompanyField model)
+        public async Task<List<CompanyField>> GetAllCompanyFieldAsync()
+        {
+            try
+            {
+                return await _context.CompanyFields.ToListAsync();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return null;
+            }
+        }
+
+        public async Task<int> AddAsync(Company model)
+        {
+            try
+            {
+                await _context.Companies.AddAsync(model);
+                return await _context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return -1;
+            }
+        }
+
+        public async Task<int> DeleteAsync(Company model)
+        {
+            try
+            {
+                _context.Companies.Remove(model);
+                return await _context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return -1;
+            }
+        }
+
+        public async Task<int> UpdateAsync(Company model)
+        {
+            try
+            {
+                _context.Companies.Update(model);
+                return await _context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return -1;
+            }
+        }
+
+        public async Task<List<Company>> GetByCompanyFieldAsync(CompanyField model)
         {
             try
             {
                 var companyList = await _context.Companies.Where(c => c.CompanyFieldId == model.CompanyFieldId).ToListAsync();
                 foreach (var company in companyList)
                 {
-                    company.CompanyField = await _context.CompanyFields.FindAsync(company.CompanyFieldId);
+                    company.CompanyField = model;
                 }
 
                 return companyList;
@@ -41,7 +96,7 @@ namespace GetJob.Services.Impl
             }
         }
 
-        async Task<List<Company>> ICompanyService.GetAllAsync()
+        public async Task<List<Company>> GetAllAsync()
         {
             try
             {
@@ -60,7 +115,7 @@ namespace GetJob.Services.Impl
             }
         }
 
-        async Task<List<Company>> ICompanyService.SearchAsync(string searchString)
+        public async Task<List<Company>> SearchAsync(string searchString)
         {
             try
             {

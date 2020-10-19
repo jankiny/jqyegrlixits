@@ -1,5 +1,77 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model GetJob.Web.ViewModels.User.UserSignInViewModel
 @{
+    ViewBag.Header = "欢迎登录";
 }
+<style>
+    .form-signin {
+        margin: auto;
+        max-width: 330px;
+        padding: 15px;
+        width: 100%;
+    }
+
+    .form-signin .checkbox { font-weight: 400; }
+
+    .form-signin .form-control {
+        box-sizing: border-box;
+        font-size: 16px;
+        height: auto;
+        padding: 10px;
+        position: relative;
+    }
+
+    .form-signin .form-control:focus { z-index: 2; }
+
+    .form-signin input[type="password"] {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        margin-bottom: 10px;
+    }
+</style>
+<div class="container">
+    <partial name="_Logo"/>
+</div>
+
+<div>
+    <form class="form-signin" method="post">
+        <div class="form-group">
+        </div>
+        <div class="form-group">
+            <label for="inputUserName" class="sr-only"></label>
+            <input id="inputUserName" class="form-control" asp-for="UserName"/>
+            <span asp-validation-for="UserName"></span>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword" class="sr-only"></label>
+            <input id="inputPassword" class="form-control" type="password" asp-for="Password"/>
+            <span asp-validation-for="Password"></span>
+        </div>
+        <button class="btn btn-lg btn-success btn-block" type="submit">提交</button>
+        <div style="margin-top: 10px;">
+            <ul class="nav justify-content-start base-style">
+                <li class="nav-item">
+                    <a>
+                        <b class="QQ-icon"></b><small>QQ</small>
+                    </a>
+                    <span class="line">|</span>
+                </li>
+                <li class="nav-item">
+                    <a>
+                        <b class="weixin-icon"></b><small>微信</small>
+                    </a>
+                </li>
+                <li class="nav-item ml-auto">
+                    <a asp-controller="Company" asp-action="SignUp">
+                        <small>我要招人</small>
+                    </a>
+                </li>
+                <li class="nav-item ml-4">
+                    <a asp-controller="Student" asp-action="SignUp">
+                        <small>立即注册</small>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div asp-validation-summary="All"></div>
+    </form>
+</div>

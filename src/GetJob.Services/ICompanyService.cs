@@ -8,6 +8,12 @@ namespace GetJob.Services
 {
     public interface ICompanyService
     {
+        // CompanyField
+        Task<List<CompanyField>> GetAllCompanyFieldAsync();
+        // Company
+        Task<int> AddAsync(Company model);
+        Task<int> DeleteAsync(Company model);
+        Task<int> UpdateAsync(Company model);
         Task<List<Company>> GetByCompanyFieldAsync(CompanyField model);
         Task<List<Company>> GetAllAsync();
         Task<List<Company>> SearchAsync(string searchString);
