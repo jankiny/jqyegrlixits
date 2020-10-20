@@ -73,6 +73,8 @@ namespace GetJob.Web
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<IJobService, JobService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ILocationService, LocationService>();
+            services.AddScoped<IDegreeService, DegreeService>();
 
         }
 

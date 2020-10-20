@@ -16,7 +16,6 @@ namespace GetJob.Services
         Task<List<JobPay>> GetAllJobPayAsync();
         // JobStatus
         Task<List<JobStatus>> GetAllJobStatusAsync();
-
         // Job
         Task<int> AddJobAsync(Job model);
         Task<int> DeleteJobAsync(Job model);

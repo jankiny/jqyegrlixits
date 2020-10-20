@@ -35,6 +35,19 @@ namespace GetJob.Services.Impl
             }
         }
 
+        public async Task<List<CompanyScale>> GetAllCompanyScaleAsync()
+        {
+            try
+            {
+                return await _context.CompanyScales.ToListAsync();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return null;
+            }
+        }
+
         public async Task<int> AddAsync(Company model)
         {
             try
@@ -83,6 +96,7 @@ namespace GetJob.Services.Impl
             {
                 var company = await _context.Companies.FindAsync(id);
                 company.CompanyField = await _context.CompanyFields.FindAsync(company.CompanyFieldId);
+                company.CompanyScale = await _context.CompanyScales.FindAsync(company.CompanyScaleId);
                 return company;
             }
             catch (Exception e)
@@ -100,6 +114,7 @@ namespace GetJob.Services.Impl
                 foreach (var company in companyList)
                 {
                     company.CompanyField = model;
+                    company.CompanyScale = await _context.CompanyScales.FindAsync(company.CompanyScaleId);
                 }
 
                 return companyList;
@@ -119,6 +134,7 @@ namespace GetJob.Services.Impl
                 foreach (var company in companyList)
                 {
                     company.CompanyField = await _context.CompanyFields.FindAsync(company.CompanyFieldId);
+                    company.CompanyScale = await _context.CompanyScales.FindAsync(company.CompanyScaleId);
                 }
 
                 return companyList;
@@ -139,6 +155,7 @@ namespace GetJob.Services.Impl
                 foreach (var company in companyList)
                 {
                     company.CompanyField = await _context.CompanyFields.FindAsync(company.CompanyFieldId);
+                    company.CompanyScale = await _context.CompanyScales.FindAsync(company.CompanyScaleId);
                 }
 
                 return companyList;

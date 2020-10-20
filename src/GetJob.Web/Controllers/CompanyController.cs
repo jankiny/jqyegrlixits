@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using GetJob.Models;
 using GetJob.Services;
 using GetJob.Web.ViewModels.Company;
-using GetJob.Web.ViewModels.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,18 +15,23 @@ namespace GetJob.Web.Controllers
     public class CompanyController : Controller
     {
         private readonly ICompanyService _companyService;
+        private readonly IDegreeService _degreeService;
         private readonly IJobService _jobService;
+        private readonly ILocationService _locationService;
         private readonly ILogger<CompanyController> _logger;
         private readonly IUserService _userService;
 
 
         public CompanyController(ILogger<CompanyController> logger, IUserService userService,
-            ICompanyService companyService, IJobService jobService)
+            ICompanyService companyService, IJobService jobService, ILocationService locationService,
+            IDegreeService degreeService)
         {
             _logger = logger;
             _userService = userService;
             _companyService = companyService;
             _jobService = jobService;
+            _locationService = locationService;
+            _degreeService = degreeService;
         }
 
         [Authorize(Policy = "CompanyOnly")]
@@ -52,10 +56,23 @@ namespace GetJob.Web.Controllers
             var jobSecondKind = await _jobService.GetAllSecondKindAsync(firstKindId);
             return Json(jobSecondKind);
         }
+        [Authorize(Policy = "CompanyOnly")]
+        public async Task<ActionResult> PopulateCities(int provinceId)
+        {
+            var cities = await _locationService.GetCityAsync(provinceId);
+            return Json(cities);
+        }
+        [Authorize(Policy = "CompanyOnly")]
+        public async Task<ActionResult> PopulateDistricts(int cityId)
+        {
+            var districts = await _locationService.GetDistrictAsync(cityId);
+            return Json(districts);
+        }
 
         private async Task PopulateJobRelatedDropDownList(string selectedJobCharacterId = null,
             string selectedJobFirstKindId = null, string selectedJobKindId = null, string selectedJobPayId = null,
-            string selectedJobStatusId = null)
+            string selectedJobStatusId = null, string selectedProvinceId = null, string selectedCityId = null,
+            string selectedDistrictId = null, string selectedDegreeId = null)
         {
             var jobCharacters = await _jobService.GetAllJobCharacterAsync();
             ViewBag.JobCharacters = new SelectList(jobCharacters, "JobCharacterId", "Text", selectedJobCharacterId);
@@ -73,6 +90,24 @@ namespace GetJob.Web.Controllers
 
             var jobStatuses = await _jobService.GetAllJobStatusAsync();
             ViewBag.JobStatuses = new SelectList(jobStatuses, "JobStatusId", "Text", selectedJobStatusId);
+
+            var provinces = await _locationService.GetProvinceAsync();
+            ViewBag.Provinces = new SelectList(provinces, "LocationId", "Text", selectedProvinceId);
+
+            if (selectedProvinceId != null)
+            {
+                var cities = await _locationService.GetCityAsync(int.Parse(selectedProvinceId));
+                ViewBag.Cities = new SelectList(cities, "LocationId", "Text", selectedCityId);
+            }
+
+            if (selectedCityId != null)
+            {
+                var districts = await _locationService.GetDistrictAsync(int.Parse(selectedCityId));
+                ViewBag.Districts = new SelectList(districts, "LocationId", "Text", selectedDistrictId);
+            }
+
+            var degrees = await _degreeService.GetAllAsync();
+            ViewBag.Degrees = new SelectList(degrees, "DegreeId", "Text", selectedDistrictId);
         }
 
         [Authorize(Policy = "CompanyOnly")]
@@ -96,6 +131,9 @@ namespace GetJob.Web.Controllers
                     JobKindId = vm.JobKindId,
                     JobPayId = vm.JobPayId,
                     JobStatusId = vm.JobStatusId,
+                    LocationId = vm.LocationId,
+                    DegreeId = vm.DegreeId,
+                    RecruitNumber = vm.RecruitNumber,
                     Description = vm.Description,
                     LastModify = DateTime.Now
                 };
@@ -104,7 +142,8 @@ namespace GetJob.Web.Controllers
             }
 
             await PopulateJobRelatedDropDownList(vm.JobCharacterId.ToString(), vm.JobFirstKindId.ToString(),
-                vm.JobKindId.ToString(), vm.JobPayId.ToString(), vm.JobStatusId.ToString());
+                vm.JobKindId.ToString(), vm.JobPayId.ToString(), vm.JobStatusId.ToString(), vm.ProvinceId.ToString(),
+                vm.CityId.ToString(), vm.LocationId.ToString(), vm.DegreeId.ToString());
             return View(vm);
         }
 
@@ -116,7 +155,8 @@ namespace GetJob.Web.Controllers
             if (job == null) return NotFound();
             var vm = new JobViewModel(job);
             await PopulateJobRelatedDropDownList(vm.JobCharacterId.ToString(), vm.JobFirstKindId.ToString(),
-                vm.JobKindId.ToString(), vm.JobPayId.ToString(), vm.JobStatusId.ToString());
+                vm.JobKindId.ToString(), vm.JobPayId.ToString(), vm.JobStatusId.ToString(), vm.ProvinceId.ToString(),
+                vm.CityId.ToString(), vm.LocationId.ToString(), vm.DegreeId.ToString());
             return View(vm);
         }
 
@@ -135,6 +175,9 @@ namespace GetJob.Web.Controllers
                     JobKindId = vm.JobKindId,
                     JobPayId = vm.JobPayId,
                     JobStatusId = vm.JobStatusId,
+                    LocationId = vm.LocationId,
+                    DegreeId = vm.DegreeId,
+                    RecruitNumber = vm.RecruitNumber,
                     Description = vm.Description,
                     LastModify = DateTime.Now
                 };
@@ -143,7 +186,8 @@ namespace GetJob.Web.Controllers
             }
 
             await PopulateJobRelatedDropDownList(vm.JobCharacterId.ToString(), vm.JobFirstKindId.ToString(),
-                vm.JobKindId.ToString(), vm.JobPayId.ToString(), vm.JobStatusId.ToString());
+                vm.JobKindId.ToString(), vm.JobPayId.ToString(), vm.JobStatusId.ToString(), vm.ProvinceId.ToString(),
+                vm.CityId.ToString(), vm.LocationId.ToString(), vm.DegreeId.ToString());
             return View(vm);
         }
 
@@ -171,10 +215,14 @@ namespace GetJob.Web.Controllers
             return RedirectToAction(nameof(HireJobManage));
         }
 
-        private async Task PopulateCompanyFieldsDropDownList(string selectedCompanyFieldId = null)
+        private async Task PopulateCompanyFieldsDropDownList(string selectedCompanyFieldId = null,
+            string selectedCompanyScaleId = null)
         {
             var companyFields = await _companyService.GetAllCompanyFieldAsync();
             ViewBag.CompanyFields = new SelectList(companyFields, "CompanyFieldId", "Text", selectedCompanyFieldId);
+
+            var companyScales = await _companyService.GetAllCompanyScaleAsync();
+            ViewBag.CompanyScales = new SelectList(companyScales, "CompanyScaleId", "Text", selectedCompanyScaleId);
         }
 
         public async Task<IActionResult> SignUp()
@@ -184,13 +232,13 @@ namespace GetJob.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SignUp(UserSignUpViewModel vm)
+        public async Task<IActionResult> SignUp(CompanySignUpViewModel vm)
         {
             if (ModelState.IsValid)
             {
                 var user = new IdentityUser
                 {
-                    PhoneNumber = vm.Phone,
+                    PhoneNumber = vm.PhoneNumber,
                     UserName = vm.UserName,
                     Email = vm.Mail,
                     EmailConfirmed = true
@@ -198,7 +246,8 @@ namespace GetJob.Web.Controllers
                 var company = new Company
                 {
                     Name = vm.CompanyName,
-                    CompanyFieldId = vm.CompanyFieldId
+                    CompanyFieldId = vm.CompanyFieldId,
+                    CompanyScaleId = vm.CompanyScaleId
                 };
                 if (await _companyService.AddAsync(company) != -1)
                 {
@@ -206,7 +255,7 @@ namespace GetJob.Web.Controllers
 
                     if (result.Succeeded)
                     {
-                        _logger.LogInformation($"{vm.Phone} created a new account with password.");
+                        _logger.LogInformation($"{vm.PhoneNumber} created a new account with password.");
                         return RedirectToAction("SignIn", "Home");
                     }
                 }
@@ -214,7 +263,7 @@ namespace GetJob.Web.Controllers
 
             _logger.LogInformation("Failed to create a new account.");
             ModelState.AddModelError("", "错误信息");
-            await PopulateCompanyFieldsDropDownList(vm.CompanyFieldId.ToString());
+            await PopulateCompanyFieldsDropDownList(vm.CompanyFieldId.ToString(), vm.CompanyScaleId.ToString());
             return RedirectToAction("SignUp", "Company", vm);
         }
     }

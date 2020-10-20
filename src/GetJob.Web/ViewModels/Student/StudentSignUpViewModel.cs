@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace GetJob.Web.ViewModels.User
+namespace GetJob.Web.ViewModels.Student
 {
-    public class UserSignUpViewModel
+    public class StudentSignUpViewModel
     {
         [Required] [Display(Name = "用户名")] public string UserName { get; set; }
 

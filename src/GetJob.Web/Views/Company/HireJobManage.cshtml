@@ -38,8 +38,12 @@
             <input type="hidden" asp-for="@Model.JobViewModels[i].JobCharacterId" />
             <input type="hidden" asp-for="@Model.JobViewModels[i].JobKindId" />
             <input type="hidden" asp-for="@Model.JobViewModels[i].JobPayId" />
+            <input type="hidden" asp-for="@Model.JobViewModels[i].JobStatusId" />
+            <input type="hidden" asp-for="@Model.JobViewModels[i].LocationId" />
+            <input type="hidden" asp-for="@Model.JobViewModels[i].DegreeId" />
+            <input type="hidden" asp-for="@Model.JobViewModels[i].RecruitNumber" />
             <input type="hidden" asp-for="@Model.JobViewModels[i].Description" />
-            <input type="hidden" asp-for="@Model.JobViewModels[i].ResumeReceived" />
+            <input type="hidden" asp-for="@Model.JobViewModels[i].LastModify" />
         </td>
         <td>@Model.JobViewModels[i].Name</td>
         <td>@Model.JobViewModels[i].JobPay.Text</td>
@@ -48,7 +52,7 @@
         <td>@Model.JobViewModels[i].JobKind.Text</td>
         <td>@Model.JobViewModels[i].LastModify.ToString("yyyy-MM-dd HH:mm")</td>
         <td>
-            <a asp-controller="Company" asp-action="HireJobEdit" asp-route-id="@Model.JobViewModels[i].Id">详细</a>
+            <a asp-controller="Company" asp-action="HireJobEdit" asp-route-id="@Model.JobViewModels[i].Id">修改</a>
             <a asp-controller="Company" asp-action="HireJobDelete" asp-route-id="@Model.JobViewModels[i].Id">删除</a>
         </td>
     </tr>

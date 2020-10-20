@@ -10,6 +10,8 @@ namespace GetJob.Services
     {
         // CompanyField
         Task<List<CompanyField>> GetAllCompanyFieldAsync();
+        // CompanyScale
+        Task<List<CompanyScale>> GetAllCompanyScaleAsync();
         // Company
         Task<int> AddAsync(Company model);
         Task<int> DeleteAsync(Company model);

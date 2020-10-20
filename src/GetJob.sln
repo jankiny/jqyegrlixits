@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GetJob.Services", "GetJob.S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GetJob.Models", "GetJob.Models\GetJob.Models.csproj", "{9A38AD07-C1EA-4ACF-AC82-7E0C7D313C50}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetJob.Services.Test", "GetJob.Test\GetJob.Services.Test.csproj", "{B16ACCE9-4BB9-40EC-9DBC-A44CE8514719}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{9A38AD07-C1EA-4ACF-AC82-7E0C7D313C50}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A38AD07-C1EA-4ACF-AC82-7E0C7D313C50}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A38AD07-C1EA-4ACF-AC82-7E0C7D313C50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B16ACCE9-4BB9-40EC-9DBC-A44CE8514719}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B16ACCE9-4BB9-40EC-9DBC-A44CE8514719}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B16ACCE9-4BB9-40EC-9DBC-A44CE8514719}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B16ACCE9-4BB9-40EC-9DBC-A44CE8514719}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

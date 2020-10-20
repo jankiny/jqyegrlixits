@@ -137,6 +137,9 @@ namespace GetJob.Services.Impl
                 job.JobCharacter = await _context.JobCharacters.FindAsync(job.JobCharacterId);
                 job.JobKind = await _context.JobKinds.FindAsync(job.JobKindId);
                 job.JobPay = await _context.JobPays.FindAsync(job.JobPayId);
+                job.JobStatus = await _context.JobStatuses.FindAsync(job.JobStatusId);
+                job.Location = await _context.Locations.FindAsync(job.LocationId);
+                job.Degree = await _context.Degrees.FindAsync(job.DegreeId);
                 return job;
             }
             catch (Exception e)
@@ -157,6 +160,9 @@ namespace GetJob.Services.Impl
                     job.JobCharacter = await _context.JobCharacters.FindAsync(job.JobCharacterId);
                     job.JobKind = await _context.JobKinds.FindAsync(job.JobKindId);
                     job.JobPay = await _context.JobPays.FindAsync(job.JobPayId);
+                    job.JobStatus = await _context.JobStatuses.FindAsync(job.JobStatusId);
+                    job.Location = await _context.Locations.FindAsync(job.LocationId);
+                    job.Degree = await _context.Degrees.FindAsync(job.DegreeId);
                 }
 
                 return jobList;
@@ -179,6 +185,9 @@ namespace GetJob.Services.Impl
                     job.JobCharacter = model;
                     job.JobKind = await _context.JobKinds.FindAsync(job.JobKindId);
                     job.JobPay = await _context.JobPays.FindAsync(job.JobPayId);
+                    job.JobStatus = await _context.JobStatuses.FindAsync(job.JobStatusId);
+                    job.Location = await _context.Locations.FindAsync(job.LocationId);
+                    job.Degree = await _context.Degrees.FindAsync(job.DegreeId);
                 }
 
                 return jobList;
@@ -201,6 +210,9 @@ namespace GetJob.Services.Impl
                     job.JobCharacter = await _context.JobCharacters.FindAsync(job.JobCharacterId);
                     job.JobKind = model;
                     job.JobPay = await _context.JobPays.FindAsync(job.JobPayId);
+                    job.JobStatus = await _context.JobStatuses.FindAsync(job.JobStatusId);
+                    job.Location = await _context.Locations.FindAsync(job.LocationId);
+                    job.Degree = await _context.Degrees.FindAsync(job.DegreeId);
                 }
 
                 return jobList;
@@ -223,6 +235,9 @@ namespace GetJob.Services.Impl
                     job.JobCharacter = await _context.JobCharacters.FindAsync(job.JobCharacterId);
                     job.JobKind = await _context.JobKinds.FindAsync(job.JobKindId);
                     job.JobPay = model;
+                    job.JobStatus = await _context.JobStatuses.FindAsync(job.JobStatusId);
+                    job.Location = await _context.Locations.FindAsync(job.LocationId);
+                    job.Degree = await _context.Degrees.FindAsync(job.DegreeId);
                 }
 
                 return jobList;
@@ -245,6 +260,9 @@ namespace GetJob.Services.Impl
                     job.JobCharacter = await _context.JobCharacters.FindAsync(job.JobCharacterId);
                     job.JobKind = await _context.JobKinds.FindAsync(job.JobKindId);
                     job.JobPay = await _context.JobPays.FindAsync(job.JobPayId);
+                    job.JobStatus = await _context.JobStatuses.FindAsync(job.JobStatusId);
+                    job.Location = await _context.Locations.FindAsync(job.LocationId);
+                    job.Degree = await _context.Degrees.FindAsync(job.DegreeId);
                 }
 
                 return jobList;
