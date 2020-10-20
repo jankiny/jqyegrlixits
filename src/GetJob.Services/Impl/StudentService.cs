@@ -19,5 +19,22 @@ namespace GetJob.Services.Impl
         }
 
 
+        public async Task<Student> GetByIdAsync(string id)
+        {
+            try
+            {
+                var student = await _context.Students.FindAsync(id);
+                student.BirthPlace = await _context.Locations.FindAsync(student.BirthPlaceId);
+                student.Nation = await _context.Nations.FindAsync(student.NationId);
+                student.PoliticalOutlook = await _context.PoliticalOutlooks.FindAsync(student.PoliticalOutlookId);
+                student.Degree = await _context.Degrees.FindAsync(student.DegreeId);
+                return student;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return null;
+            }
+        }
     }
 }

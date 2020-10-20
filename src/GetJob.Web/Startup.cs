@@ -1,6 +1,5 @@
 using System;
 using GetJob.Data;
-using GetJob.Models;
 using GetJob.Services;
 using GetJob.Services.Impl;
 using Microsoft.AspNetCore.Builder;
@@ -21,11 +20,18 @@ namespace GetJob.Web
         {
             _configuration = configuration;
         }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews()
+                .AddMvcOptions(options =>
+                {
+                    options.MaxModelValidationErrors = 50;
+                    options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(
+                        _ => "±ØÌî");
+                })
                 .AddRazorRuntimeCompilation();
 
             services.AddAuthorization(options =>
@@ -67,7 +73,8 @@ namespace GetJob.Web
 
             services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<AppDbContext>()
-                .AddDefaultTokenProviders(); ;
+                .AddDefaultTokenProviders();
+            ;
 
             services.AddScoped<ICompanyService, CompanyService>();
             services.AddScoped<IStudentService, StudentService>();
@@ -75,16 +82,13 @@ namespace GetJob.Web
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ILocationService, LocationService>();
             services.AddScoped<IDegreeService, DegreeService>();
-
+            services.AddScoped<IDeliverService, DeliverService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
             app.UseHttpsRedirection();
 

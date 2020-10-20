@@ -6,5 +6,6 @@ namespace GetJob.Services
 {
     public interface IStudentService
     {
+        Task<Student> GetByIdAsync(string id);
     }
 }

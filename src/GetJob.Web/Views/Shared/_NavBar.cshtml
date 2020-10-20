@@ -34,17 +34,17 @@
                     @if (User.Claims.Any(i => i.Type == "Identity" && i.Value == "Company"))
                     {
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Company" asp-action="HireJobManage">企业后台</a>
+                            <a class="nav-link" asp-controller="Hire" asp-action="HireJobManage">企业后台</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Company" asp-action="HireJobPublish">发布岗位</a>
+                            <a class="nav-link" asp-controller="Hire" asp-action="HireJobPublish">发布岗位</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="dropdown07XL" data-toggle="dropdown" aria-expanded="false">@User.Identity.Name</a>
                             <div class="dropdown-menu" aria-labelledby="dropdown07XL">
-                                <a class="dropdown-item" asp-controller="Order" asp-action="Display">个人信息</a>
-                                <a class="dropdown-item" asp-controller="Order" asp-action="Display">当前职位</a>
-                                <a class="dropdown-item" asp-controller="Mine" asp-action="Foot">密码修改</a>
+                                <a class="dropdown-item" asp-controller="Recruiter" asp-action="PersonalInfo">个人信息</a>
+                                <a class="dropdown-item" asp-controller="Recruiter" asp-action="RecruiterInfo">职位信息</a>
+                                <a class="dropdown-item" asp-controller="Recruiter" asp-action="ChangePassword">密码修改</a>
                                 <a class="dropdown-item" asp-controller="Home" asp-action="Logout">登出</a>
                             </div>
                         </li>

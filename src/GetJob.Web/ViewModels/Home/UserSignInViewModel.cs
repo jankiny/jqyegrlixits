@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace GetJob.Web.ViewModels.User
+namespace GetJob.Web.ViewModels.Home
 {
     public class UserSignInViewModel
     {

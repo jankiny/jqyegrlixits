@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using GetJob.Models;
 using GetJob.Services;
 using GetJob.Web.ViewModels;
-using GetJob.Web.ViewModels.User;
+using GetJob.Web.ViewModels.Home;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -43,7 +43,7 @@ namespace GetJob.Web.Controllers
                 if (identity is Company company)
                 {
                     _logger.LogInformation($"用户身份是{company.Name}");
-                    return RedirectToAction("HireJobManage", "Company");
+                    return RedirectToAction("PersonalInfo", "Recruiter");
                 }
                 else if (identity is Student student)
                 {

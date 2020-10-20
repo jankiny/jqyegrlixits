@@ -81,24 +81,35 @@ namespace GetJob.Data
             );
             modelBuilder.Entity<JobPay>().HasData(
                 new JobPay {JobPayId = 1, PayFrom = 0, PayTo = 1000, Text = "1000以下"},
-                new JobPay {JobPayId = 2, PayFrom = 1000, PayTo = 2000, Text = "1000~2000"},
-                new JobPay {JobPayId = 3, PayFrom = 2000, PayTo = 3000, Text = "2000~3000"},
-                new JobPay {JobPayId = 4, PayFrom = 3000, PayTo = 4000, Text = "3000~4000"},
-                new JobPay {JobPayId = 5, PayFrom = 4000, PayTo = 6000, Text = "4000~6000"},
-                new JobPay {JobPayId = 6, PayFrom = 6000, PayTo = 8000, Text = "6000~8000"},
-                new JobPay {JobPayId = 7, PayFrom = 8000, PayTo = 10000, Text = "8000~10000"},
-                new JobPay {JobPayId = 8, PayFrom = 10000, PayTo = 15000, Text = "10000~15000"},
-                new JobPay {JobPayId = 9, PayFrom = 15000, PayTo = 20000, Text = "15000~20000"},
-                new JobPay {JobPayId = 10, PayFrom = 20000, PayTo = 30000, Text = "20000~30000"},
-                new JobPay {JobPayId = 11, PayFrom = 30000, PayTo = 50000, Text = "30000~50000"},
-                new JobPay {JobPayId = 12, PayFrom = 50000, PayTo = 10000000, Text = "50000以上"}
+                new JobPay {JobPayId = 2, PayFrom = 1000, PayTo = 2000, Text = "1k~2k"},
+                new JobPay {JobPayId = 3, PayFrom = 2000, PayTo = 3000, Text = "2k~3k"},
+                new JobPay {JobPayId = 4, PayFrom = 3000, PayTo = 4000, Text = "3k~4k"},
+                new JobPay {JobPayId = 5, PayFrom = 4000, PayTo = 6000, Text = "4k~6k"},
+                new JobPay {JobPayId = 6, PayFrom = 6000, PayTo = 8000, Text = "6k~8k"},
+                new JobPay {JobPayId = 7, PayFrom = 8000, PayTo = 10000, Text = "8k~1k"},
+                new JobPay {JobPayId = 8, PayFrom = 10000, PayTo = 15000, Text = "10k~15k"},
+                new JobPay {JobPayId = 9, PayFrom = 15000, PayTo = 20000, Text = "15k~20k"},
+                new JobPay {JobPayId = 10, PayFrom = 20000, PayTo = 30000, Text = "20k~30k"},
+                new JobPay {JobPayId = 11, PayFrom = 30000, PayTo = 50000, Text = "30k~50k"},
+                new JobPay {JobPayId = 12, PayFrom = 50000, PayTo = 10000000, Text = "50k以上"}
             );
             modelBuilder.Entity<JobStatus>().HasData(new JobStatus
-            {
-                JobStatusId = 1,
-                Text = "招聘中"
-            });
-            modelBuilder.Entity<Location>().HasData(new Location
+                {
+                    JobStatusId = 1,
+                    Text = "招聘中"
+                }, new JobStatus
+                {
+                    JobStatusId = 2,
+                    Text = "招聘结束"
+                }
+            );
+            modelBuilder.Entity<Location>().HasData(
+                new Location
+                {
+                    LocationId = 110000,
+                    Text = "北京市"
+                },
+                new Location
                 {
                     LocationId = 330000,
                     Text = "浙江省"
@@ -107,6 +118,11 @@ namespace GetJob.Data
                 {
                     LocationId = 330100,
                     Text = "浙江省杭州市"
+                },
+                new Location
+                {
+                    LocationId = 330200,
+                    Text = "浙江省宁波市"
                 },
                 new Location
                 {
@@ -189,7 +205,8 @@ namespace GetJob.Data
                     SelfEvaluation = "",
                     State = "",
                     Visible = ""
-                });
+                }
+                );
 
             modelBuilder.Entity<ResumeSubmitted>().HasData(
                 new ResumeSubmitted
@@ -212,12 +229,17 @@ namespace GetJob.Data
                 new DeliverStatus
                 {
                     DeliverStatusId = 1,
-                    Text = "未审核"
+                    Text = "待审核"
                 },
                 new DeliverStatus
                 {
                     DeliverStatusId = 2,
-                    Text = "已审核"
+                    Text = "审核通过"
+                },
+                new DeliverStatus
+                {
+                    DeliverStatusId = 3,
+                    Text = "审核未通过"
                 });
 
             modelBuilder.Entity<Deliver>().HasData(

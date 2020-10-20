@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 using GetJob.Models;
 
-namespace GetJob.Web.ViewModels.Company
+namespace GetJob.Web.ViewModels.Hire
 {
     public class JobViewModel
     {
@@ -14,7 +11,7 @@ namespace GetJob.Web.ViewModels.Company
             
         }
 
-        public JobViewModel(Job job)
+        public JobViewModel(Models.Job job)
         {
             Id = job.Id;
             Name = job.Name;

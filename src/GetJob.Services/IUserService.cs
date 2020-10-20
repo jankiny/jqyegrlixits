@@ -15,7 +15,9 @@ namespace GetJob.Services
         Task SignOutAsync();
         Task<IdentityResult> DeleteAsync(IdentityUser model);
         Task<IdentityResult> UpdateAsync(IdentityUser model);
+        Task<IdentityResult> ChangePassword(string userName, string currentPassword, string newPassword);
         Task<IdentityUser> GetByIdAsync(string id);
+        Task<IdentityUser> GetByUserNameAsync(string userName);
         Task<object> GetUserClaim(string userName);
         Task<List<IdentityUser>> GetAllAsync();
     }

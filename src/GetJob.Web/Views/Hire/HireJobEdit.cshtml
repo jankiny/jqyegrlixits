@@ -1,9 +1,10 @@
 ﻿@{
+    ViewBag.Title = "岗位编辑";
     Layout = "_Company";
 }
 
 @model JobViewModel
-<form asp-controller="Company" asp-action="HireJobEdit" method="post">
+<form asp-controller="Hire" asp-action="HireJobEdit" method="post">
     <input type="hidden" asp-for="Id" />
     <input type="hidden" asp-for="CompanyId" value="@User.FindFirst("CompanyId").Value" />
 
@@ -100,57 +101,3 @@
         <button type="submit" class="btn btn-primary px-4">保存</button>
     </div>
 </form>
-<script>
-    function PopulateSecondKinds() {
-        var firstKindId = $('#FirstKind').val();
-        $.ajax({
-            url: '/Company/PopulateSecondKinds',
-            type: "GET",
-            dataType: "JSON",
-            data: { firstKindId: firstKindId },
-            success: function (kinds) {
-                $("#SecondKind").html('<option value="">-- 选择岗位类别 --</option>');
-                $.each(kinds,
-                    function (i, kind) {
-                        console.log(kind);
-                        $("#SecondKind").append($('<option></option>').val(kind.jobKindId).html(kind.text));
-                    });
-            }
-        });
-    }
-    function PopulateCities() {
-        var provinceId = $('#ProvinceId').val();
-        $.ajax({
-            url: '/Company/PopulateCities',
-            type: "GET",
-            dataType: "JSON",
-            data: { provinceId: provinceId },
-            success: function (cities) {
-                $("#CityId").html('<option value="">-- 选择市 --</option>');
-                $("#LocationId").html('<option value="">-- 选择区 --</option>');
-                $.each(cities,
-                    function (i, city) {
-                        console.log(city);
-                        $("#CityId").append($('<option></option>').val(city.locationId).html(city.text));
-                    });
-            }
-        });
-    }
-    function PopulateDistricts() {
-        var cityId = $('#CityId').val();
-        $.ajax({
-            url: '/Company/PopulateDistricts',
-            type: "GET",
-            dataType: "JSON",
-            data: { cityId: cityId },
-            success: function (districts) {
-                $("#LocationId").html('<option value="">-- 选择区 --</option>');
-                $.each(districts,
-                    function (i, district) {
-                        console.log(district);
-                        $("#LocationId").append($('<option></option>').val(district.locationId).html(district.text));
-                    });
-            }
-        });
-    }
-</script>

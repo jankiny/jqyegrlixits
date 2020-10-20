@@ -102,11 +102,39 @@ namespace GetJob.Services.Impl
             }
         }
 
+        public async Task<IdentityResult> ChangePassword(string userName, string currentPassword, string newPassword)
+        {
+            try
+            {
+                var user = await _userManager.FindByNameAsync(userName);
+                return await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return IdentityResult.Failed();
+            }
+        }
+
+
         public async Task<IdentityUser> GetByIdAsync(string id)
         {
             try
             {
                 return await _userManager.FindByIdAsync(id);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return null;
+            }
+        }
+
+        public async Task<IdentityUser> GetByUserNameAsync(string userName)
+        {
+            try
+            {
+                return await _userManager.FindByNameAsync(userName);
             }
             catch (Exception e)
             {

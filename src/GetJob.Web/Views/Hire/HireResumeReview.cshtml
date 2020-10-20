@@ -1,0 +1,83 @@
+﻿@model ResumeReviewViewModel
+@{
+    ViewBag.Title = "简历审核";
+    Layout = "_Company";
+}
+<div class="row">
+    <div class="col-9">
+        <div class="tab-content" id="v-pills-tabContent">
+            @for (int i = 0; i < Model.JobViewModels.Count; i++)
+            {
+                <div class="tab-pane fade @(i == 0 ? "show active" : "")"
+                     id="@Model.JobViewModels[i].Id-tabpanel"
+                     role="tabpanel"
+                     aria-labelledby="@Model.JobViewModels[i].Id-tab">
+                    @Model.JobViewModels[i].Name
+                    <form>
+                        <table style="width: 100%;">
+                            <tr>
+                                <td>求职人</td>
+                                <td>毕业院校</td>
+                                <td>简历状态</td>
+                                <td>提交时间</td>
+                                <td>操作</td>
+                            </tr>
+                            @for (int j = 0; j < Model.DeliverListViewModels[i].DeliverViewModels.Count; j++)
+                            {
+                                <tr>
+                                    <td>@Model.DeliverListViewModels[i].DeliverViewModels[j].ResumeSubmitted.Student.Name</td>
+                                    <td>@Model.DeliverListViewModels[i].DeliverViewModels[j].ResumeSubmitted.Student.College</td>
+                                    <td>@Model.DeliverListViewModels[i].DeliverViewModels[j].DeliverStatus.Text</td>
+                                    <td>@Model.DeliverListViewModels[i].DeliverViewModels[j].DeliverDateTime.ToString("yyyy-MM-dd HH:mm")</td>
+                                    <td>
+                                        <a asp-controller="Hire" asp-action="HireJobEdit" asp-route-id="@Model.DeliverListViewModels[i].DeliverViewModels[j].Id">审核</a>
+                                    </td>
+                                    <td>
+                                        <input type="hidden" asp-for="@Model.DeliverListViewModels[i].DeliverViewModels[j].Id" />
+                                        <input type="hidden" asp-for="@Model.DeliverListViewModels[i].DeliverViewModels[j].JobId" />
+                                        <input type="hidden" asp-for="@Model.DeliverListViewModels[i].DeliverViewModels[j].DeliverStatusId" />
+                                        <input type="hidden" asp-for="@Model.DeliverListViewModels[i].DeliverViewModels[j].ResumeSubmittedId" />
+                                        <input type="hidden" asp-for="@Model.DeliverListViewModels[i].DeliverViewModels[j].DeliverDateTime" />
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                        <div class="form-inline row mt-3 pl-4">
+                            <a class="mr-2">全选</a>
+                            <a class="mr-2">反选</a>
+                            <button type="submit" class="btn btn-sm btn-primary">批量删除</button>
+                        </div>
+                    </form>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="col-3">
+        <form class="form-inline" asp-controller="Hire" asp-action="HireResumeReview" method="post">
+            <div class="form-group mb-2 mr-3">
+                <select name="selectedJobStatus" onchange="JobStatusDropDownListChange()" class="form-control" asp-items="ViewBag.JobStatuses">
+                </select>
+            </div>
+            <button id="query" type="submit" class="btn btn-sm btn-primary mb-2 d-none">查询</button>
+        </form>
+        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            @for (int i = 0; i < Model.JobViewModels.Count; i++)
+            {
+                <a class="nav-link @(i == 0 ? "active" : "")"
+                   id="@Model.JobViewModels[i].Id-tab"
+                   data-toggle="pill"
+                   href="#@Model.JobViewModels[i].Id-tabpanel"
+                   role="tab"
+                   aria-controls="@Model.JobViewModels[i].Id-tabpanel"
+                   aria-selected="@(i == 0 ? "true" : "false")">
+                    @Model.JobViewModels[i].Name (@Model.DeliverListViewModels[i].DeliverViewModels.Count)
+                </a>
+            }
+        </div>
+    </div>
+</div>
+<script>
+    function JobStatusDropDownListChange() {
+        $('#query').click();
+    }
+</script>
