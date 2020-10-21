@@ -24,6 +24,48 @@ namespace GetJob.Services.Impl
             _studentService = studentService;
         }
 
+        public async Task<int> AddResume(Resume model)
+        {
+            try
+            {
+                await _context.Resumes.AddAsync(model);
+                return await _context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return -1;
+            }
+        }
+
+        public async Task<int> AddResumeSubmit(ResumeSubmitted model)
+        {
+            try
+            {
+                await _context.SubmittedResumes.AddAsync(model);
+                return await _context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return -1;
+            }
+        }
+
+        public async Task<int> AddDeliver(Deliver model)
+        {
+            try
+            {
+                await _context.Delivers.AddAsync(model);
+                return await _context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return -1;
+            }
+        }
+
         public async Task<List<Deliver>> GetDeliverByJobId(string jobId)
         {
             try

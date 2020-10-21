@@ -157,7 +157,7 @@ namespace GetJob.Services.Impl
                         return await _context.Companies.FindAsync(companyId);
                     case "Student":
                         var studentId = claims.FirstOrDefault(c => c.Type == "StudentId")?.Value;
-                        return await _context.Companies.FindAsync(studentId);
+                        return await _context.Students.FindAsync(studentId);
                     default:
                         return null;
                 }

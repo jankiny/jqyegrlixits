@@ -20,7 +20,7 @@
                         <div class="collapse @(ViewBag.Title == "岗位管理" || ViewBag.Title == "岗位发布" || ViewBag.Title == "简历审核" || ViewBag.Title == "招聘历史" ? "show" : "") p-0 fs-5" id="multiCollapse2">
                             <a class="dropdown-item @(ViewBag.Title == "岗位管理" ? "active" : "")" asp-controller="Hire" asp-action="HireJobManage">岗位管理</a>
                             <a class="dropdown-item @(ViewBag.Title == "岗位发布" ? "active" : "")" asp-controller="Hire" asp-action="HireJobPublish">岗位发布</a>
-                            <a class="dropdown-item @(ViewBag.Title == "简历审核" ? "active" : "")" asp-controller="Hire" asp-action="HireResumeReview">简历审核</a>
+                            <a class="dropdown-item @(ViewBag.Title == "简历审核" ? "active" : "")" asp-controller="Hire" asp-action="HireResumeList">简历审核</a>
                             <a class="dropdown-item @(ViewBag.Title == "招聘历史" ? "active" : "")" asp-controller="Hire" asp-action="HireHistory">招聘历史</a>
                         </div>
                     </li>
