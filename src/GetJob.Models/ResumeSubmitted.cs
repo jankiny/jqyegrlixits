@@ -7,6 +7,31 @@ namespace GetJob.Models
 {
     public class ResumeSubmitted
     {
+        public ResumeSubmitted()
+        {
+            
+        }
+        public ResumeSubmitted(Resume resume)
+        {
+            Id = resume.Id;
+            StudentId = resume.StudentId;
+            Student = resume.Student;
+            Title = resume.Title;
+            CreateDateTime = resume.CreateDateTime;
+            ForJobKindId = resume.ForJobKindId;
+            ForJobKind = resume.ForJobKind;
+            ForJobAddressId = resume.ForJobAddressId;
+            ForJobAddress = resume.ForJobAddress;
+            ForJobCharacterId = resume.ForJobCharacterId;
+            ForJobCharacter = resume.ForJobCharacter;
+            ForJobPayId = resume.ForJobPayId;
+            ForJobPay = resume.ForJobPay;
+            Certificate = resume.Certificate;
+            WorkExperience = resume.WorkExperience;
+            SelfEvaluation = resume.SelfEvaluation;
+            State = resume.State;
+            Visible = resume.Visible;
+        }
         public string Id { get; set; } = Guid.NewGuid().ToString();
         [Required] public string StudentId { get; set; }
         public Student Student { get; set; }

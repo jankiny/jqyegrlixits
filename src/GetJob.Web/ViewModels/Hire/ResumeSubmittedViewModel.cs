@@ -7,14 +7,14 @@ using GetJob.Models;
 
 namespace GetJob.Web.ViewModels.Hire
 {
-    public class ResumeViewModel
+    public class ResumeSubmittedViewModel
     {
-        public ResumeViewModel()
+        public ResumeSubmittedViewModel()
         {
 
         }
 
-        public ResumeViewModel(ResumeSubmitted resumeSubmitted)
+        public ResumeSubmittedViewModel(ResumeSubmitted resumeSubmitted)
         {
             Id = resumeSubmitted.Id;
             StudentId = resumeSubmitted.StudentId;

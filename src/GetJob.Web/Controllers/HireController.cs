@@ -6,6 +6,7 @@ using GetJob.Services;
 using GetJob.Web.ViewModels.Company;
 using GetJob.Web.ViewModels.Hire;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity.UI.V3.Pages.Internal.Account;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore.Query;
@@ -235,7 +236,7 @@ namespace GetJob.Web.Controllers
         }
 
         [Authorize(Policy = "CompanyOnly")]
-        public async Task<IActionResult> HireResumeReview(string selectedJobStatus)
+        public async Task<IActionResult> HireResumeList(string selectedJobStatus)
         {
             var company = await _companyService.GetByIdAsync(User.FindFirst("CompanyId").Value);
             var jobList = await _jobService.GetByCompanyAsync(company);
@@ -257,7 +258,16 @@ namespace GetJob.Web.Controllers
             }
             await PopulateJobStatusesDropDownList(selectedJobStatus);
             return View(vm);
-        }   
+        }
+        [Authorize(Policy = "CompanyOnly")]
+        public async Task<IActionResult> HireResumeReview(string id = null)
+        {
+            if (id == null) return NotFound();
+            var resume = await _deliverService.GetResumeSubmittedById(id);
+            if (resume == null) return NotFound();
+            var vm = new ResumeSubmittedViewModel(resume);
+            return View(vm);
+        }
 
         #endregion
     }
