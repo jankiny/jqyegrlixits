@@ -53,5 +53,8 @@ namespace GetJob.Web.ViewModels.Hire
         [Display(Name = "自我评估")] public string SelfEvaluation { get; set; }
         [StringLength(10), Display(Name = "当前状态")] public string State { get; set; }
         [StringLength(2)] public string Visible { get; set; }
+
+        [Required, Display(Name = "省份")] public int ProvinceId { get; set; }
+        [Required, Display(Name = "城市")] public int CityId { get; set; }
     }
 }
