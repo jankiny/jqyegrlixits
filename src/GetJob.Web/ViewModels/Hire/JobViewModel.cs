@@ -65,7 +65,7 @@ namespace GetJob.Web.ViewModels.Hire
         [Required, Display(Name = "工作地点")] public int LocationId { get; set; }
         public Location Location { get; set; }
 
-        [Required, Display(Name = "学历")] public int DegreeId { get; set; }
+        [Required, Display(Name = "学历要求")] public int DegreeId { get; set; }
         public Degree Degree { get; set; }
 
         [Required, Display(Name = "招聘人数")] public int RecruitNumber { get; set; }

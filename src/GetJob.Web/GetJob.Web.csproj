@@ -21,7 +21,7 @@
 
   <ItemGroup>
     <Folder Include="ViewModels\Candidate\" />
-    <Folder Include="Views\Resume\" />
+    <Folder Include="wwwroot\upload\" />
   </ItemGroup>
 
 </Project>

@@ -31,6 +31,7 @@ namespace GetJob.Services.Impl
             try
             {
                 await _userManager.CreateAsync(model, plainPassword);
+                await _userManager.AddClaimAsync(model, new Claim("HeaderUrl", @"/img/default_head.png"));
                 await _userManager.AddClaimAsync(model, new Claim("Identity", "Company"));
                 return await _userManager.AddClaimAsync(model, new Claim("CompanyId", company.Id));
             }
@@ -102,6 +103,23 @@ namespace GetJob.Services.Impl
             }
         }
 
+        public async Task<IdentityResult> UpdateUserClaimAsync(string userName, string claimType, string claimValue)
+        {
+            try
+            {
+                var user = await _userManager.FindByNameAsync(userName);
+                var claims = await _userManager.GetClaimsAsync(user);
+                var claim = claims.FirstOrDefault(c => c.Type == claimType);
+                await _userManager.RemoveClaimAsync(user, claim);
+                return await _userManager.AddClaimAsync(user, new Claim(claim?.Type, claimValue));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return IdentityResult.Failed();
+            }
+        }
+
         public async Task<IdentityResult> ChangePassword(string userName, string currentPassword, string newPassword)
         {
             try
@@ -143,13 +161,29 @@ namespace GetJob.Services.Impl
             }
         }
 
-        public async Task<object> GetUserClaim(string userName)
+        public async Task<string> GetUserClaimAsync(string userName, string claimType)
+        {
+            try
+            {
+                var user = await _userManager.FindByNameAsync(userName);
+                var claims = await _userManager.GetClaimsAsync(user);
+                return claims.FirstOrDefault(c => c.Type == claimType)?.Value;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return string.Empty;
+            }
+        }
+
+        public async Task<object> GetUserIdentity(string userName)
         {
             try
             {
                 var user = await _userManager.FindByNameAsync(userName);
                 var claims = await _userManager.GetClaimsAsync(user);
                 var identity = claims.FirstOrDefault(c => c.Type == "Identity")?.Value;
+                // GetUserClaimAsync(userName, "Identity");
                 switch (identity)
                 {
                     case "Company":

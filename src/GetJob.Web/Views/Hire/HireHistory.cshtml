@@ -8,53 +8,79 @@
         <div class="tab-content" id="v-pills-tabContent">
             @for (var i = 0; i < Model.JobViewModels.Count; i++)
             {
-            <div class="tab-pane fade@(i == 0 ? " active show" : "")"
-                 id="v-@Model.JobViewModels[i].Id"
-                 role="tabpanel"
-                 aria-labelledby="@Model.JobViewModels[i].Id-tab">
-                <div class="alert alert-success" role="alert">
-                    <h5 class="alert-heading">简历状态：审核通过</h5>
-                    招聘岗位：
-                    @Model.JobViewModels[i].Name (薪水：@Model.JobViewModels[i].JobPay.Text； 岗位类型：@Model.JobViewModels[i].JobCharacter.Text； 岗位类别：@Model.JobViewModels[i].JobKind.Text)
-                </div>
-                <form>
-                    <table class="table table-striped" style="width: 100%;">
-                        <tr>
-                            <th>求职人</th>
-                            <th>毕业院校</th>
-                            <th>本科专业</th>
-                            <th>提交时间</th>
-                            <th>操作</th>
-                        </tr>
-                        @for (var j = 0; j < Model.DeliverListViewModels[i].DeliverViewModels.Count; j++)
-                        {
+                <div class="tab-pane fade@(i == 0 ? " active show" : "")"
+                     id="v-@Model.JobViewModels[i].Id"
+                     role="tabpanel"
+                     aria-labelledby="@Model.JobViewModels[i].Id-tab">
+                    <div class="alert alert-success" role="alert">
+                        <h5 class="alert-heading">简历状态：审核通过</h5>
+                        招聘岗位：
+                        @Model.JobViewModels[i].Name (薪水：@Model.JobViewModels[i].JobPay.Text； 岗位类型：@Model.JobViewModels[i].JobCharacter.Text； 岗位类别：@Model.JobViewModels[i].JobKind.Text)
+                    </div>
+                    <form>
+                        <table class="table table-striped" style="width: 100%;">
                             <tr>
-                                <td class="d-none">
-                                    <input type="hidden" asp-for="@Model.DeliverListViewModels[i].DeliverViewModels[j].Id" />
-                                    <input type="hidden" asp-for="@Model.DeliverListViewModels[i].DeliverViewModels[j].JobId" />
-                                    <input type="hidden" asp-for="@Model.DeliverListViewModels[i].DeliverViewModels[j].DeliverStatusId" />
-                                    <input type="hidden" asp-for="@Model.DeliverListViewModels[i].DeliverViewModels[j].ResumeSubmittedId" />
-                                    <input type="hidden" asp-for="@Model.DeliverListViewModels[i].DeliverViewModels[j].DeliverDateTime" />
-                                </td>
-                                <td>@Model.DeliverListViewModels[i].DeliverViewModels[j].ResumeSubmitted.Student.Name</td>
-                                <td>@Model.DeliverListViewModels[i].DeliverViewModels[j].ResumeSubmitted.Student.College</td>
-                                <td>@Model.DeliverListViewModels[i].DeliverViewModels[j].ResumeSubmitted.Student.Major</td>
-                                <td>@Model.DeliverListViewModels[i].DeliverViewModels[j].DeliverDateTime.ToString("yyyy-MM-dd HH:mm")</td>
-                                <td>
-                                    <a asp-controller="Hire" asp-action="HireResumeReview" asp-route-id="@Model.DeliverListViewModels[i].DeliverViewModels[j].Id">
-                                        @(Model.DeliverListViewModels[i].DeliverViewModels[j].DeliverStatusId == 1 ? "审核" : "查看简历")
-                                    </a>
-                                </td>
+                                <th>求职人</th>
+                                <th>毕业院校</th>
+                                <th>本科专业</th>
+                                <th>提交时间</th>
+                                <th>操作</th>
                             </tr>
+                            @for (var j = 0; j < Model.DeliverListViewModels[i].DeliverViewModels.Count; j++)
+                            {
+                                <tr>
+                                    <td class="d-none">
+                                        <input type="hidden" asp-for="@Model.DeliverListViewModels[i].DeliverViewModels[j].Id"/>
+                                        <input type="hidden" asp-for="@Model.DeliverListViewModels[i].DeliverViewModels[j].JobId"/>
+                                        <input type="hidden" asp-for="@Model.DeliverListViewModels[i].DeliverViewModels[j].DeliverStatusId"/>
+                                        <input type="hidden" asp-for="@Model.DeliverListViewModels[i].DeliverViewModels[j].ResumeSubmittedId"/>
+                                        <input type="hidden" asp-for="@Model.DeliverListViewModels[i].DeliverViewModels[j].DeliverDateTime"/>
+                                    </td>
+                                    <td>@Model.DeliverListViewModels[i].DeliverViewModels[j].ResumeSubmitted.Student.Name</td>
+                                    <td>@Model.DeliverListViewModels[i].DeliverViewModels[j].ResumeSubmitted.Student.College</td>
+                                    <td>@Model.DeliverListViewModels[i].DeliverViewModels[j].ResumeSubmitted.Student.Major</td>
+                                    <td>@Model.DeliverListViewModels[i].DeliverViewModels[j].DeliverDateTime.ToString("yyyy-MM-dd HH:mm")</td>
+                                    <td>
+                                        <a asp-controller="Hire" asp-action="HireResumeReview" asp-route-id="@Model.DeliverListViewModels[i].DeliverViewModels[j].Id">
+                                            @(Model.DeliverListViewModels[i].DeliverViewModels[j].DeliverStatusId == 1 ? "审核" : "查看简历")
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                        @if (Model.DeliverListViewModels[i].DeliverViewModels.Count > 10)
+                        {
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">1</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">2</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">3</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
                         }
-                    </table>
-                    @*<div class="form-inline row mt-3 pl-4">
+                        @*<div class="form-inline row mt-3 pl-4">
                 <a class="mr-2">全选</a>
                 <a class="mr-2">反选</a>
                 <button type="submit" class="btn btn-sm btn-primary">批量删除</button>
             </div>*@
-                </form>
-            </div>
+                    </form>
+                </div>
             }
         </div>
     </div>
@@ -76,7 +102,10 @@
                    role="tab"
                    aria-controls="v-@Model.JobViewModels[i].Id"
                    aria-selected="@(i == 0 ? "true" : "false")">
-                    @Model.JobViewModels[i].Name (@Model.DeliverListViewModels[i].DeliverViewModels.Count)
+                    <div class="form-inline row">
+                        <div class="col-sm-10 hidden-line">@Model.JobViewModels[i].Name</div>
+                        (@Model.DeliverListViewModels[i].DeliverViewModels.Count)
+                    </div>
                 </a>
             }
         </div>

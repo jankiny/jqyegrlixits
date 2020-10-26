@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using GetJob.Services;
+using GetJob.Web.Helper;
 using GetJob.Web.ViewModels.Recruiter;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GetJob.Web.Controllers
@@ -12,17 +16,37 @@ namespace GetJob.Web.Controllers
     public class RecruiterController : Controller
     {
         private readonly IUserService _userService;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public RecruiterController(IUserService userService)
+        public RecruiterController(IUserService userService, IWebHostEnvironment webHostEnvironment)
         {
             _userService = userService;
+            _webHostEnvironment = webHostEnvironment;
         }
         [Authorize(Policy = "CompanyOnly")]
         public async Task<IActionResult> PersonalInfo()
         {
             var user = await _userService.GetByUserNameAsync(User.Identity.Name);
-            var vm = new UserInfoViewModel(user);
+            var vm = new UserInfoViewModel(user)
+            {
+                HeaderUrl = await _userService.GetUserClaimAsync(user.UserName, "HeaderUrl")
+            };
             return View(vm);
+        }
+        [HttpPost, Authorize(Policy = "CompanyOnly")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> PersonalInfoChangeHeader(UserInfoViewModel vm, IFormFile headerFile)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userService.GetByUserNameAsync(User.Identity.Name);
+                var fileName = await FileHelper.UploadFileAsync(headerFile, _webHostEnvironment.WebRootPath + @$"\upload\header\");
+                vm.HeaderUrl = @"\upload\header\" + fileName;
+                await _userService.UpdateUserClaimAsync(user.UserName, "HeaderUrl", vm.HeaderUrl);
+                return RedirectToAction(nameof(PersonalInfo), vm);
+            }
+            ModelState.AddModelError("", "未知错误");
+            return RedirectToAction(nameof(PersonalInfo));
         }
         [Authorize(Policy = "CompanyOnly")]
         public IActionResult RecruiterInfo()

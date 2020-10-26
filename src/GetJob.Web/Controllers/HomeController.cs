@@ -39,7 +39,7 @@ namespace GetJob.Web.Controllers
             if (result.Succeeded)
             {
                 _logger.LogInformation("用户登录成功");
-                var identity = await _userService.GetUserClaim(vm.UserName);
+                var identity = await _userService.GetUserIdentity(vm.UserName);
                 if (identity is Company company)
                 {
                     _logger.LogInformation($"用户身份是{company.Name}");

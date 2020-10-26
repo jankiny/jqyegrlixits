@@ -22,6 +22,7 @@ namespace GetJob.Web.ViewModels.Recruiter
             PhoneNumber = user.PhoneNumber;
         }
         public string Id { get; set; }
+        [Display(Name = "头像")] public string HeaderUrl { get; set; }
         [Display(Name = "用户名")] public string UserName { get; set; }
         [Display(Name = "邮箱")] public string Email { get; set; }
         [Display(Name = "电话")] public string PhoneNumber { get; set; }

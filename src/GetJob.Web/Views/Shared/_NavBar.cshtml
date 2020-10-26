@@ -40,7 +40,10 @@
                             <a class="nav-link" asp-controller="Hire" asp-action="HireJobPublish">发布岗位</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="dropdown07XL" data-toggle="dropdown" aria-expanded="false">@User.Identity.Name</a>
+                            <a class="nav-link dropdown-toggle" href="#" id="dropdown07XL" data-toggle="dropdown" aria-expanded="false">
+                                <img class="user-header radius" src="@User.Claims.FirstOrDefault(c => c.Type=="HeaderUrl")?.Value" width="30" height="30"/>
+                                @User.Identity.Name
+                            </a>
                             <div class="dropdown-menu" aria-labelledby="dropdown07XL">
                                 <a class="dropdown-item" asp-controller="Recruiter" asp-action="PersonalInfo">个人信息</a>
                                 <a class="dropdown-item" asp-controller="Recruiter" asp-action="RecruiterInfo">职位信息</a>

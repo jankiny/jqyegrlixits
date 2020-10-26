@@ -80,7 +80,10 @@
                    role="tab"
                    aria-controls="v-@Model.JobViewModels[i].Id"
                    aria-selected="@(i == 0 ? "true" : "false")">
-                    @Model.JobViewModels[i].Name (@Model.DeliverListViewModels[i].DeliverViewModels.Count)
+                    <div class="form-inline row">
+                        <div class="col-sm-9 hidden-line">@Model.JobViewModels[i].Name</div>
+                        (@Model.DeliverListViewModels[i].DeliverViewModels.Count)
+                    </div>
                 </a>
             }
         </div>

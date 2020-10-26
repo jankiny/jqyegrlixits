@@ -55,10 +55,25 @@ a:hover { color: #0D812E !important; }
 
 .line { margin: 0 5px !important; }
 
+.hidden-line {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
 .feather {
     height: 16px;
     vertical-align: text-bottom;
     width: 16px;
+}
+
+.user-header {
+    border: #cccccc solid 1px;
+    object-fit: cover;
+}
+
+.user-header.radius{
+    border-radius: 50%;
 }
 
 #agreementModel {
