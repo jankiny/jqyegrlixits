@@ -19,6 +19,5 @@ namespace GetJob.Models
         public DeliverStatus DeliverStatus { get; set; }
 
         public DateTime DeliverDateTime { get; set; }
-
     }
 }

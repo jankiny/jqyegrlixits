@@ -11,6 +11,8 @@
     <Compile Remove="Migrations\20201019062832_ChangeSeedData.Designer.cs" />
     <Compile Remove="Migrations\20201019160719_InitialDb.cs" />
     <Compile Remove="Migrations\20201019160719_InitialDb.Designer.cs" />
+    <Compile Remove="Migrations\20201026125739_anyMigrationName.cs" />
+    <Compile Remove="Migrations\20201026125739_anyMigrationName.Designer.cs" />
     <Compile Remove="Migrations\GetJobDb\20201018084708_AddDataSeed.cs" />
     <Compile Remove="Migrations\GetJobDb\20201018084708_AddDataSeed.Designer.cs" />
     <Compile Remove="Migrations\GetJobDb\20201019011624_InitialDb.cs" />

@@ -35,9 +35,6 @@ namespace GetJob.Models
 
         [StringLength(450)] public string Description { get; set; } = string.Empty;
 
-        // 用‘|’分割
-        //[StringLength(450)] public string ResumeReceived { get; set; } = string.Empty;
-
         [Required, DataType(DataType.DateTime)] public DateTime LastModify { get; set; }
     }
 }

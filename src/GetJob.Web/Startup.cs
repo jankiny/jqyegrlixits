@@ -25,55 +25,55 @@ namespace GetJob.Web
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-services.AddControllersWithViews()
-    .AddMvcOptions(options =>
-    {
-        options.MaxModelValidationErrors = 50;
-        options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(
-            _ => "±ØÌî");
-    })
-    .AddRazorRuntimeCompilation();
+            services.AddControllersWithViews()
+                .AddMvcOptions(options =>
+                {
+                    options.MaxModelValidationErrors = 50;
+                    options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(
+                        _ => "±ØÌî");
+                })
+                .AddRazorRuntimeCompilation();
 
-services.AddAuthorization(options =>
-{
-    options.AddPolicy("CompanyOnly", policy => policy.RequireClaim("CompanyId"));
-});
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("CompanyOnly", policy => policy.RequireClaim("CompanyId"));
+            });
 
-services.AddDbContext<GetJobDbContext>(options =>
-{
-options.UseSqlServer(_configuration.GetConnectionString("GetJobDb"),
-    b => b.MigrationsAssembly("GetJob.Data"));
-});
-services.AddDbContext<AppDbContext>(options =>
-options.UseSqlServer(
-    _configuration.GetConnectionString("GetJobDb"),
-    b => b.MigrationsAssembly("GetJob.Data"))
-);
+            services.AddDbContext<GetJobDbContext>(options =>
+            {
+                options.UseSqlServer(_configuration.GetConnectionString("GetJobDb"),
+                    b => b.MigrationsAssembly("GetJob.Data"));
+            });
+            services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(
+                    _configuration.GetConnectionString("GetJobDb"),
+                    b => b.MigrationsAssembly("GetJob.Data"))
+            );
 
-services.Configure<IdentityOptions>(options =>
-{
-// Password settings.
-options.Password.RequireDigit = false;
-options.Password.RequireLowercase = false;
-options.Password.RequireNonAlphanumeric = false;
-options.Password.RequireUppercase = false;
-options.Password.RequiredLength = 6;
-options.Password.RequiredUniqueChars = 0;
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Password settings.
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 0;
 
-// Lockout settings.
-options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-options.Lockout.MaxFailedAccessAttempts = 5;
-options.Lockout.AllowedForNewUsers = true;
+                // Lockout settings.
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.AllowedForNewUsers = true;
 
-// User settings.
-options.User.AllowedUserNameCharacters =
-    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-options.User.RequireUniqueEmail = false;
-});
+                // User settings.
+                options.User.AllowedUserNameCharacters =
+                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                options.User.RequireUniqueEmail = false;
+            });
 
-services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
-    .AddEntityFrameworkStores<AppDbContext>()
-    .AddDefaultTokenProviders();
+            services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders();
 
             services.AddScoped<ICompanyService, CompanyService>();
             services.AddScoped<IStudentService, StudentService>();
