@@ -66,11 +66,42 @@ namespace GetJob.Services.Impl
             }
         }
 
+        public async Task<int> UpdateAsync(Deliver model)
+        {
+            try
+            {
+                _context.Delivers.Update(model);
+                return await _context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return -1;
+            }
+        }
+
+        public async Task<Deliver> GetDeliverById(string id)
+        {
+            try
+            {
+                var deliver = await _context.Delivers.FindAsync(id);
+                deliver.Job = await _jobService.GetByIdAsync(deliver.JobId);
+                deliver.ResumeSubmitted = await GetResumeSubmittedById(deliver.ResumeSubmittedId);
+                deliver.DeliverStatus = await _context.DeliverStatuses.FindAsync(deliver.DeliverStatusId);
+                return deliver;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return null;
+            }
+        }
+
         public async Task<List<Deliver>> GetDeliverByJobId(string jobId)
         {
             try
             {
-                var delivers = await _context.Delivers.Where(d => d.JobId == jobId).ToListAsync();
+                var delivers = await _context.Delivers.Where(d => d.JobId == jobId).OrderBy(d => d.DeliverStatusId).ToListAsync();
                 foreach (var deliver in delivers)
                 {
                     deliver.Job = await _jobService.GetByIdAsync(deliver.JobId);
@@ -102,6 +133,20 @@ namespace GetJob.Services.Impl
             {
                 _logger.LogError(e.Message);
                 return null;
+            }
+        }
+
+        public async Task<int> AddNotify(InterviewNotify model)
+        {
+            try
+            {
+                await _context.InterviewNotifies.AddAsync(model);
+                return await _context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return -1;
             }
         }
     }

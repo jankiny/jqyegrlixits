@@ -8,19 +8,13 @@
         <div class="tab-content" id="v-pills-tabContent">
             @for (var i = 0; i < Model.JobViewModels.Count; i++)
             {
-                <div class="tab-pane fade @(i == 0 ? "show active" : "")"
-                     id="@Model.JobViewModels[i].Id-tabpanel"
+                <div class="tab-pane fade@(i == 0 ? " active show" : "")"
+                     id="v-@Model.JobViewModels[i].Id"
                      role="tabpanel"
                      aria-labelledby="@Model.JobViewModels[i].Id-tab">
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">招聘岗位：</label>
-                        <label class="col-sm-10 col-form-label">
-                            @Model.JobViewModels[i].Name (薪水：@Model.JobViewModels[i].JobPay.Text - 岗位类型：@Model.JobViewModels[i].JobCharacter.Text - 岗位类别：@Model.JobViewModels[i].JobKind.Text)
-                        </label>
-                    </div>
-                    <div class="form-group mb-2">
-                        <div>
-                        </div>
+                    <div class="alert alert-success" role="alert">
+                        招聘岗位：
+                        @Model.JobViewModels[i].Name (薪水：@Model.JobViewModels[i].JobPay.Text； 岗位类型：@Model.JobViewModels[i].JobCharacter.Text； 岗位类别：@Model.JobViewModels[i].JobKind.Text)
                     </div>
                     <form>
                         <table class="table table-striped" style="width: 100%;">
@@ -35,27 +29,29 @@
                             {
                                 <tr>
                                     <td class="d-none">
-                                        <input type="hidden" asp-for="@Model.DeliverListViewModels[i].DeliverViewModels[j].Id"/>
-                                        <input type="hidden" asp-for="@Model.DeliverListViewModels[i].DeliverViewModels[j].JobId"/>
-                                        <input type="hidden" asp-for="@Model.DeliverListViewModels[i].DeliverViewModels[j].DeliverStatusId"/>
-                                        <input type="hidden" asp-for="@Model.DeliverListViewModels[i].DeliverViewModels[j].ResumeSubmittedId"/>
-                                        <input type="hidden" asp-for="@Model.DeliverListViewModels[i].DeliverViewModels[j].DeliverDateTime"/>
+                                        <input type="hidden" asp-for="@Model.DeliverListViewModels[i].DeliverViewModels[j].Id" />
+                                        <input type="hidden" asp-for="@Model.DeliverListViewModels[i].DeliverViewModels[j].JobId" />
+                                        <input type="hidden" asp-for="@Model.DeliverListViewModels[i].DeliverViewModels[j].DeliverStatusId" />
+                                        <input type="hidden" asp-for="@Model.DeliverListViewModels[i].DeliverViewModels[j].ResumeSubmittedId" />
+                                        <input type="hidden" asp-for="@Model.DeliverListViewModels[i].DeliverViewModels[j].DeliverDateTime" />
                                     </td>
                                     <td>@Model.DeliverListViewModels[i].DeliverViewModels[j].ResumeSubmitted.Student.Name</td>
                                     <td>@Model.DeliverListViewModels[i].DeliverViewModels[j].ResumeSubmitted.Student.College</td>
                                     <td>@Model.DeliverListViewModels[i].DeliverViewModels[j].DeliverStatus.Text</td>
                                     <td>@Model.DeliverListViewModels[i].DeliverViewModels[j].DeliverDateTime.ToString("yyyy-MM-dd HH:mm")</td>
                                     <td>
-                                        <a asp-controller="Hire" asp-action="HireResumeReview" asp-route-id="@Model.DeliverListViewModels[i].DeliverViewModels[j].Id">审核</a>
+                                        <a asp-controller="Hire" asp-action="HireResumeReview" asp-route-id="@Model.DeliverListViewModels[i].DeliverViewModels[j].Id">
+                                            @(Model.DeliverListViewModels[i].DeliverViewModels[j].DeliverStatusId == 1 ? "审核" : "查看简历")
+                                        </a>
                                     </td>
                                 </tr>
                             }
                         </table>
-                        <div class="form-inline row mt-3 pl-4">
-                            <a class="mr-2">全选</a>
-                            <a class="mr-2">反选</a>
-                            <button type="submit" class="btn btn-sm btn-primary">批量删除</button>
-                        </div>
+                        @*<div class="form-inline row mt-3 pl-4">
+                                <a class="mr-2">全选</a>
+                                <a class="mr-2">反选</a>
+                                <button type="submit" class="btn btn-sm btn-primary">批量删除</button>
+                            </div>*@
                     </form>
                 </div>
             }
@@ -69,15 +65,20 @@
             </div>
             <button id="query" type="submit" class="btn btn-sm btn-primary mb-2 d-none">查询</button>
         </form>
+        @* 错误记录（写到报告中）：直接使用@Model.JobViewModels[i].Id会出现第一个pills不能被再次触发的问题，点击后<a>标签中的属性发生变化，
+            但控制的<div>属性没有发生变化，导致控制的框不展开。第二及之后的都没有问题，只有第一个会出现这样的问题。初步认定为id部分出现的错误，但尝试在id后加后缀，
+            甚至不通过循环渲染第一个nav框，问题都存在，而且在前端中查看html代码结构完全一样（本来就是循环渲染的）。最后解决方法是在id前加入前缀，可以正确
+            控制pills的展开，似乎是href中的#后直接接@开头的代码引起的错误，像是asp框架的问题。
+        *@
         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             @for (var i = 0; i < Model.JobViewModels.Count; i++)
             {
-                <a class="nav-link @(i == 0 ? "active" : "")"
-                   id="@Model.JobViewModels[i].Id-tab"
+                <a class="nav-link@(i == 0 ? " active" : "")"
+                   id="vModel.JobViewModels[i].Id-tab"
                    data-toggle="pill"
-                   href="#@Model.JobViewModels[i].Id-tabpanel"
+                   href="#v-@Model.JobViewModels[i].Id"
                    role="tab"
-                   aria-controls="@Model.JobViewModels[i].Id-tabpanel"
+                   aria-controls="v-@Model.JobViewModels[i].Id"
                    aria-selected="@(i == 0 ? "true" : "false")">
                     @Model.JobViewModels[i].Name (@Model.DeliverListViewModels[i].DeliverViewModels.Count)
                 </a>

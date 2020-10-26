@@ -52,7 +52,12 @@ namespace GetJob.Web.Controllers
                         j.Name.Contains(searchString) || j.Company.Name.Contains(searchString) ||
                         j.Description.Contains(searchString))
                     .ToList();
-            if (!string.IsNullOrEmpty(selectedJobStatus))
+            // TODO：是否需要在进入时显示所有招聘（如果后期数据变多 显示全部 页面数据会很多）
+            if (string.IsNullOrEmpty(selectedJobStatus))
+            {
+                jobList = jobList.Where(j => j.JobStatus.JobStatusId == 1).ToList();
+            }
+            else
             {
                 jobList = jobList.Where(j => j.JobStatus.JobStatusId == int.Parse(selectedJobStatus)).ToList();
             }
@@ -102,7 +107,8 @@ namespace GetJob.Web.Controllers
 
             var jobPays = await _jobService.GetAllJobPayAsync();
             ViewBag.JobPays = new SelectList(jobPays, "JobPayId", "Text", selectedJobPayId);
-
+            
+            //TODO: 不不允许用户直接修改招聘状态，改成停止招聘按钮
             var jobStatuses = await _jobService.GetAllJobStatusAsync();
             ViewBag.JobStatuses = new SelectList(jobStatuses, "JobStatusId", "Text", selectedJobStatusId);
 
@@ -230,17 +236,15 @@ namespace GetJob.Web.Controllers
         }
 
         [Authorize(Policy = "CompanyOnly")]
-        public IActionResult HireHistory()
-        {
-            return View();
-        }
-
-        [Authorize(Policy = "CompanyOnly")]
         public async Task<IActionResult> HireResumeList(string selectedJobStatus)
         {
             var company = await _companyService.GetByIdAsync(User.FindFirst("CompanyId").Value);
             var jobList = await _jobService.GetByCompanyAsync(company);
-            if (!string.IsNullOrEmpty(selectedJobStatus))
+            if (string.IsNullOrEmpty(selectedJobStatus))
+            {
+                jobList = jobList.Where(j => j.JobStatus.JobStatusId == 1).ToList();
+            }
+            else
             {
                 jobList = jobList.Where(j => j.JobStatus.JobStatusId == int.Parse(selectedJobStatus)).ToList();
             }
@@ -260,12 +264,82 @@ namespace GetJob.Web.Controllers
             return View(vm);
         }
         [Authorize(Policy = "CompanyOnly")]
+        public async Task<IActionResult> HireHistory(string selectedJobStatus)
+        {
+            var company = await _companyService.GetByIdAsync(User.FindFirst("CompanyId").Value);
+            var jobList = await _jobService.GetByCompanyAsync(company);
+            if (string.IsNullOrEmpty(selectedJobStatus))
+            {
+                jobList = jobList.Where(j => j.JobStatus.JobStatusId == 1).ToList();
+            }
+            else
+            {
+                jobList = jobList.Where(j => j.JobStatus.JobStatusId == int.Parse(selectedJobStatus)).ToList();
+            }
+            var vm = new ResumeReviewViewModel();
+            foreach (var job in jobList)
+            {
+                vm.JobViewModels.Add(new JobViewModel(job));
+                var deliverListViewModel = new DeliverListViewModel(job.Id);
+                var delivers = await _deliverService.GetDeliverByJobId(job.Id);
+                delivers = delivers.Where(d => d.DeliverStatusId == 2).ToList();
+                foreach (var deliver in delivers)
+                {
+                    deliverListViewModel.DeliverViewModels.Add(new DeliverViewModel(deliver));
+                }
+                vm.DeliverListViewModels.Add(deliverListViewModel);
+            }
+            await PopulateJobStatusesDropDownList(selectedJobStatus);
+            return View(vm);
+        }
+        [Authorize(Policy = "CompanyOnly")]
+        public async Task PopulateDeliverDropDownList(string selectedJobStatus = null)
+        {
+            var jobStatuses = await _jobService.GetAllJobStatusAsync();
+            ViewBag.JobStatuses = new SelectList(jobStatuses, "JobStatusId", "Text", selectedJobStatus);
+        }
+        [Authorize(Policy = "CompanyOnly")]
         public async Task<IActionResult> HireResumeReview(string id = null)
         {
             if (id == null) return NotFound();
-            var resume = await _deliverService.GetResumeSubmittedById(id);
-            if (resume == null) return NotFound();
-            var vm = new ResumeSubmittedViewModel(resume);
+            var deliver = await _deliverService.GetDeliverById(id);
+            if (deliver == null) return NotFound();
+            var vm = new ResumeSubmittedViewModel(deliver);
+            return View(vm);
+        }
+        [HttpPost, Authorize(Policy = "CompanyOnly")]
+        public async Task<IActionResult> HireResumeReview(ResumeSubmittedViewModel vm)
+        {
+            if (ModelState.IsValid)
+            {
+                if (string.IsNullOrEmpty(vm.Pass))
+                {
+                    _logger.LogError("HireResumeReview中提交了未知的ViewModel");
+                    return View(vm);
+                }
+                var deliver = await _deliverService.GetDeliverById(vm.DeliverId);
+                if (vm.Pass == "通过")
+                {
+                    deliver.DeliverStatusId = 2;
+                    await _deliverService.UpdateAsync(deliver);
+
+                    var notify = new InterviewNotify
+                    {
+                        DeliverId = vm.DeliverId,
+                        Title = vm.NotifyTitle,
+                        InterviewDate = vm.InterviewDate,
+                        InterviewLocation = vm.InterviewLocation,
+                        Note = vm.InterviewNote
+                    };
+                    await _deliverService.AddNotify(notify);
+                }
+                else
+                {
+                    deliver.DeliverStatusId = 3;
+                    await _deliverService.UpdateAsync(deliver);
+                }
+                return RedirectToAction(nameof(HireResumeList));
+            }
             return View(vm);
         }
 

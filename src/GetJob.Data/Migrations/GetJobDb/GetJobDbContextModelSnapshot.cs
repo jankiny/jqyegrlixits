@@ -46,16 +46,6 @@ namespace GetJob.Data.Migrations.GetJobDb
                     b.HasIndex("CompanyScaleId");
 
                     b.ToTable("C_Company");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "3eed3eed-3eed-2020-3eed-123456789abc",
-                            CompanyFieldId = 1,
-                            CompanyScaleId = 1,
-                            Description = "无",
-                            Name = "树苗"
-                        });
                 });
 
             modelBuilder.Entity("GetJob.Models.CompanyField", b =>
@@ -73,13 +63,6 @@ namespace GetJob.Data.Migrations.GetJobDb
                     b.HasKey("CompanyFieldId");
 
                     b.ToTable("Dir_CompanyField");
-
-                    b.HasData(
-                        new
-                        {
-                            CompanyFieldId = 1,
-                            Text = "服务业"
-                        });
                 });
 
             modelBuilder.Entity("GetJob.Models.CompanyScale", b =>
@@ -97,13 +80,6 @@ namespace GetJob.Data.Migrations.GetJobDb
                     b.HasKey("CompanyScaleId");
 
                     b.ToTable("Dir_CompanyScale");
-
-                    b.HasData(
-                        new
-                        {
-                            CompanyScaleId = 1,
-                            Text = "20人以下"
-                        });
                 });
 
             modelBuilder.Entity("GetJob.Models.Degree", b =>
@@ -121,18 +97,6 @@ namespace GetJob.Data.Migrations.GetJobDb
                     b.HasKey("DegreeId");
 
                     b.ToTable("Dir_Degree");
-
-                    b.HasData(
-                        new
-                        {
-                            DegreeId = 1,
-                            Text = "博士后"
-                        },
-                        new
-                        {
-                            DegreeId = 2,
-                            Text = "博士"
-                        });
                 });
 
             modelBuilder.Entity("GetJob.Models.Deliver", b =>
@@ -163,16 +127,6 @@ namespace GetJob.Data.Migrations.GetJobDb
                     b.HasIndex("ResumeSubmittedId");
 
                     b.ToTable("S_Deliver");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "3eed3eed-3eed-2020-3eed-123456789abc",
-                            DeliverDateTime = new DateTime(2020, 10, 20, 17, 44, 19, 794, DateTimeKind.Local).AddTicks(4045),
-                            DeliverStatusId = 1,
-                            JobId = "3eed3eed-3eed-2020-3eed-123456789abc",
-                            ResumeSubmittedId = "3eed3eed-3eed-2020-3eed-123456789abc"
-                        });
                 });
 
             modelBuilder.Entity("GetJob.Models.DeliverStatus", b =>
@@ -190,23 +144,6 @@ namespace GetJob.Data.Migrations.GetJobDb
                     b.HasKey("DeliverStatusId");
 
                     b.ToTable("Dir_DeliverStatus");
-
-                    b.HasData(
-                        new
-                        {
-                            DeliverStatusId = 1,
-                            Text = "待审核"
-                        },
-                        new
-                        {
-                            DeliverStatusId = 2,
-                            Text = "审核通过"
-                        },
-                        new
-                        {
-                            DeliverStatusId = 3,
-                            Text = "审核未通过"
-                        });
                 });
 
             modelBuilder.Entity("GetJob.Models.InterviewNotify", b =>
@@ -239,17 +176,6 @@ namespace GetJob.Data.Migrations.GetJobDb
                     b.HasIndex("DeliverId");
 
                     b.ToTable("C_InterviewNotify");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "3eed3eed-3eed-2020-3eed-123456789abc",
-                            DeliverId = "3eed3eed-3eed-2020-3eed-123456789abc",
-                            InterviewDate = new DateTime(2020, 10, 20, 17, 44, 19, 794, DateTimeKind.Local).AddTicks(6653),
-                            InterviewLocation = "",
-                            Note = "",
-                            Title = "通知测试种子数据"
-                        });
                 });
 
             modelBuilder.Entity("GetJob.Models.Job", b =>
@@ -311,23 +237,6 @@ namespace GetJob.Data.Migrations.GetJobDb
                     b.HasIndex("LocationId");
 
                     b.ToTable("C_Job");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "3eed3eed-3eed-2020-3eed-123456789abc",
-                            CompanyId = "3eed3eed-3eed-2020-3eed-123456789abc",
-                            DegreeId = 2,
-                            Description = "",
-                            JobCharacterId = 3,
-                            JobKindId = 10001,
-                            JobPayId = 4,
-                            JobStatusId = 1,
-                            LastModify = new DateTime(2020, 10, 20, 17, 44, 19, 791, DateTimeKind.Local).AddTicks(482),
-                            LocationId = 330105,
-                            Name = "测试攻城师",
-                            RecruitNumber = 19
-                        });
                 });
 
             modelBuilder.Entity("GetJob.Models.JobCharacter", b =>
@@ -345,28 +254,6 @@ namespace GetJob.Data.Migrations.GetJobDb
                     b.HasKey("JobCharacterId");
 
                     b.ToTable("Dir_JobCharacter");
-
-                    b.HasData(
-                        new
-                        {
-                            JobCharacterId = 1,
-                            Text = "全职"
-                        },
-                        new
-                        {
-                            JobCharacterId = 2,
-                            Text = "临时"
-                        },
-                        new
-                        {
-                            JobCharacterId = 3,
-                            Text = "实习"
-                        },
-                        new
-                        {
-                            JobCharacterId = 4,
-                            Text = "兼职"
-                        });
                 });
 
             modelBuilder.Entity("GetJob.Models.JobCollection", b =>
@@ -392,15 +279,6 @@ namespace GetJob.Data.Migrations.GetJobDb
                     b.HasIndex("StudentId");
 
                     b.ToTable("S_JobCollection");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "3eed3eed-3eed-2020-3eed-123456789abc",
-                            CollectionDateTime = new DateTime(2020, 10, 20, 17, 44, 19, 794, DateTimeKind.Local).AddTicks(9865),
-                            JobId = "3eed3eed-3eed-2020-3eed-123456789abc",
-                            StudentId = "3eed3eed-3eed-2020-3eed-123456789abc"
-                        });
                 });
 
             modelBuilder.Entity("GetJob.Models.JobKind", b =>
@@ -418,18 +296,6 @@ namespace GetJob.Data.Migrations.GetJobDb
                     b.HasKey("JobKindId");
 
                     b.ToTable("Dir_JobKind");
-
-                    b.HasData(
-                        new
-                        {
-                            JobKindId = 10000,
-                            Text = "计算机类"
-                        },
-                        new
-                        {
-                            JobKindId = 10001,
-                            Text = "测试"
-                        });
                 });
 
             modelBuilder.Entity("GetJob.Models.JobPay", b =>
@@ -453,92 +319,6 @@ namespace GetJob.Data.Migrations.GetJobDb
                     b.HasKey("JobPayId");
 
                     b.ToTable("Dir_JobPay");
-
-                    b.HasData(
-                        new
-                        {
-                            JobPayId = 1,
-                            PayFrom = 0.0,
-                            PayTo = 1000.0,
-                            Text = "1000以下"
-                        },
-                        new
-                        {
-                            JobPayId = 2,
-                            PayFrom = 1000.0,
-                            PayTo = 2000.0,
-                            Text = "1k~2k"
-                        },
-                        new
-                        {
-                            JobPayId = 3,
-                            PayFrom = 2000.0,
-                            PayTo = 3000.0,
-                            Text = "2k~3k"
-                        },
-                        new
-                        {
-                            JobPayId = 4,
-                            PayFrom = 3000.0,
-                            PayTo = 4000.0,
-                            Text = "3k~4k"
-                        },
-                        new
-                        {
-                            JobPayId = 5,
-                            PayFrom = 4000.0,
-                            PayTo = 6000.0,
-                            Text = "4k~6k"
-                        },
-                        new
-                        {
-                            JobPayId = 6,
-                            PayFrom = 6000.0,
-                            PayTo = 8000.0,
-                            Text = "6k~8k"
-                        },
-                        new
-                        {
-                            JobPayId = 7,
-                            PayFrom = 8000.0,
-                            PayTo = 10000.0,
-                            Text = "8k~1k"
-                        },
-                        new
-                        {
-                            JobPayId = 8,
-                            PayFrom = 10000.0,
-                            PayTo = 15000.0,
-                            Text = "10k~15k"
-                        },
-                        new
-                        {
-                            JobPayId = 9,
-                            PayFrom = 15000.0,
-                            PayTo = 20000.0,
-                            Text = "15k~20k"
-                        },
-                        new
-                        {
-                            JobPayId = 10,
-                            PayFrom = 20000.0,
-                            PayTo = 30000.0,
-                            Text = "20k~30k"
-                        },
-                        new
-                        {
-                            JobPayId = 11,
-                            PayFrom = 30000.0,
-                            PayTo = 50000.0,
-                            Text = "30k~50k"
-                        },
-                        new
-                        {
-                            JobPayId = 12,
-                            PayFrom = 50000.0,
-                            PayTo = 10000000.0,
-                            Text = "50k以上"
-                        });
                 });
 
             modelBuilder.Entity("GetJob.Models.JobStatus", b =>
@@ -556,18 +336,6 @@ namespace GetJob.Data.Migrations.GetJobDb
                     b.HasKey("JobStatusId");
 
                     b.ToTable("Dir_JobStatus");
-
-                    b.HasData(
-                        new
-                        {
-                            JobStatusId = 1,
-                            Text = "招聘中"
-                        },
-                        new
-                        {
-                            JobStatusId = 2,
-                            Text = "招聘结束"
-                        });
                 });
 
             modelBuilder.Entity("GetJob.Models.Location", b =>
@@ -584,38 +352,6 @@ namespace GetJob.Data.Migrations.GetJobDb
                     b.HasKey("LocationId");
 
                     b.ToTable("Dir_Location");
-
-                    b.HasData(
-                        new
-                        {
-                            LocationId = 110000,
-                            Text = "北京市"
-                        },
-                        new
-                        {
-                            LocationId = 330000,
-                            Text = "浙江省"
-                        },
-                        new
-                        {
-                            LocationId = 330100,
-                            Text = "浙江省杭州市"
-                        },
-                        new
-                        {
-                            LocationId = 330200,
-                            Text = "浙江省宁波市"
-                        },
-                        new
-                        {
-                            LocationId = 330105,
-                            Text = "浙江省杭州市拱墅区"
-                        },
-                        new
-                        {
-                            LocationId = 330106,
-                            Text = "浙江省杭州市西湖区"
-                        });
                 });
 
             modelBuilder.Entity("GetJob.Models.Nation", b =>
@@ -633,18 +369,6 @@ namespace GetJob.Data.Migrations.GetJobDb
                     b.HasKey("NationId");
 
                     b.ToTable("Dir_Nation");
-
-                    b.HasData(
-                        new
-                        {
-                            NationId = 1,
-                            Text = "汉族"
-                        },
-                        new
-                        {
-                            NationId = 2,
-                            Text = "蒙古族"
-                        });
                 });
 
             modelBuilder.Entity("GetJob.Models.PoliticalOutlook", b =>
@@ -662,18 +386,6 @@ namespace GetJob.Data.Migrations.GetJobDb
                     b.HasKey("PoliticalOutlookId");
 
                     b.ToTable("Dir_PoliticalOutlook");
-
-                    b.HasData(
-                        new
-                        {
-                            PoliticalOutlookId = 1,
-                            Text = "共青团员"
-                        },
-                        new
-                        {
-                            PoliticalOutlookId = 2,
-                            Text = "中共党员"
-                        });
                 });
 
             modelBuilder.Entity("GetJob.Models.Resume", b =>
@@ -734,24 +446,6 @@ namespace GetJob.Data.Migrations.GetJobDb
                     b.HasIndex("StudentId");
 
                     b.ToTable("S_Resume");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "3eed3eed-3eed-2020-3eed-123456789abc",
-                            Certificate = "",
-                            CreateDateTime = new DateTime(2020, 10, 20, 17, 44, 19, 793, DateTimeKind.Local).AddTicks(571),
-                            ForJobAddressId = 330105,
-                            ForJobCharacterId = 1,
-                            ForJobKindId = 10001,
-                            ForJobPayId = 1,
-                            SelfEvaluation = "",
-                            State = "",
-                            StudentId = "3eed3eed-3eed-2020-3eed-123456789abc",
-                            Title = "简历种子数据",
-                            Visible = "",
-                            WorkExperience = ""
-                        });
                 });
 
             modelBuilder.Entity("GetJob.Models.ResumeSubmitted", b =>
@@ -812,24 +506,6 @@ namespace GetJob.Data.Migrations.GetJobDb
                     b.HasIndex("StudentId");
 
                     b.ToTable("S_ResumeSubmitted");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "3eed3eed-3eed-2020-3eed-123456789abc",
-                            Certificate = "",
-                            CreateDateTime = new DateTime(2020, 10, 20, 17, 44, 19, 793, DateTimeKind.Local).AddTicks(6402),
-                            ForJobAddressId = 330105,
-                            ForJobCharacterId = 1,
-                            ForJobKindId = 10001,
-                            ForJobPayId = 1,
-                            SelfEvaluation = "",
-                            State = "",
-                            StudentId = "3eed3eed-3eed-2020-3eed-123456789abc",
-                            Title = "简历种子数据",
-                            Visible = "",
-                            WorkExperience = ""
-                        });
                 });
 
             modelBuilder.Entity("GetJob.Models.Student", b =>
@@ -898,26 +574,6 @@ namespace GetJob.Data.Migrations.GetJobDb
                     b.HasIndex("PoliticalOutlookId");
 
                     b.ToTable("S_Student");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "3eed3eed-3eed-2020-3eed-123456789abc",
-                            Address = "null",
-                            BirthPlaceId = 330106,
-                            Birthday = new DateTime(2020, 10, 20, 17, 44, 19, 792, DateTimeKind.Local).AddTicks(4947),
-                            College = "浙江树人大学",
-                            DegreeId = 2,
-                            IdentityNumber = "330682199909301038",
-                            Mail = "123@123.com",
-                            Major = "计算机",
-                            Name = "吴知",
-                            NationId = 1,
-                            Phone = "12345678900",
-                            PoliticalOutlookId = 1,
-                            Sex = "男",
-                            StudyDate = new DateTime(2017, 9, 10, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        });
                 });
 
             modelBuilder.Entity("GetJob.Models.StudentCollection", b =>
@@ -943,15 +599,6 @@ namespace GetJob.Data.Migrations.GetJobDb
                     b.HasIndex("StudentId");
 
                     b.ToTable("C_StudentCollection");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "3eed3eed-3eed-2020-3eed-123456789abc",
-                            CollectionDateTime = new DateTime(2020, 10, 20, 17, 44, 19, 795, DateTimeKind.Local).AddTicks(2310),
-                            CompanyId = "3eed3eed-3eed-2020-3eed-123456789abc",
-                            StudentId = "3eed3eed-3eed-2020-3eed-123456789abc"
-                        });
                 });
 
             modelBuilder.Entity("GetJob.Models.Company", b =>

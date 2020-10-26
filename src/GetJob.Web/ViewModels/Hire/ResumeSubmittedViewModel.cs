@@ -14,27 +14,36 @@ namespace GetJob.Web.ViewModels.Hire
 
         }
 
-        public ResumeSubmittedViewModel(ResumeSubmitted resumeSubmitted)
+        public ResumeSubmittedViewModel(Deliver deliver)
         {
-            Id = resumeSubmitted.Id;
-            StudentId = resumeSubmitted.StudentId;
-            Student = resumeSubmitted.Student;
-            Title = resumeSubmitted.Title;
-            CreateDateTime = resumeSubmitted.CreateDateTime;
-            ForJobKindId = resumeSubmitted.ForJobKindId;
-            ForJobKind = resumeSubmitted.ForJobKind;
-            ForJobAddressId = resumeSubmitted.ForJobAddressId;
-            ForJobAddress = resumeSubmitted.ForJobAddress;
-            ForJobCharacterId = resumeSubmitted.ForJobCharacterId;
-            ForJobCharacter = resumeSubmitted.ForJobCharacter;
-            ForJobPayId = resumeSubmitted.ForJobPayId;
-            ForJobPay = resumeSubmitted.ForJobPay;
-            Certificate = resumeSubmitted.Certificate;
-            WorkExperience = resumeSubmitted.WorkExperience;
-            SelfEvaluation = resumeSubmitted.SelfEvaluation;
-            State = resumeSubmitted.State;
-            Visible = resumeSubmitted.Visible;
+            DeliverStatusId = deliver.DeliverStatusId;
+            DeliverId = deliver.Id;
+            Id = deliver.ResumeSubmitted.Id;
+            StudentId = deliver.ResumeSubmitted.StudentId;
+            Student = deliver.ResumeSubmitted.Student;
+            Title = deliver.ResumeSubmitted.Title;
+            CreateDateTime = deliver.ResumeSubmitted.CreateDateTime;
+            ForJobKindId = deliver.ResumeSubmitted.ForJobKindId;
+            ForJobKind = deliver.ResumeSubmitted.ForJobKind;
+            ForJobAddressId = deliver.ResumeSubmitted.ForJobAddressId;
+            ForJobAddress = deliver.ResumeSubmitted.ForJobAddress;
+            ForJobCharacterId = deliver.ResumeSubmitted.ForJobCharacterId;
+            ForJobCharacter = deliver.ResumeSubmitted.ForJobCharacter;
+            ForJobPayId = deliver.ResumeSubmitted.ForJobPayId;
+            ForJobPay = deliver.ResumeSubmitted.ForJobPay;
+            Certificate = deliver.ResumeSubmitted.Certificate;
+            WorkExperience = deliver.ResumeSubmitted.WorkExperience;
+            SelfEvaluation = deliver.ResumeSubmitted.SelfEvaluation;
+            State = deliver.ResumeSubmitted.State;
+            Visible = deliver.ResumeSubmitted.Visible;
         }
+        public string Pass { get; set; }
+        public int DeliverStatusId { get; set; }
+        [Display(Name = "标题")] public string NotifyTitle { get; set; }
+        [Display(Name = "地点")] public string InterviewLocation { get; set; }
+        [Display(Name = "时间")] public DateTime InterviewDate { get; set; } = DateTime.Now;
+        [Display(Name = "备注")] public string InterviewNote { get; set; }
+        public string DeliverId { get; set; }
         public string Id { get; set; } = string.Empty;
         [Required, Display(Name = "求职人")] public string StudentId { get; set; }
         public Models.Student Student { get; set; }

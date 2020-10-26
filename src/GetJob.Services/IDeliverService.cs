@@ -10,7 +10,10 @@ namespace GetJob.Services
         Task<int> AddResume(Resume model);
         Task<int> AddResumeSubmit(ResumeSubmitted model);
         Task<int> AddDeliver(Deliver model);
+        Task<int> UpdateAsync(Deliver model);
+        Task<Deliver> GetDeliverById(string id);
         Task<List<Deliver>> GetDeliverByJobId(string jobId);
         Task<ResumeSubmitted> GetResumeSubmittedById(string id);
+        Task<int> AddNotify(InterviewNotify model);
     }
 }

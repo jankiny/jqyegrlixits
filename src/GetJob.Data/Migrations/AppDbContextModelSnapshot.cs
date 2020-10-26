@@ -133,25 +133,6 @@ namespace GetJob.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("Sys_User");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "3eed3eed-3eed-2020-3eed-123456789abc",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "e559ae7b-3a71-4047-878e-845df8688436",
-                            Email = "123456@test.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = true,
-                            NormalizedEmail = "123456@TEST.COM",
-                            NormalizedUserName = "TEST",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJUaVTjZwGFbhiLxeTG8AeKARILXbRDwAjE5iBCLO/Yt/YLkqN0EBWQafi+Q1JJsAg==",
-                            PhoneNumber = "12387654321",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "EUKRFQG3CKQNR33NIXQEH6D4SZHKD4H5",
-                            TwoFactorEnabled = false,
-                            UserName = "test"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -176,22 +157,6 @@ namespace GetJob.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Sys_UserClaim");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ClaimType = "Identity",
-                            ClaimValue = "Company",
-                            UserId = "3eed3eed-3eed-2020-3eed-123456789abc"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ClaimType = "CompanyId",
-                            ClaimValue = "3eed3eed-3eed-2020-3eed-123456789abc",
-                            UserId = "3eed3eed-3eed-2020-3eed-123456789abc"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>

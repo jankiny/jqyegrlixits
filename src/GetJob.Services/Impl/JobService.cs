@@ -153,7 +153,7 @@ namespace GetJob.Services.Impl
         {
             try
             {
-                var jobList = await _context.Jobs.Where(j => j.CompanyId == model.Id).ToListAsync();
+                var jobList = await _context.Jobs.Where(j => j.CompanyId == model.Id).OrderBy(j => j.LastModify).ToListAsync();
                 foreach (var job in jobList)
                 {
                     job.Company = await _context.Companies.FindAsync(model.Id);

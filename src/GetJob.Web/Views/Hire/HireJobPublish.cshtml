@@ -52,6 +52,8 @@
             <select class="form-control" asp-for="JobStatusId" asp-items="ViewBag.JobStatuses">
                 <option value="">-- 选择招聘状态 --</option>
             </select>
+            @* TODO: 不不允许用户直接修改招聘状态，改成停止招聘按钮 *@
+            @*<input asp-for="JobStatusId" value="1"/>*@
         </div>
     </div>
 
