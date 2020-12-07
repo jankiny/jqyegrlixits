@@ -1,10 +1,7 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using GetJob.Models;
 using GetJob.Services;
 using GetJob.Web.ViewModels.Company;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -97,7 +94,7 @@ namespace GetJob.Web.Controllers
                     if (result.Succeeded)
                     {
                         _logger.LogInformation($"{vm.PhoneNumber} created a new account with password.");
-                        return RedirectToAction("SignIn", "Home");
+                        return View("_SignUpSuccess");
                     }
                 }
             }

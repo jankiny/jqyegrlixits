@@ -3,13 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using GetJob.Models;
 using GetJob.Services;
-using GetJob.Web.ViewModels.Company;
 using GetJob.Web.ViewModels.Hire;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity.UI.V3.Pages.Internal.Account;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.Extensions.Logging;
 
 namespace GetJob.Web.Controllers
@@ -35,8 +32,13 @@ namespace GetJob.Web.Controllers
         }
 
         #region 公司部分
+        /// <summary>
+        /// 填充JobStatus下拉框
+        /// </summary>
+        /// <param name="selectedJobStatus">选择的JobStatusId</param>
+        /// <returns></returns>
         [Authorize(Policy = "CompanyOnly")]
-        public async Task PopulateJobStatusesDropDownList(string selectedJobStatus = null)
+        private async Task PopulateJobStatusesDropDownList(string selectedJobStatus = null)
         {
             var jobStatuses = await _jobService.GetAllJobStatusAsync();
             ViewBag.JobStatuses = new SelectList(jobStatuses, "JobStatusId", "Text", selectedJobStatus);
@@ -67,28 +69,52 @@ namespace GetJob.Web.Controllers
             await PopulateJobStatusesDropDownList(selectedJobStatus);
             return View(vm);
         }
-
+        /// <summary>
+        /// 返回工作类别（第二级）Json数据
+        /// </summary>
+        /// <param name="firstKindId">工作类别（第一级）</param>
+        /// <returns>工作类别（第二级）Json数据</returns>
         [Authorize(Policy = "CompanyOnly")]
         public async Task<ActionResult> PopulateSecondKinds(int firstKindId)
         {
             var jobSecondKind = await _jobService.GetAllSecondKindAsync(firstKindId);
             return Json(jobSecondKind);
         }
-
+        /// <summary>
+        /// 返回城市字典Json数据
+        /// </summary>
+        /// <param name="provinceId">省份代码</param>
+        /// <returns>城市字典Json数据</returns>
         [Authorize(Policy = "CompanyOnly")]
         public async Task<ActionResult> PopulateCities(int provinceId)
         {
             var cities = await _locationService.GetCityAsync(provinceId);
             return Json(cities);
         }
-
+        /// <summary>
+        /// 返回地区字典Json数据
+        /// </summary>
+        /// <param name="cityId">城市代码</param>
+        /// <returns>地区字典Json数据</returns>
         [Authorize(Policy = "CompanyOnly")]
         public async Task<ActionResult> PopulateDistricts(int cityId)
         {
             var districts = await _locationService.GetDistrictAsync(cityId);
             return Json(districts);
         }
-
+        /// <summary>
+        /// 填充Job相关下拉框
+        /// </summary>
+        /// <param name="selectedJobCharacterId">已选择的JobCharacterId</param>
+        /// <param name="selectedJobFirstKindId">已选择的JobFirstKindId</param>
+        /// <param name="selectedJobKindId">已选择的JobKindId</param>
+        /// <param name="selectedJobPayId">已选择的JobPayId</param>
+        /// <param name="selectedJobStatusId">已选择的JobStatusId</param>
+        /// <param name="selectedProvinceId">已选择的ProvinceId</param>
+        /// <param name="selectedCityId">已选择的CityId</param>
+        /// <param name="selectedDistrictId">已选择的DistrictId</param>
+        /// <param name="selectedDegreeId">已选择的DegreeId</param>
+        /// <returns></returns>
         private async Task PopulateJobRelatedDropDownList(string selectedJobCharacterId = null,
             string selectedJobFirstKindId = null, string selectedJobKindId = null, string selectedJobPayId = null,
             string selectedJobStatusId = null, string selectedProvinceId = null, string selectedCityId = null,
@@ -292,8 +318,13 @@ namespace GetJob.Web.Controllers
             await PopulateJobStatusesDropDownList(selectedJobStatus);
             return View(vm);
         }
+        /// <summary>
+        /// 填充提交表的下拉框数据
+        /// </summary>
+        /// <param name="selectedJobStatus">选择的JobStatusId</param>
+        /// <returns></returns>
         [Authorize(Policy = "CompanyOnly")]
-        public async Task PopulateDeliverDropDownList(string selectedJobStatus = null)
+        private async Task PopulateDeliverDropDownList(string selectedJobStatus = null)
         {
             var jobStatuses = await _jobService.GetAllJobStatusAsync();
             ViewBag.JobStatuses = new SelectList(jobStatuses, "JobStatusId", "Text", selectedJobStatus);

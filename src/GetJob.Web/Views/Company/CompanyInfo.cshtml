@@ -1,9 +1,9 @@
-﻿@{
+﻿@model CompanyInfoViewModel
+@{
     ViewBag.Title = "企业信息";
     Layout = "_Company";
 }
 
-@model CompanyInfoViewModel
 <form asp-controller="Company" asp-action="CompanyInfoEdit" method="post">
     <input type="hidden" asp-for="Id" />
 

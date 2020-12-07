@@ -32,6 +32,7 @@
                 <input type="hidden" asp-for="SelfEvaluation" />
                 <input type="hidden" asp-for="State" />
                 <input type="hidden" asp-for="Visible" />
+                <input id="passed" type="hidden" asp-for="Pass" />
                 <div class="modal-body form-group row">
                     <div class="col-sm-12">
                         拒收后不能再通过该简历发送面试通知，确定拒收该简历吗？
@@ -196,7 +197,7 @@
                     <li>
                         <h3>
                             <span>@Model.Student.College - @Model.Student.Major（@Model.Student.Degree.Text）</span>
-                            <time>@Model.Student.StudyDate.ToString("yyyy.M")-201X.7</time>
+                            <time>@Model.Student.StudyDate.ToString("yyyy.M")-@(Model.Student.StudyDate.Year+4).7</time>
                         </h3>
                         <p>
                             @*专业排名

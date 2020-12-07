@@ -40,22 +40,19 @@ namespace GetJob.Web.Controllers
             {
                 _logger.LogInformation("用户登录成功");
                 var identity = await _userService.GetUserIdentity(vm.UserName);
-                if (identity is Company company)
+                switch (identity)
                 {
-                    _logger.LogInformation($"用户身份是{company.Name}");
-                    return RedirectToAction("PersonalInfo", "Recruiter");
-                }
-                else if (identity is Student student)
-                {
-                    _logger.LogInformation($"用户身份是{student.Id}");
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    _logger.LogError("未找到用户身份");
-                    ModelState.AddModelError("", "用户身份非法");
-                    await _userService.SignOutAsync();
-                    return View();
+                    case Company company:
+                        _logger.LogInformation($"用户是{company.Name} (企业)");
+                        return RedirectToAction("PersonalInfo", "Recruiter");
+                    case Student student:
+                        _logger.LogInformation($"用户是{student.Name}（学生");
+                        return RedirectToAction("Index", "Home");
+                    default:
+                        _logger.LogError("未找到用户身份");
+                        ModelState.AddModelError("", "用户身份非法");
+                        await _userService.SignOutAsync();
+                        return View();
                 }
             }
             ModelState.AddModelError("", "用户名/密码不正确");

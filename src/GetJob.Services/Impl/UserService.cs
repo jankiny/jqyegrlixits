@@ -47,6 +47,7 @@ namespace GetJob.Services.Impl
             try
             {
                 await _userManager.CreateAsync(model, plainPassword);
+                await _userManager.AddClaimAsync(model, new Claim("HeaderUrl", @"/img/default_head.png"));
                 await _userManager.AddClaimAsync(model, new Claim("Identity", "Student"));
                 return await _userManager.AddClaimAsync(model, new Claim("StudentId", student.Id));
             }

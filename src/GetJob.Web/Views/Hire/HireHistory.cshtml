@@ -85,7 +85,7 @@
         </div>
     </div>
     <div class="col-3">
-        <form class="form-inline" asp-controller="Hire" asp-action="HireResumeList" method="post">
+        <form class="form-inline" asp-controller="Hire" asp-action="HireHistory" method="post">
             <div class="form-group mb-2 mr-3">
                 <select name="selectedJobStatus" onchange="JobStatusDropDownListChange()" class="form-control" asp-items="ViewBag.JobStatuses">
                 </select>
@@ -103,7 +103,7 @@
                    aria-controls="v-@Model.JobViewModels[i].Id"
                    aria-selected="@(i == 0 ? "true" : "false")">
                     <div class="form-inline row">
-                        <div class="col-sm-10 hidden-line">@Model.JobViewModels[i].Name</div>
+                        <div class="col-sm-9 hidden-line">@Model.JobViewModels[i].Name</div>
                         (@Model.DeliverListViewModels[i].DeliverViewModels.Count)
                     </div>
                 </a>
